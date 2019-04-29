@@ -18,19 +18,16 @@ package com.kunminx.linkagelistview;
 
 
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.kunminx.linkage.LinkageItem;
+import com.kunminx.linkage.bean.LinkageItem;
 import com.kunminx.linkage.LinkageRecyclerView;
 import com.kunminx.linkagelistview.databinding.ActivityMainBinding;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

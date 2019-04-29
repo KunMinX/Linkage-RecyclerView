@@ -1,4 +1,4 @@
-package com.kunminx.linkage;
+package com.kunminx.linkage.bean;
 
 /*
  * Copyright (c) 2018-2019. KunMinX
@@ -16,7 +16,6 @@ package com.kunminx.linkage;
  * limitations under the License.
  */
 
-import com.chad.library.adapter.base.entity.SectionEntity;
 
 /**
  * Create by KunMinX at 19/4/27
