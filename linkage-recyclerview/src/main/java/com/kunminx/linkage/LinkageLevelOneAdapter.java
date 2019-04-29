@@ -82,7 +82,7 @@ public class LinkageLevelOneAdapter extends RecyclerView.Adapter<LinkageLevelOne
             @Override
             public void onClick(View v) {
                 if (mListener != null) {
-                    mListener.onItemClick(holder, holder.getAdapterPosition());
+                    mListener.onItemClick(holder, mStrings.get(holder.getAdapterPosition()), holder.getAdapterPosition());
                 }
             }
         });
@@ -113,7 +113,7 @@ public class LinkageLevelOneAdapter extends RecyclerView.Adapter<LinkageLevelOne
         }
     }
 
-    class LevelOneViewHolder extends RecyclerView.ViewHolder {
+    public class LevelOneViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mTvGroup;
         private LinearLayout mLayout;
@@ -126,6 +126,6 @@ public class LinkageLevelOneAdapter extends RecyclerView.Adapter<LinkageLevelOne
     }
 
     public interface OnItemClickListener {
-        void onItemClick(LevelOneViewHolder holder, int position);
+        void onItemClick(LevelOneViewHolder holder, String group, int position);
     }
 }

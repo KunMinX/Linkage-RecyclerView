@@ -86,7 +86,7 @@ public class LinkageLevelTwoAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        LinkageItem linkageItem = mItems.get(holder.getAdapterPosition());
+        final LinkageItem linkageItem = mItems.get(holder.getAdapterPosition());
         if (linkageItem.isHeader) {
             LevelTwoTitleViewHolder titleViewHolder = (LevelTwoTitleViewHolder) holder;
             titleViewHolder.mTvHeader.setText(linkageItem.header);
@@ -98,7 +98,7 @@ public class LinkageLevelTwoAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 @Override
                 public void onClick(View v) {
                     if (mListener != null) {
-                        mListener.onItemClick(viewHolder, viewHolder.getAdapterPosition());
+                        mListener.onItemClick(viewHolder, linkageItem, viewHolder.getAdapterPosition());
                     }
                 }
             });
@@ -110,7 +110,7 @@ public class LinkageLevelTwoAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         return mItems.size();
     }
 
-    class LevelTwoViewHolder extends RecyclerView.ViewHolder {
+    public class LevelTwoViewHolder extends RecyclerView.ViewHolder {
 
         private LinearLayout mLayout;
         private TextView mTvTitle;
@@ -124,7 +124,7 @@ public class LinkageLevelTwoAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
     }
 
-    class LevelTwoTitleViewHolder extends RecyclerView.ViewHolder {
+    public class LevelTwoTitleViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mTvHeader;
 
@@ -135,6 +135,6 @@ public class LinkageLevelTwoAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     public interface OnItemClickListener {
-        void onItemClick(LevelTwoViewHolder holder, int position);
+        void onItemClick(LevelTwoViewHolder holder, LinkageItem item, int position);
     }
 }

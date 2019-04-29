@@ -56,13 +56,15 @@ public class LinkageRecyclerView extends RelativeLayout {
     private LinearLayoutManager mLevel2LayoutManager;
     private boolean mIsGridLayout;
     private OnLinkageItemClickListener mClickListener;
+    private int mLevel1Layout, mLevel2TitleLayout, mLevel2LinearLayout, mLevel2GridLayout;
 
     public void setClickListener(OnLinkageItemClickListener clickListener) {
         mClickListener = clickListener;
     }
 
-    public void setGridLayout(boolean gridLayout) {
+    public void setGridMode(boolean gridLayout) {
         mIsGridLayout = gridLayout;
+        setLevel2LayoutManager();
     }
 
     public List<Integer> getHeaderPositions() {
@@ -89,33 +91,45 @@ public class LinkageRecyclerView extends RelativeLayout {
         mRvLevel2 = (RecyclerView) view.findViewById(R.id.rv_level_2);
         mTvLevel2Header = (TextView) view.findViewById(R.id.tv_level_2_header);
         mLinkageLayout = (LinearLayout) view.findViewById(R.id.linkage_layout);
+    }
 
-        int layout = R.layout.adapter_linkage_level_2_linear;
+    private void setLevel2LayoutManager() {
+        int layout = mLevel2LinearLayout;
         if (mIsGridLayout) {
             mLevel2LayoutManager = new GridLayoutManager(mContext, 3);
-            layout = R.layout.adapter_linkage_level_2_grid;
+            layout = mLevel2GridLayout;
         } else {
             mLevel2LayoutManager = new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false);
         }
+        mRvLevel2.setLayoutManager(mLevel2LayoutManager);
 
-        mLevel2Adapter = new LinkageLevelTwoAdapter(layout, R.layout.adapter_linkage_level_2_title, null, new LinkageLevelTwoAdapter.OnItemClickListener() {
+        mLevel2Adapter = new LinkageLevelTwoAdapter(layout, mLevel2TitleLayout, mItems, new LinkageLevelTwoAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(LinkageLevelTwoAdapter.LevelTwoViewHolder holder, int position) {
+            public void onItemClick(LinkageLevelTwoAdapter.LevelTwoViewHolder holder, LinkageItem item, int position) {
                 if (mClickListener != null && !mHeaderPositions.contains(position)) {
-                    mClickListener.onLinkageLevel2Click(holder, position);
+                    mClickListener.onLinkageLevel2Click(holder, item, position);
                 }
             }
         });
-        mRvLevel2.setLayoutManager(mLevel2LayoutManager);
-        mRvLevel2.setAdapter(mLevel2Adapter);
 
-        mLevel1Adapter = new LinkageLevelOneAdapter(R.layout.adapter_linkage_level_1, null, new LinkageLevelOneAdapter.OnItemClickListener() {
+        mRvLevel2.setAdapter(mLevel2Adapter);
+    }
+
+    private void initRecyclerView(int level1Layout, int level2TitleLayout, int level2LinearLayout, int level2GridLayout) {
+        mLevel1Layout = level1Layout == 0 ? R.layout.adapter_linkage_level_1 : level1Layout;
+        mLevel2TitleLayout = level2TitleLayout == 0 ? R.layout.adapter_linkage_level_2_title : level2TitleLayout;
+        mLevel2LinearLayout = level2LinearLayout == 0 ? R.layout.adapter_linkage_level_2_linear : level2LinearLayout;
+        mLevel2GridLayout = level2GridLayout == 0 ? R.layout.adapter_linkage_level_2_grid : level2GridLayout;
+
+        setLevel2LayoutManager();
+
+        mLevel1Adapter = new LinkageLevelOneAdapter(mLevel1Layout, mGroupNames, new LinkageLevelOneAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(LinkageLevelOneAdapter.LevelOneViewHolder holder, int position) {
+            public void onItemClick(LinkageLevelOneAdapter.LevelOneViewHolder holder, String group, int position) {
                 mLevel1Adapter.selectItem(position);
                 mLevel2LayoutManager.scrollToPositionWithOffset(mHeaderPositions.get(position), 0);
                 if (mClickListener != null) {
-                    mClickListener.onLinkageLevel1Click(holder, position);
+                    mClickListener.onLinkageLevel1Click(holder, group, position);
                 }
             }
         });
@@ -124,6 +138,12 @@ public class LinkageRecyclerView extends RelativeLayout {
     }
 
     public void init(List<LinkageItem> linkageItems) {
+        init(linkageItems, 0, 0, 0, 0);
+    }
+
+    public void init(List<LinkageItem> linkageItems, int level1Layout, int level2TitleLayout, int level2LinearLayout, int level2GridLayout) {
+        initRecyclerView(level1Layout, level2TitleLayout, level2LinearLayout, level2GridLayout);
+
         this.mItems = linkageItems;
 
         List<String> groupNames = new ArrayList<>();
@@ -212,9 +232,9 @@ public class LinkageRecyclerView extends RelativeLayout {
     }
 
     public interface OnLinkageItemClickListener {
-        void onLinkageLevel1Click(LinkageLevelOneAdapter.LevelOneViewHolder holder, int position);
+        void onLinkageLevel1Click(LinkageLevelOneAdapter.LevelOneViewHolder holder, String group, int position);
 
-        void onLinkageLevel2Click(LinkageLevelTwoAdapter.LevelTwoViewHolder holder, int position);
+        void onLinkageLevel2Click(LinkageLevelTwoAdapter.LevelTwoViewHolder holder, LinkageItem item, int position);
     }
 
 

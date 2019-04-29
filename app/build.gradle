@@ -35,6 +35,6 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation project(':linkage-recyclerview')
-//    implementation 'com.kunminx.linkage:linkage-recyclerview:1.0.2'
+//    implementation 'com.kunminx.linkage:linkage-recyclerview:1.0.3'
 
 }
