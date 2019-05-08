@@ -19,13 +19,16 @@ package com.kunminx.linkagelistview;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.kunminx.linkage.bean.LinkageItem;
 import com.kunminx.linkage.LinkageRecyclerView;
+import com.kunminx.linkage.bean.LinkageItem;
 import com.kunminx.linkagelistview.databinding.ActivityMainBinding;
 
 import java.util.List;
@@ -35,38 +38,56 @@ import java.util.List;
  */
 public class MainActivity extends AppCompatActivity {
 
+    private String[] mFragmentTitles;
+    private Fragment[] mFragments;
+
     private ActivityMainBinding mBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        mBinding.setClickProxy(new ClickProxy());
 
-        initLinkageDatas(mBinding.linkage);
+        mBinding.toolbar.setTitle(R.string.app_name);
+        setSupportActionBar(mBinding.toolbar);
+
+        mFragmentTitles = getResources().getStringArray(R.array.fragments);
+        mFragments = new Fragment[mFragmentTitles.length];
+
+        mBinding.viewPager.setAdapter(new FragmentStateAdapter(this) {
+            @NonNull
+            @Override
+            public Fragment getItem(int position) {
+                return createFragment(position);
+            }
+
+            @Override
+            public int getItemCount() {
+                return mFragmentTitles.length;
+            }
+        });
+
+        new TabLayoutMediator(mBinding.tabs, mBinding.viewPager, (tab, position) -> {
+            tab.setText(mFragmentTitles[position].replace("SampleFragment", ""));
+        }).attach();
     }
 
-    private void initLinkageDatas(LinkageRecyclerView linkage) {
-        Gson gson = new Gson();
-        List<LinkageItem> items = gson.fromJson(getString(R.string.operators_json),
-                new TypeToken<List<LinkageItem>>() {
-                }.getType());
-
-        linkage.init(items);
-    }
-
-    public class ClickProxy {
-
-        public void showDialog() {
-
+    private Fragment createFragment(Integer tag) {
+        if (mFragments[tag] != null) {
+            return mFragments[tag];
         }
-
-        public void showBottomSheet() {
-
+        String name = "com.kunminx.linkagelistview." + mFragmentTitles[tag];
+        Fragment fragment = null;
+        try {
+            fragment = (Fragment) Class.forName(name).newInstance();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (java.lang.InstantiationException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
-
-        public void showGridLayout() {
-            mBinding.linkage.setGridMode(!mBinding.linkage.isGridMode());
-        }
+        mFragments[tag] = fragment;
+        return mFragments[tag];
     }
 }

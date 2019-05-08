@@ -110,9 +110,11 @@ public class LinkageRecyclerView extends RelativeLayout {
         mRvLevel2.setLayoutManager(mLevel2LayoutManager);
     }
 
-    private void initRecyclerView(ILevelPrimaryAdapterConfig primaryAdapterConfig, ILevelSecondaryAdapterConfig secondaryAdapterConfig) {
+    private void initRecyclerView(ILevelPrimaryAdapterConfig primaryAdapterConfig,
+                                  ILevelSecondaryAdapterConfig secondaryAdapterConfig) {
 
-        mLevel1Adapter = new LinkageLevelPrimaryAdapter(mGroupNames, primaryAdapterConfig, new LinkageLevelPrimaryAdapter.OnLinkageListener() {
+        mLevel1Adapter = new LinkageLevelPrimaryAdapter(mGroupNames,
+                primaryAdapterConfig, new LinkageLevelPrimaryAdapter.OnLinkageListener() {
             @Override
             public void onLinkageClick(LinkageLevelPrimaryAdapter.LevelPrimaryViewHolder holder, String title, int position) {
                 mLevel1Adapter.selectItem(position);
@@ -202,7 +204,9 @@ public class LinkageRecyclerView extends RelativeLayout {
         init(linkageItems, new DefaultLevelPrimaryAdapterConfig(), new DefaultLevelSecondaryAdapterConfig());
     }
 
-    public void init(List<LinkageItem> linkageItems, ILevelPrimaryAdapterConfig primaryAdapterConfig, ILevelSecondaryAdapterConfig secondaryAdapterConfig) {
+    public void init(List<LinkageItem> linkageItems, ILevelPrimaryAdapterConfig primaryAdapterConfig,
+                     ILevelSecondaryAdapterConfig secondaryAdapterConfig) {
+
         initRecyclerView(primaryAdapterConfig, secondaryAdapterConfig);
 
         this.mItems = linkageItems;

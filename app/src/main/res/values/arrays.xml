@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="fragments">
+        <item name="rxmagic">RxMagicSampleFragment</item>
+        <item name="eleme">ElemeSampleFragment</item>
+        <item name="switch">SwitchSampleFragment</item>
+        <item name="dialog">DialogSampleFragment</item>
+        <item name="bottomsheet">BottomSheetSampleFragment</item>
+    </string-array>
+
+</resources>
