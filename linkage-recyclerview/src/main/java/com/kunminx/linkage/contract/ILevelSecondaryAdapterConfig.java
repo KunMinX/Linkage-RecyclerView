@@ -16,20 +16,36 @@ package com.kunminx.linkage.contract;
  */
 
 
-import com.kunminx.linkage.LinkageLevelTwoAdapter;
+import android.content.Context;
+
+import com.kunminx.linkage.adapter.LinkageLevelSecondaryAdapter;
 import com.kunminx.linkage.bean.LinkageItem;
 
 /**
  * Create by KunMinX at 19/5/8
  */
-public interface ILevelTwoAdapterConfig {
+public interface ILevelSecondaryAdapterConfig {
 
     /**
-     * get layout res id
+     * setContext
      *
-     * @return layout res id
+     * @param context context
      */
-    int getLayoutId();
+    void setContext(Context context);
+
+    /**
+     * get grid layout res id
+     *
+     * @return grid layout res id
+     */
+    int getGridLayoutId();
+
+    /**
+     * get linear layout res id
+     *
+     * @return linear layout res id
+     */
+    int getLinearLayoutId();
 
     /**
      * get header layout res id
@@ -60,12 +76,26 @@ public interface ILevelTwoAdapterConfig {
     int getHeaderViewId();
 
     /**
+     * if is grid layout now
+     *
+     * @return is grid layout
+     */
+    boolean isGridMode();
+
+    /**
+     * set Grid Mode
+     *
+     * @param isGridMode isGridMode
+     */
+    void setGridMode(boolean isGridMode);
+
+    /**
      * achieve the onBindViewHolder logic on outside
      *
-     * @param holder   LevelTwoViewHolder
+     * @param holder   LevelSecondaryViewHolder
      * @param item     linkageItem of this position
      * @param position holder.getAdapterPosition()
      */
-    void onBindViewHolder(LinkageLevelTwoAdapter.LevelTwoViewHolder holder, LinkageItem item, int position);
+    void onBindViewHolder(LinkageLevelSecondaryAdapter.LevelSecondaryViewHolder holder, LinkageItem item, int position);
 
 }

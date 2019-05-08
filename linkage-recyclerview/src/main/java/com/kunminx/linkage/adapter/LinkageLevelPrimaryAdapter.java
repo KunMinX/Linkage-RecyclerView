@@ -1,4 +1,4 @@
-package com.kunminx.linkage;
+package com.kunminx.linkage.adapter;
 /*
  * Copyright (c) 2018-2019. KunMinX
  *
@@ -18,6 +18,7 @@ package com.kunminx.linkage;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.kunminx.linkage.contract.ILevelOneAdapterConfig;
+import com.kunminx.linkage.contract.ILevelPrimaryAdapterConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,21 +36,25 @@ import java.util.List;
 /**
  * Create by KunMinX at 19/4/29
  */
-public class LinkageLevelOneAdapter extends RecyclerView.Adapter<LinkageLevelOneAdapter.LevelOneViewHolder> {
+public class LinkageLevelPrimaryAdapter extends RecyclerView.Adapter<LinkageLevelPrimaryAdapter.LevelPrimaryViewHolder> {
 
     private List<String> mStrings;
     private List<TextView> mTextViews = new ArrayList<>();
     private Context mContext;
+    private View mConvertView;
+    private SparseArray<View> mViews = new SparseArray<>();
 
-    private ILevelOneAdapterConfig mConfig;
+    private ILevelPrimaryAdapterConfig mConfig;
+    private OnLinkageListener mListener;
 
 
-    public LinkageLevelOneAdapter(List<String> strings, ILevelOneAdapterConfig config) {
+    public LinkageLevelPrimaryAdapter(List<String> strings, ILevelPrimaryAdapterConfig config, OnLinkageListener listener) {
         mStrings = strings;
         if (mStrings == null) {
             mStrings = new ArrayList<>();
         }
         mConfig = config;
+        mListener = listener;
     }
 
     public void refreshList(List<String> list) {
@@ -62,14 +67,16 @@ public class LinkageLevelOneAdapter extends RecyclerView.Adapter<LinkageLevelOne
 
     @NonNull
     @Override
-    public LevelOneViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public LevelPrimaryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mContext = parent.getContext();
+        mConfig.setContext(mContext);
         View view = LayoutInflater.from(mContext).inflate(mConfig.getLayoutId(), parent, false);
-        return new LevelOneViewHolder(view);
+        mConvertView = view;
+        return new LevelPrimaryViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final LevelOneViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull LevelPrimaryViewHolder holder, int position) {
 
         holder.mTvGroup.setText(mStrings.get(holder.getAdapterPosition()));
         if (!mTextViews.contains(holder.mTvGroup)) {
@@ -80,15 +87,9 @@ public class LinkageLevelOneAdapter extends RecyclerView.Adapter<LinkageLevelOne
         }
         holder.mLayout.setSelected(true);
         mConfig.onBindViewHolder(holder, mStrings.get(holder.getAdapterPosition()), holder.getAdapterPosition());
-
-        /*holder.mLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mListener != null) {
-                    mListener.onItemClick(holder, mStrings.get(holder.getAdapterPosition()), holder.getAdapterPosition());
-                }
-            }
-        });*/
+        if (mListener != null) {
+            mListener.onLinkageClick(holder, mStrings.get(holder.getAdapterPosition()), holder.getAdapterPosition());
+        }
     }
 
     @Override
@@ -100,16 +101,12 @@ public class LinkageLevelOneAdapter extends RecyclerView.Adapter<LinkageLevelOne
         for (int i = 0; i < mStrings.size(); i++) {
             if (position == i) {
                 mConfig.onItemSelected(true, mTextViews.get(i));
-//                mTextViews.get(i).setBackgroundColor(mContext.getResources().getColor(R.color.colorPurple));
-//                mTextViews.get(i).setTextColor(ContextCompat.getColor(mContext, R.color.colorWhite));
                 mTextViews.get(i).setEllipsize(TextUtils.TruncateAt.MARQUEE);
                 mTextViews.get(i).setFocusable(true);
                 mTextViews.get(i).setFocusableInTouchMode(true);
                 mTextViews.get(i).setMarqueeRepeatLimit(-1);
             } else {
                 mConfig.onItemSelected(false, mTextViews.get(i));
-//                mTextViews.get(i).setBackgroundColor(mContext.getResources().getColor(R.color.colorWhite));
-//                mTextViews.get(i).setTextColor(ContextCompat.getColor(mContext, R.color.colorGray));
                 mTextViews.get(i).setEllipsize(TextUtils.TruncateAt.END);
                 mTextViews.get(i).setFocusable(false);
                 mTextViews.get(i).setFocusableInTouchMode(false);
@@ -118,15 +115,32 @@ public class LinkageLevelOneAdapter extends RecyclerView.Adapter<LinkageLevelOne
         }
     }
 
-    public class LevelOneViewHolder extends RecyclerView.ViewHolder {
+    public class LevelPrimaryViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mTvGroup;
         private LinearLayout mLayout;
 
-        LevelOneViewHolder(@NonNull View itemView) {
+        public LevelPrimaryViewHolder(@NonNull View itemView) {
             super(itemView);
             mTvGroup = (TextView) itemView.findViewById(mConfig.getTextViewId());
             mLayout = (LinearLayout) itemView.findViewById(mConfig.getRootViewId());
         }
+
+        public <T extends View> T getView(int viewId) {
+            View view = mViews.get(viewId);
+            if (view == null) {
+                view = mConvertView.findViewById(viewId);
+                mViews.put(viewId, view);
+            }
+            return (T) view;
+        }
+    }
+
+    /**
+     * only for linkage logic of level primary adapter. not use for outside logic
+     * users can archive onLinkageClick in configs instead.
+     */
+    public interface OnLinkageListener {
+        void onLinkageClick(LinkageLevelPrimaryAdapter.LevelPrimaryViewHolder holder, String title, int position);
     }
 }

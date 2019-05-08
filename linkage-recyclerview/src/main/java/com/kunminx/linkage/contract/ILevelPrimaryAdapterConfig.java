@@ -16,14 +16,22 @@ package com.kunminx.linkage.contract;
  */
 
 
+import android.content.Context;
 import android.widget.TextView;
 
-import com.kunminx.linkage.LinkageLevelOneAdapter;
+import com.kunminx.linkage.adapter.LinkageLevelPrimaryAdapter;
 
 /**
  * Create by KunMinX at 19/5/8
  */
-public interface ILevelOneAdapterConfig {
+public interface ILevelPrimaryAdapterConfig {
+
+    /**
+     * setContext
+     *
+     * @param context context
+     */
+    void setContext(Context context);
 
     /**
      * get layout res id
@@ -49,11 +57,11 @@ public interface ILevelOneAdapterConfig {
     /**
      * achieve the onBindViewHolder logic on outside
      *
-     * @param holder   LevelOneViewHolder
+     * @param holder   LevelPrimaryViewHolder
      * @param title    title of this position
      * @param position holder.getAdapterPosition()
      */
-    void onBindViewHolder(LinkageLevelOneAdapter.LevelOneViewHolder holder, String title, int position);
+    void onBindViewHolder(LinkageLevelPrimaryAdapter.LevelPrimaryViewHolder holder, String title, int position);
 
     /**
      * configurations of textView when selected or not

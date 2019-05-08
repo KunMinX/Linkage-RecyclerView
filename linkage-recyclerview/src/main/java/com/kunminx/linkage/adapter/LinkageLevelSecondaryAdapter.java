@@ -1,4 +1,4 @@
-package com.kunminx.linkage;
+package com.kunminx.linkage.adapter;
 /*
  * Copyright (c) 2018-2019. KunMinX
  *
@@ -17,6 +17,7 @@ package com.kunminx.linkage;
 
 
 import android.content.Context;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kunminx.linkage.bean.LinkageItem;
-import com.kunminx.linkage.contract.ILevelTwoAdapterConfig;
+import com.kunminx.linkage.contract.ILevelSecondaryAdapterConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,16 +36,31 @@ import java.util.List;
 /**
  * Create by KunMinX at 19/4/29
  */
-public class LinkageLevelTwoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class LinkageLevelSecondaryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
     private List<LinkageItem> mItems;
     private static final int IS_HEADER = 0;
-    private static final int IS_NORMAL = 1;
+    private static final int IS_LINEAR = 1;
+    private static final int IS_GRID = 2;
 
-    private ILevelTwoAdapterConfig mConfig;
+    private ILevelSecondaryAdapterConfig mConfig;
 
-    public LinkageLevelTwoAdapter(List<LinkageItem> items, ILevelTwoAdapterConfig config) {
+    private SparseArray<View> mHeaderViews = new SparseArray<>();
+    private SparseArray<View> mViews = new SparseArray<>();
+    private View mHeaderConvertView;
+    private View mConvertView;
+
+
+    public boolean isGridMode() {
+        return mConfig.isGridMode();
+    }
+
+    public void setGridMode(boolean isGridMode) {
+        mConfig.setGridMode(isGridMode);
+    }
+
+    public LinkageLevelSecondaryAdapter(List<LinkageItem> items, ILevelSecondaryAdapterConfig config) {
         mItems = items;
         if (mItems == null) {
             mItems = new ArrayList<>();
@@ -72,8 +88,10 @@ public class LinkageLevelTwoAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public int getItemViewType(int position) {
         if (mItems.get(position).isHeader) {
             return IS_HEADER;
+        } else if (mConfig.isGridMode()) {
+            return IS_GRID;
         } else {
-            return IS_NORMAL;
+            return IS_LINEAR;
         }
     }
 
@@ -81,12 +99,19 @@ public class LinkageLevelTwoAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mContext = parent.getContext();
+        mConfig.setContext(mContext);
         if (viewType == IS_HEADER) {
             View view = LayoutInflater.from(mContext).inflate(mConfig.getHeaderLayoutId(), parent, false);
-            return new LevelTwoTitleViewHolder(view);
+            mHeaderConvertView = view;
+            return new LevelSecondaryTitleViewHolder(view);
+        } else if (viewType == IS_GRID) {
+            View view = LayoutInflater.from(mContext).inflate(mConfig.getGridLayoutId(), parent, false);
+            mConvertView = view;
+            return new LevelSecondaryViewHolder(view);
         } else {
-            View view = LayoutInflater.from(mContext).inflate(mConfig.getLayoutId(), parent, false);
-            return new LevelTwoViewHolder(view);
+            View view = LayoutInflater.from(mContext).inflate(mConfig.getLinearLayoutId(), parent, false);
+            mConvertView = view;
+            return new LevelSecondaryViewHolder(view);
         }
     }
 
@@ -94,10 +119,10 @@ public class LinkageLevelTwoAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         final LinkageItem linkageItem = mItems.get(holder.getAdapterPosition());
         if (linkageItem.isHeader) {
-            LevelTwoTitleViewHolder titleViewHolder = (LevelTwoTitleViewHolder) holder;
+            LevelSecondaryTitleViewHolder titleViewHolder = (LevelSecondaryTitleViewHolder) holder;
             titleViewHolder.mTvHeader.setText(linkageItem.header);
         } else {
-            final LevelTwoViewHolder viewHolder = (LevelTwoViewHolder) holder;
+            final LevelSecondaryViewHolder viewHolder = (LevelSecondaryViewHolder) holder;
             viewHolder.mTvTitle.setText(linkageItem.t.getTitle());
 
             mConfig.onBindViewHolder(viewHolder, linkageItem, viewHolder.getAdapterPosition());
@@ -106,7 +131,7 @@ public class LinkageLevelTwoAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 @Override
                 public void onClick(View v) {
                     if (mListener != null) {
-                        mListener.onItemClick(viewHolder, linkageItem, viewHolder.getAdapterPosition());
+                        mListener.onLinkageClick(viewHolder, linkageItem, viewHolder.getAdapterPosition());
                     }
                 }
             });*/
@@ -118,26 +143,44 @@ public class LinkageLevelTwoAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         return mItems.size();
     }
 
-    public class LevelTwoViewHolder extends RecyclerView.ViewHolder {
+    public class LevelSecondaryViewHolder extends RecyclerView.ViewHolder {
 
         private LinearLayout mLayout;
         private TextView mTvTitle;
 //        private TextView mTvContent;
 
-        public LevelTwoViewHolder(@NonNull View itemView) {
+        public LevelSecondaryViewHolder(@NonNull View itemView) {
             super(itemView);
             mLayout = (LinearLayout) itemView.findViewById(mConfig.getRootViewId());
             mTvTitle = (TextView) itemView.findViewById(mConfig.getTextViewId());
         }
+
+        public <T extends View> T getView(int viewId) {
+            View view = mViews.get(viewId);
+            if (view == null) {
+                view = mConvertView.findViewById(viewId);
+                mViews.put(viewId, view);
+            }
+            return (T) view;
+        }
     }
 
-    public class LevelTwoTitleViewHolder extends RecyclerView.ViewHolder {
+    public class LevelSecondaryTitleViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mTvHeader;
 
-        public LevelTwoTitleViewHolder(@NonNull View itemView) {
+        public LevelSecondaryTitleViewHolder(@NonNull View itemView) {
             super(itemView);
             mTvHeader = (TextView) itemView.findViewById(mConfig.getHeaderViewId());
+        }
+
+        public <T extends View> T getView(int viewId) {
+            View view = mHeaderViews.get(viewId);
+            if (view == null) {
+                view = mConvertView.findViewById(viewId);
+                mHeaderViews.put(viewId, view);
+            }
+            return (T) view;
         }
     }
 
