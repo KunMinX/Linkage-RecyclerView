@@ -126,15 +126,6 @@ public class LinkageLevelSecondaryAdapter extends RecyclerView.Adapter<RecyclerV
             viewHolder.mTvTitle.setText(linkageItem.t.getTitle());
 
             mConfig.onBindViewHolder(viewHolder, linkageItem, viewHolder.getAdapterPosition());
-//            viewHolder.mTvContent.setText(linkageItem.t.getContent());
-            /*viewHolder.mLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mListener != null) {
-                        mListener.onLinkageClick(viewHolder, linkageItem, viewHolder.getAdapterPosition());
-                    }
-                }
-            });*/
         }
     }
 
@@ -147,7 +138,6 @@ public class LinkageLevelSecondaryAdapter extends RecyclerView.Adapter<RecyclerV
 
         private LinearLayout mLayout;
         private TextView mTvTitle;
-//        private TextView mTvContent;
 
         public LevelSecondaryViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -177,7 +167,7 @@ public class LinkageLevelSecondaryAdapter extends RecyclerView.Adapter<RecyclerV
         public <T extends View> T getView(int viewId) {
             View view = mHeaderViews.get(viewId);
             if (view == null) {
-                view = mConvertView.findViewById(viewId);
+                view = mHeaderConvertView.findViewById(viewId);
                 mHeaderViews.put(viewId, view);
             }
             return (T) view;

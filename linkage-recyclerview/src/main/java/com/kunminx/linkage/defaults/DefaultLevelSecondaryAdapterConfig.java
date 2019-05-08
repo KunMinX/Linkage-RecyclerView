@@ -17,6 +17,8 @@ package com.kunminx.linkage.defaults;
 
 
 import android.content.Context;
+import android.view.View;
+import android.widget.TextView;
 
 import com.kunminx.linkage.R;
 import com.kunminx.linkage.adapter.LinkageLevelSecondaryAdapter;
@@ -68,7 +70,7 @@ public class DefaultLevelSecondaryAdapterConfig implements ILevelSecondaryAdapte
 
     @Override
     public boolean isGridMode() {
-        return false;
+        return mIsGridMode;
     }
 
     @Override
@@ -78,6 +80,12 @@ public class DefaultLevelSecondaryAdapterConfig implements ILevelSecondaryAdapte
 
     @Override
     public void onBindViewHolder(LinkageLevelSecondaryAdapter.LevelSecondaryViewHolder holder, LinkageItem item, int position) {
-
+        ((TextView) holder.getView(R.id.level_2_content)).setText(item.t.getContent());
+        holder.getView(R.id.level_2_item).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO
+            }
+        });
     }
 }

@@ -20,7 +20,7 @@ package com.kunminx.linkage.bean;
 /**
  * Create by KunMinX at 19/4/27
  */
-public class LinkageItem extends SectionEntity<LinkageItem.ItemInfo> {
+public class LinkageItem extends BaseLinkageItem<LinkageItem.ItemInfo> {
 
     public LinkageItem(boolean isHeader, String header) {
         super(isHeader, header);

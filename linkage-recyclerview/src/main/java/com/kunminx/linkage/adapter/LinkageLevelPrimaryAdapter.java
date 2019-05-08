@@ -76,7 +76,7 @@ public class LinkageLevelPrimaryAdapter extends RecyclerView.Adapter<LinkageLeve
     }
 
     @Override
-    public void onBindViewHolder(@NonNull LevelPrimaryViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final LevelPrimaryViewHolder holder, int position) {
 
         holder.mTvGroup.setText(mStrings.get(holder.getAdapterPosition()));
         if (!mTextViews.contains(holder.mTvGroup)) {
@@ -87,9 +87,14 @@ public class LinkageLevelPrimaryAdapter extends RecyclerView.Adapter<LinkageLeve
         }
         holder.mLayout.setSelected(true);
         mConfig.onBindViewHolder(holder, mStrings.get(holder.getAdapterPosition()), holder.getAdapterPosition());
-        if (mListener != null) {
-            mListener.onLinkageClick(holder, mStrings.get(holder.getAdapterPosition()), holder.getAdapterPosition());
-        }
+        holder.mLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListener != null) {
+                    mListener.onLinkageClick(holder, mStrings.get(holder.getAdapterPosition()), holder.getAdapterPosition());
+                }
+            }
+        });
     }
 
     @Override
