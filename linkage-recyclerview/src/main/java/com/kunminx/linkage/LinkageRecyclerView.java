@@ -42,14 +42,18 @@ import java.util.List;
 public class LinkageRecyclerView extends RelativeLayout {
 
     private Context mContext;
+
     private RecyclerView mRvLevel1;
     private RecyclerView mRvLevel2;
     private LinearLayout mLinkageLayout;
+
     private LinkageLevelOneAdapter mLevel1Adapter;
     private LinkageLevelTwoAdapter mLevel2Adapter;
     private TextView mTvLevel2Header;
+
     private List<String> mGroupNames;
     private List<LinkageItem> mItems;
+
     private List<Integer> mHeaderPositions = new ArrayList<>();
     private int mTitleHeight;
     private int mFirstPosition = 0;

@@ -27,6 +27,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kunminx.linkage.bean.LinkageItem;
+import com.kunminx.linkage.contract.ILevelTwoAdapterConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,26 +37,31 @@ import java.util.List;
  */
 public class LinkageLevelTwoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private int mLayoutId;
-    private int mTitleLayoutId;
     private Context mContext;
-    private OnItemClickListener mListener;
     private List<LinkageItem> mItems;
     private static final int IS_HEADER = 0;
     private static final int IS_NORMAL = 1;
 
-    public LinkageLevelTwoAdapter(int layoutId, int titleLayoutId, List<LinkageItem> items, OnItemClickListener listener) {
-        mLayoutId = layoutId;
-        mTitleLayoutId = titleLayoutId;
+    private ILevelTwoAdapterConfig mConfig;
+
+    public LinkageLevelTwoAdapter(List<LinkageItem> items, ILevelTwoAdapterConfig config) {
         mItems = items;
         if (mItems == null) {
             mItems = new ArrayList<>();
         }
-        mListener = listener;
+        mConfig = config;
     }
 
     public void refreshList(List<LinkageItem> list) {
         mItems.clear();
+        if (list != null) {
+            mItems.addAll(list);
+        }
+        notifyDataSetChanged();
+    }
+
+    //TODO load more data...
+    public void refreshListLoadMore(List<LinkageItem> list) {
         if (list != null) {
             mItems.addAll(list);
         }
@@ -76,10 +82,10 @@ public class LinkageLevelTwoAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mContext = parent.getContext();
         if (viewType == IS_HEADER) {
-            View view = LayoutInflater.from(mContext).inflate(mTitleLayoutId, parent, false);
+            View view = LayoutInflater.from(mContext).inflate(mConfig.getHeaderLayoutId(), parent, false);
             return new LevelTwoTitleViewHolder(view);
         } else {
-            View view = LayoutInflater.from(mContext).inflate(mLayoutId, parent, false);
+            View view = LayoutInflater.from(mContext).inflate(mConfig.getLayoutId(), parent, false);
             return new LevelTwoViewHolder(view);
         }
     }
@@ -93,15 +99,17 @@ public class LinkageLevelTwoAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         } else {
             final LevelTwoViewHolder viewHolder = (LevelTwoViewHolder) holder;
             viewHolder.mTvTitle.setText(linkageItem.t.getTitle());
-            viewHolder.mTvContent.setText(linkageItem.t.getContent());
-            viewHolder.mLayout.setOnClickListener(new View.OnClickListener() {
+
+            mConfig.onBindViewHolder(viewHolder, linkageItem, viewHolder.getAdapterPosition());
+//            viewHolder.mTvContent.setText(linkageItem.t.getContent());
+            /*viewHolder.mLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (mListener != null) {
                         mListener.onItemClick(viewHolder, linkageItem, viewHolder.getAdapterPosition());
                     }
                 }
-            });
+            });*/
         }
     }
 
@@ -114,13 +122,12 @@ public class LinkageLevelTwoAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         private LinearLayout mLayout;
         private TextView mTvTitle;
-        private TextView mTvContent;
+//        private TextView mTvContent;
 
         public LevelTwoViewHolder(@NonNull View itemView) {
             super(itemView);
-            mLayout = (LinearLayout) itemView.findViewById(R.id.level_2_item);
-            mTvTitle = (TextView) itemView.findViewById(R.id.level_2_title);
-            mTvContent = (TextView) itemView.findViewById(R.id.level_2_content);
+            mLayout = (LinearLayout) itemView.findViewById(mConfig.getRootViewId());
+            mTvTitle = (TextView) itemView.findViewById(mConfig.getTextViewId());
         }
     }
 
@@ -130,11 +137,8 @@ public class LinkageLevelTwoAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         public LevelTwoTitleViewHolder(@NonNull View itemView) {
             super(itemView);
-            mTvHeader = (TextView) itemView.findViewById(R.id.level_2_header);
+            mTvHeader = (TextView) itemView.findViewById(mConfig.getHeaderViewId());
         }
     }
 
-    public interface OnItemClickListener {
-        void onItemClick(LevelTwoViewHolder holder, LinkageItem item, int position);
-    }
 }

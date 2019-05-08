@@ -25,8 +25,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.kunminx.linkage.contract.ILevelOneAdapterConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,19 +37,19 @@ import java.util.List;
  */
 public class LinkageLevelOneAdapter extends RecyclerView.Adapter<LinkageLevelOneAdapter.LevelOneViewHolder> {
 
-    private int mLayoutId;
-    private List<String> mStrings = new ArrayList<>();
+    private List<String> mStrings;
     private List<TextView> mTextViews = new ArrayList<>();
     private Context mContext;
-    private OnItemClickListener mListener;
 
-    public LinkageLevelOneAdapter(int layoutId, List<String> strings, OnItemClickListener listener) {
-        mLayoutId = layoutId;
+    private ILevelOneAdapterConfig mConfig;
+
+
+    public LinkageLevelOneAdapter(List<String> strings, ILevelOneAdapterConfig config) {
         mStrings = strings;
         if (mStrings == null) {
             mStrings = new ArrayList<>();
         }
-        mListener = listener;
+        mConfig = config;
     }
 
     public void refreshList(List<String> list) {
@@ -63,7 +64,7 @@ public class LinkageLevelOneAdapter extends RecyclerView.Adapter<LinkageLevelOne
     @Override
     public LevelOneViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mContext = parent.getContext();
-        View view = LayoutInflater.from(mContext).inflate(mLayoutId, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(mConfig.getLayoutId(), parent, false);
         return new LevelOneViewHolder(view);
     }
 
@@ -78,14 +79,16 @@ public class LinkageLevelOneAdapter extends RecyclerView.Adapter<LinkageLevelOne
             selectItem(0);
         }
         holder.mLayout.setSelected(true);
-        holder.mLayout.setOnClickListener(new View.OnClickListener() {
+        mConfig.onBindViewHolder(holder, mStrings.get(holder.getAdapterPosition()), holder.getAdapterPosition());
+
+        /*holder.mLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mListener != null) {
                     mListener.onItemClick(holder, mStrings.get(holder.getAdapterPosition()), holder.getAdapterPosition());
                 }
             }
-        });
+        });*/
     }
 
     @Override
@@ -96,15 +99,17 @@ public class LinkageLevelOneAdapter extends RecyclerView.Adapter<LinkageLevelOne
     public void selectItem(int position) {
         for (int i = 0; i < mStrings.size(); i++) {
             if (position == i) {
-                mTextViews.get(i).setBackgroundColor(mContext.getResources().getColor(R.color.colorPurple));
-                mTextViews.get(i).setTextColor(ContextCompat.getColor(mContext, R.color.colorWhite));
+                mConfig.onItemSelected(true, mTextViews.get(i));
+//                mTextViews.get(i).setBackgroundColor(mContext.getResources().getColor(R.color.colorPurple));
+//                mTextViews.get(i).setTextColor(ContextCompat.getColor(mContext, R.color.colorWhite));
                 mTextViews.get(i).setEllipsize(TextUtils.TruncateAt.MARQUEE);
                 mTextViews.get(i).setFocusable(true);
                 mTextViews.get(i).setFocusableInTouchMode(true);
                 mTextViews.get(i).setMarqueeRepeatLimit(-1);
             } else {
-                mTextViews.get(i).setBackgroundColor(mContext.getResources().getColor(R.color.colorWhite));
-                mTextViews.get(i).setTextColor(ContextCompat.getColor(mContext, R.color.colorGray));
+                mConfig.onItemSelected(false, mTextViews.get(i));
+//                mTextViews.get(i).setBackgroundColor(mContext.getResources().getColor(R.color.colorWhite));
+//                mTextViews.get(i).setTextColor(ContextCompat.getColor(mContext, R.color.colorGray));
                 mTextViews.get(i).setEllipsize(TextUtils.TruncateAt.END);
                 mTextViews.get(i).setFocusable(false);
                 mTextViews.get(i).setFocusableInTouchMode(false);
@@ -118,14 +123,10 @@ public class LinkageLevelOneAdapter extends RecyclerView.Adapter<LinkageLevelOne
         private TextView mTvGroup;
         private LinearLayout mLayout;
 
-        public LevelOneViewHolder(@NonNull View itemView) {
+        LevelOneViewHolder(@NonNull View itemView) {
             super(itemView);
-            mTvGroup = (TextView) itemView.findViewById(R.id.tv_group);
-            mLayout = (LinearLayout) itemView.findViewById(R.id.layout_group);
+            mTvGroup = (TextView) itemView.findViewById(mConfig.getTextViewId());
+            mLayout = (LinearLayout) itemView.findViewById(mConfig.getRootViewId());
         }
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(LevelOneViewHolder holder, String group, int position);
     }
 }
