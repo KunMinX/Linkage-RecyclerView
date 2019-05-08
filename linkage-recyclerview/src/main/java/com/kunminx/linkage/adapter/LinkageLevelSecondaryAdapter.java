@@ -46,10 +46,6 @@ public class LinkageLevelSecondaryAdapter extends RecyclerView.Adapter<RecyclerV
 
     private ILevelSecondaryAdapterConfig mConfig;
 
-    private SparseArray<View> mHeaderViews = new SparseArray<>();
-    private SparseArray<View> mViews = new SparseArray<>();
-    private View mHeaderConvertView;
-    private View mConvertView;
 
     public List<LinkageItem> getItems() {
         return mItems;
@@ -105,15 +101,12 @@ public class LinkageLevelSecondaryAdapter extends RecyclerView.Adapter<RecyclerV
         mConfig.setContext(mContext);
         if (viewType == IS_HEADER) {
             View view = LayoutInflater.from(mContext).inflate(mConfig.getHeaderLayoutId(), parent, false);
-            mHeaderConvertView = view;
             return new LevelSecondaryTitleViewHolder(view);
         } else if (viewType == IS_GRID) {
             View view = LayoutInflater.from(mContext).inflate(mConfig.getGridLayoutId(), parent, false);
-            mConvertView = view;
             return new LevelSecondaryViewHolder(view);
         } else {
             View view = LayoutInflater.from(mContext).inflate(mConfig.getLinearLayoutId(), parent, false);
-            mConvertView = view;
             return new LevelSecondaryViewHolder(view);
         }
     }
@@ -139,11 +132,14 @@ public class LinkageLevelSecondaryAdapter extends RecyclerView.Adapter<RecyclerV
 
     public class LevelSecondaryViewHolder extends RecyclerView.ViewHolder {
 
+        private SparseArray<View> mViews = new SparseArray<>();
+        private View mConvertView;
         private LinearLayout mLayout;
         private TextView mTvTitle;
 
         public LevelSecondaryViewHolder(@NonNull View itemView) {
             super(itemView);
+            mConvertView = itemView;
             mLayout = (LinearLayout) itemView.findViewById(mConfig.getRootViewId());
             mTvTitle = (TextView) itemView.findViewById(mConfig.getTextViewId());
         }
@@ -160,10 +156,13 @@ public class LinkageLevelSecondaryAdapter extends RecyclerView.Adapter<RecyclerV
 
     public class LevelSecondaryTitleViewHolder extends RecyclerView.ViewHolder {
 
+        private SparseArray<View> mHeaderViews = new SparseArray<>();
+        private View mHeaderConvertView;
         private TextView mTvHeader;
 
         public LevelSecondaryTitleViewHolder(@NonNull View itemView) {
             super(itemView);
+            mHeaderConvertView = itemView;
             mTvHeader = (TextView) itemView.findViewById(mConfig.getHeaderViewId());
         }
 

@@ -66,17 +66,7 @@ public class LinkageRecyclerView extends RelativeLayout {
     private int mFirstPosition = 0;
     private LinearLayoutManager mLevel2LayoutManager;
 
-    public boolean isGridMode() {
-        return mLevel2Adapter.isGridMode();
-    }
-
-    public void setGridMode(boolean isGridMode) {
-        mLevel2Adapter.setGridMode(isGridMode);
-        setLevel2LayoutManager();
-        mRvLevel2.requestLayout();
-    }
-
-    public List<Integer> getHeaderPositions() {
+    private List<Integer> getHeaderPositions() {
         return mHeaderPositions;
     }
 
@@ -135,54 +125,8 @@ public class LinkageRecyclerView extends RelativeLayout {
 
 
         mLevel2Adapter = new LinkageLevelSecondaryAdapter(mItems, secondaryAdapterConfig);
-
-       /* new LinkageLevelSecondaryAdapter.OnLinkageListener() {
-            @Override
-            public void onLinkageClick(LinkageLevelSecondaryAdapter.LevelSecondaryViewHolder holder, LinkageItem item, int position) {
-                if (mClickListener != null && !mHeaderPositions.contains(position)) {
-                    mClickListener.onLinkageLevel2Click(holder, item, position);
-                }
-            }
-        });*/
         setLevel2LayoutManager();
         mRvLevel2.setAdapter(mLevel2Adapter);
-    }
-
-    public void init(List<LinkageItem> linkageItems) {
-        init(linkageItems, new DefaultLevelPrimaryAdapterConfig(), new DefaultLevelSecondaryAdapterConfig());
-    }
-
-    public void init(List<LinkageItem> linkageItems, ILevelPrimaryAdapterConfig primaryAdapterConfig, ILevelSecondaryAdapterConfig secondaryAdapterConfig) {
-        initRecyclerView(primaryAdapterConfig, secondaryAdapterConfig);
-
-        this.mItems = linkageItems;
-
-        List<String> groupNames = new ArrayList<>();
-        if (mItems != null && mItems.size() > 0) {
-            for (LinkageItem item1 : mItems) {
-                if (item1.isHeader) {
-                    groupNames.add(item1.header);
-                }
-            }
-        }
-        if (mItems != null) {
-            for (int i = 0; i < mItems.size(); i++) {
-                if (mItems.get(i).isHeader) {
-                    getHeaderPositions().add(i);
-                }
-            }
-        }
-
-        this.mGroupNames = groupNames;
-        mLevel1Adapter.refreshList(mGroupNames);
-        mLevel2Adapter.refreshList(mItems);
-        initLinkageLevel2();
-    }
-
-    public void setLayoutHeight(float dp) {
-        ViewGroup.LayoutParams lp = mLinkageLayout.getLayoutParams();
-        lp.height = dpToPx(getContext(), dp);
-        mLinkageLayout.setLayoutParams(lp);
     }
 
     private void initLinkageLevel2() {
@@ -242,6 +186,53 @@ public class LinkageRecyclerView extends RelativeLayout {
     private int dpToPx(Context context, float dp) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         return (int) ((dp * displayMetrics.density) + 0.5f);
+    }
+
+    public boolean isGridMode() {
+        return mLevel2Adapter.isGridMode();
+    }
+
+    public void setGridMode(boolean isGridMode) {
+        mLevel2Adapter.setGridMode(isGridMode);
+        setLevel2LayoutManager();
+        mRvLevel2.requestLayout();
+    }
+
+    public void init(List<LinkageItem> linkageItems) {
+        init(linkageItems, new DefaultLevelPrimaryAdapterConfig(), new DefaultLevelSecondaryAdapterConfig());
+    }
+
+    public void init(List<LinkageItem> linkageItems, ILevelPrimaryAdapterConfig primaryAdapterConfig, ILevelSecondaryAdapterConfig secondaryAdapterConfig) {
+        initRecyclerView(primaryAdapterConfig, secondaryAdapterConfig);
+
+        this.mItems = linkageItems;
+
+        List<String> groupNames = new ArrayList<>();
+        if (mItems != null && mItems.size() > 0) {
+            for (LinkageItem item1 : mItems) {
+                if (item1.isHeader) {
+                    groupNames.add(item1.header);
+                }
+            }
+        }
+        if (mItems != null) {
+            for (int i = 0; i < mItems.size(); i++) {
+                if (mItems.get(i).isHeader) {
+                    getHeaderPositions().add(i);
+                }
+            }
+        }
+
+        this.mGroupNames = groupNames;
+        mLevel1Adapter.refreshList(mGroupNames);
+        mLevel2Adapter.refreshList(mItems);
+        initLinkageLevel2();
+    }
+
+    public void setLayoutHeight(float dp) {
+        ViewGroup.LayoutParams lp = mLinkageLayout.getLayoutParams();
+        lp.height = dpToPx(getContext(), dp);
+        mLinkageLayout.setLayoutParams(lp);
     }
 
 }

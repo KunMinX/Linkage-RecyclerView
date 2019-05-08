@@ -41,8 +41,6 @@ public class LinkageLevelPrimaryAdapter extends RecyclerView.Adapter<LinkageLeve
     private List<String> mStrings;
     private List<TextView> mTextViews = new ArrayList<>();
     private Context mContext;
-    private View mConvertView;
-    private SparseArray<View> mViews = new SparseArray<>();
 
     private ILevelPrimaryAdapterConfig mConfig;
     private OnLinkageListener mListener;
@@ -71,7 +69,6 @@ public class LinkageLevelPrimaryAdapter extends RecyclerView.Adapter<LinkageLeve
         mContext = parent.getContext();
         mConfig.setContext(mContext);
         View view = LayoutInflater.from(mContext).inflate(mConfig.getLayoutId(), parent, false);
-        mConvertView = view;
         return new LevelPrimaryViewHolder(view);
     }
 
@@ -122,11 +119,14 @@ public class LinkageLevelPrimaryAdapter extends RecyclerView.Adapter<LinkageLeve
 
     public class LevelPrimaryViewHolder extends RecyclerView.ViewHolder {
 
+        private View mConvertView;
+        private SparseArray<View> mViews = new SparseArray<>();
         private TextView mTvGroup;
         private LinearLayout mLayout;
 
         public LevelPrimaryViewHolder(@NonNull View itemView) {
             super(itemView);
+            mConvertView = itemView;
             mTvGroup = (TextView) itemView.findViewById(mConfig.getTextViewId());
             mLayout = (LinearLayout) itemView.findViewById(mConfig.getRootViewId());
         }
