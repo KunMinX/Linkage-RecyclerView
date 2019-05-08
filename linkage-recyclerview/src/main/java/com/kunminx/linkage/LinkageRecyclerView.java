@@ -66,14 +66,13 @@ public class LinkageRecyclerView extends RelativeLayout {
     private int mFirstPosition = 0;
     private LinearLayoutManager mLevel2LayoutManager;
 
+    public boolean isGridMode() {
+        return mLevel2Adapter.isGridMode();
+    }
+
     public void setGridMode(boolean isGridMode) {
         mLevel2Adapter.setGridMode(isGridMode);
-        if (mLevel2Adapter.isGridMode()) {
-            mLevel2LayoutManager = new GridLayoutManager(mContext, 3);
-        } else {
-            mLevel2LayoutManager = new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false);
-        }
-        mRvLevel2.setLayoutManager(mLevel2LayoutManager);
+        setLevel2LayoutManager();
         mRvLevel2.requestLayout();
     }
 
@@ -103,6 +102,24 @@ public class LinkageRecyclerView extends RelativeLayout {
         mLinkageLayout = (LinearLayout) view.findViewById(R.id.linkage_layout);
     }
 
+    private void setLevel2LayoutManager() {
+        if (mLevel2Adapter.isGridMode()) {
+            mLevel2LayoutManager = new GridLayoutManager(mContext, 3);
+            ((GridLayoutManager) mLevel2LayoutManager).setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    if (mLevel2Adapter.getItems().get(position).isHeader) {
+                        return 3;
+                    }
+                    return 1;
+                }
+            });
+        } else {
+            mLevel2LayoutManager = new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false);
+        }
+        mRvLevel2.setLayoutManager(mLevel2LayoutManager);
+    }
+
     private void initRecyclerView(ILevelPrimaryAdapterConfig primaryAdapterConfig, ILevelSecondaryAdapterConfig secondaryAdapterConfig) {
 
         mLevel1Adapter = new LinkageLevelPrimaryAdapter(mGroupNames, primaryAdapterConfig, new LinkageLevelPrimaryAdapter.OnLinkageListener() {
@@ -127,12 +144,7 @@ public class LinkageRecyclerView extends RelativeLayout {
                 }
             }
         });*/
-        if (mLevel2Adapter.isGridMode()) {
-            mLevel2LayoutManager = new GridLayoutManager(mContext, 3);
-        } else {
-            mLevel2LayoutManager = new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false);
-        }
-        mRvLevel2.setLayoutManager(mLevel2LayoutManager);
+        setLevel2LayoutManager();
         mRvLevel2.setAdapter(mLevel2Adapter);
     }
 
@@ -231,12 +243,5 @@ public class LinkageRecyclerView extends RelativeLayout {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         return (int) ((dp * displayMetrics.density) + 0.5f);
     }
-
-    /*public interface OnLinkageItemClickListener {
-        void onLinkageLevel1Click(LinkageLevelPrimaryAdapter.LevelPrimaryViewHolder holder, String group, int position);
-
-        void onLinkageLevel2Click(LinkageLevelSecondaryAdapter.LevelSecondaryViewHolder holder, LinkageItem item, int position);
-    }*/
-
 
 }

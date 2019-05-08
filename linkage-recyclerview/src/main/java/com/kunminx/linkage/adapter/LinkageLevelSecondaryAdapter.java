@@ -51,6 +51,9 @@ public class LinkageLevelSecondaryAdapter extends RecyclerView.Adapter<RecyclerV
     private View mHeaderConvertView;
     private View mConvertView;
 
+    public List<LinkageItem> getItems() {
+        return mItems;
+    }
 
     public boolean isGridMode() {
         return mConfig.isGridMode();

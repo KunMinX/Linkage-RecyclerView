@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         public void showGridLayout() {
-
+            mBinding.linkage.setGridMode(!mBinding.linkage.isGridMode());
         }
     }
 }
