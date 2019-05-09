@@ -94,12 +94,12 @@ public class LinkageRecyclerView extends RelativeLayout {
 
     private void setLevel2LayoutManager() {
         if (mLevel2Adapter.isGridMode()) {
-            mLevel2LayoutManager = new GridLayoutManager(mContext, 3);
+            mLevel2LayoutManager = new GridLayoutManager(mContext, mLevel2Adapter.getConfig().getSpanCount());
             ((GridLayoutManager) mLevel2LayoutManager).setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                 @Override
                 public int getSpanSize(int position) {
                     if (mLevel2Adapter.getItems().get(position).isHeader) {
-                        return 3;
+                        return mLevel2Adapter.getConfig().getSpanCount();
                     }
                     return 1;
                 }

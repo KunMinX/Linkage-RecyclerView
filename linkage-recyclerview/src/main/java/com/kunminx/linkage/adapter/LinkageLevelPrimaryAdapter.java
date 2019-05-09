@@ -45,6 +45,13 @@ public class LinkageLevelPrimaryAdapter extends RecyclerView.Adapter<LinkageLeve
     private ILevelPrimaryAdapterConfig mConfig;
     private OnLinkageListener mListener;
 
+    public List<String> getStrings() {
+        return mStrings;
+    }
+
+    public ILevelPrimaryAdapterConfig getConfig() {
+        return mConfig;
+    }
 
     public LinkageLevelPrimaryAdapter(List<String> strings, ILevelPrimaryAdapterConfig config, OnLinkageListener listener) {
         mStrings = strings;

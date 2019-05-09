@@ -79,6 +79,11 @@ public class DefaultLevelSecondaryAdapterConfig implements ILevelSecondaryAdapte
     }
 
     @Override
+    public int getSpanCount() {
+        return 3;
+    }
+
+    @Override
     public void onBindViewHolder(LinkageLevelSecondaryAdapter.LevelSecondaryViewHolder holder, LinkageItem item, int position) {
         ((TextView) holder.getView(R.id.level_2_content)).setText(item.t.getContent());
         holder.getView(R.id.level_2_item).setOnClickListener(new View.OnClickListener() {

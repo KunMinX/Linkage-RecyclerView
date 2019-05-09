@@ -46,6 +46,9 @@ public class LinkageLevelSecondaryAdapter extends RecyclerView.Adapter<RecyclerV
 
     private ILevelSecondaryAdapterConfig mConfig;
 
+    public ILevelSecondaryAdapterConfig getConfig() {
+        return mConfig;
+    }
 
     public List<LinkageItem> getItems() {
         return mItems;
@@ -102,7 +105,7 @@ public class LinkageLevelSecondaryAdapter extends RecyclerView.Adapter<RecyclerV
         if (viewType == IS_HEADER) {
             View view = LayoutInflater.from(mContext).inflate(mConfig.getHeaderLayoutId(), parent, false);
             return new LevelSecondaryTitleViewHolder(view);
-        } else if (viewType == IS_GRID) {
+        } else if (viewType == IS_GRID && mConfig.getGridLayoutId() != 0) {
             View view = LayoutInflater.from(mContext).inflate(mConfig.getGridLayoutId(), parent, false);
             return new LevelSecondaryViewHolder(view);
         } else {
@@ -134,13 +137,13 @@ public class LinkageLevelSecondaryAdapter extends RecyclerView.Adapter<RecyclerV
 
         private SparseArray<View> mViews = new SparseArray<>();
         private View mConvertView;
-        private LinearLayout mLayout;
+        private ViewGroup mLayout;
         private TextView mTvTitle;
 
         public LevelSecondaryViewHolder(@NonNull View itemView) {
             super(itemView);
             mConvertView = itemView;
-            mLayout = (LinearLayout) itemView.findViewById(mConfig.getRootViewId());
+            mLayout = itemView.findViewById(mConfig.getRootViewId());
             mTvTitle = (TextView) itemView.findViewById(mConfig.getTextViewId());
         }
 

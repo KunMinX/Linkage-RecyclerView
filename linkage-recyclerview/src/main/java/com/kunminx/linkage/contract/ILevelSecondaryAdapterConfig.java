@@ -90,6 +90,11 @@ public interface ILevelSecondaryAdapterConfig {
     void setGridMode(boolean isGridMode);
 
     /**
+     * get SpanCount of grid mode
+     */
+    int getSpanCount();
+
+    /**
      * achieve the onBindViewHolder logic on outside
      *
      * @param holder   LevelSecondaryViewHolder
