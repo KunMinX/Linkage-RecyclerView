@@ -1,8 +1,6 @@
-## LinkageRecyclerView：一行代码即可接入 “饿了么” 二级联动列表
-
 很高兴和大家见面！
 
-关于上一期的[《Rx钥匙：为无聊而生的 Android 开发者工具》](<https://juejin.im/post/5cc698e3e51d456e845b428e>)，有热心网友追问，能不能提供 Release 包直接下载体验，如你所愿，目前已在 GitHub 项目概述中提供下载链接。
+关于上一期的[《Rx钥匙：为无聊而生的 Android 开发者工具》](<https://juejin.im/post/5cc698e3e51d456e845b428e>)，有网友追问，能不能提供 Release 包直接下载体验，如你所愿，目前已在 GitHub 项目概述中提供下载链接。
 
 尔后又有 “眼尖” 的网友注意到，该项目依赖了我开源的另一个库 **LinkageRecyclerView**。没错，二级联动列表，从我构思 RxJava 魔法师的交互设计之日起，便已纳入开发日程。
 
@@ -12,13 +10,13 @@
 
 
 
-原本我是想，如果能像 ELEME 订单一样，将类别和选项相互关联，那么我的用户在寻找操作符时，便可以通过功能类别，轻松地匹配到对应的操作符。
+最开始我是想，如果能像 Eleme 订单一样，将类别和选项相互关联，那么我的用户在寻找操作符时，便可以通过功能类别，轻松地匹配到对应的操作符。
 
-但是，在翻遍了 GitHub 后发现，仿 ELEME 联动列表的项目不下十个，却没有一个是解耦的、能通过 gradle 配置来远程依赖的第三方库！
+但是，在翻遍 GitHub 后发现，仿 Eleme 联动列表的项目不下十个，却没有一个是解耦的且能通过 Gradle 配置来远程依赖的第三方库！
 
 ![](https://upload-images.jianshu.io/upload_images/57036-b9ab267618a7f843.png)
 
-二级列表这种需求其实十分常见，万一哪天临时急需，却没有一个可以即插即用的控件，那得多糟心呀！于是我花了五天的时间，先后在多个开源项目之间来回研究，并最终编写和开源了一套真正的、可供使用者依赖的二级联动列表库。
+二级列表的需求其实十分常见，万一哪天临时急需，却没有一个 **可以即插即用的控件**，那得多糟心呀！于是我前后花费五天时间，在多个开源项目之间来回研究，并最终自己动手编写和开源了一套真正的、可供使用者依赖的二级联动列表库。
 
 LinkageRecyclerView 的目标是：**一行代码即可接入二级联动列表**。
 
@@ -26,16 +24,20 @@ LinkageRecyclerView 的目标是：**一行代码即可接入二级联动列表*
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 | ![2.gif](https://upload-images.jianshu.io/upload_images/57036-04b42bddcdd6cf39.gif) | ![3.gif](https://upload-images.jianshu.io/upload_images/57036-5dc85c89ef486d57.gif) | ![5.gif](https://upload-images.jianshu.io/upload_images/57036-2483853731b30a14.gif) |
 
-除了一键接入而省去 99% 不必要的重复工作外，你还可以从这个开源项目获得的内容包括：
+除了一键接入而省去 99% 不必要的、复杂的、重复的工作外，你还可以从这个开源项目获得的内容包括：
 
 1. 整洁的代码风格和标准的资源命名规范。
-2. MVP 架构在第三库中的最佳实践：使用者无需了解内部逻辑，通过实现接口即可轻松完成个性化配置和一键调用。
+2. **MVP 架构在第三库中的最佳实践：使用者无需了解内部逻辑，通过实现接口即可轻松完成个性化配置**。
 3. 优秀的代码分层和封装思想，在不做任何个性化配置的情况下，一行代码即可接入。
 4. 主体工程基于前沿的、遵循关注点分离的 JetPack MVVM 架构。
-5. 使用 RxJava 和 lambda 表达式。
-6. AndroidX 和 Material Design 2 的全面使用。
-7. ConstraintLayout 约束布局的最佳实践。
-8. 绝不使用 Dagger，绝不使用奇技淫巧、编写艰深晦涩的代码。
+5. AndroidX 和 Material Design 2 的全面使用。
+6. ConstraintLayout 约束布局的最佳实践。
+7. 绝不使用 Dagger，绝不使用奇技淫巧、编写艰深晦涩的代码。
+
+
+
+如果你正在思考 **如何为项目挑选合适的架构** 的话，这个项目值得你参考！
+
 
 
 ### 简单使用：
@@ -57,9 +59,9 @@ implementation 'com.kunminx.linkage:linkage-recyclerview:1.2.0'
   {
     "isHeader": false,
     "t": {
-      "content": "好吃的食物，增肥神器，有求必应\n月售10008 好评率100%",
+      "content": "好吃的食物，增肥神器，有求必应",
       "group": "优惠",
-      "imgUrl": "https://upload-images.jianshu.io/upload_images/57036-7d50230a36c40a94.png",
+      "imgUrl": "https://upload-images.io/0a94.png",
       "title": "全家桶"
     }
   },
@@ -71,11 +73,14 @@ implementation 'com.kunminx.linkage:linkage-recyclerview:1.2.0'
     
 ```
 
+
+
 3.在布局中引入 LinkageRecyclerView 。
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -83,8 +88,7 @@ implementation 'com.kunminx.linkage:linkage-recyclerview:1.2.0'
     <com.kunminx.linkage.LinkageRecyclerView
         android:id="@+id/linkage"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:layout_height="match_parent"/>
 
 </LinearLayout>
 ```
@@ -92,10 +96,7 @@ implementation 'com.kunminx.linkage:linkage-recyclerview:1.2.0'
 4.在代码中解析 json，并只用一行代码完成初始化。
 
 ```java
-Gson gson = new Gson();
-List<LinkageItem> items = gson.fromJson(getString(R.string.operators_json),
-        new TypeToken<List<LinkageItem>>() {
-        }.getType());
+List<LinkageItem> items = gson.fromJson(...);
 
 //一行代码完成初始化
 linkage.init(items);
@@ -274,5 +275,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ```
-
 
