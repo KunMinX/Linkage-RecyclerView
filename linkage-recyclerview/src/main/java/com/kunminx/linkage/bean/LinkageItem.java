@@ -34,6 +34,8 @@ public class LinkageItem extends BaseLinkageItem<LinkageItem.ItemInfo> {
         private String group;
         private String title;
         private String content;
+        private String imgUrl;
+        private String cost;
 
         public ItemInfo(String title, String group) {
             this.title = title;
@@ -43,6 +45,16 @@ public class LinkageItem extends BaseLinkageItem<LinkageItem.ItemInfo> {
         public ItemInfo(String title, String group, String content) {
             this(title, group);
             this.content = content;
+        }
+
+        public ItemInfo(String title, String group, String content, String imgUrl) {
+            this(title, group, content);
+            this.imgUrl = imgUrl;
+        }
+
+        public ItemInfo(String title, String group, String content, String imgUrl, String cost) {
+            this(title, group, content, imgUrl);
+            this.cost = cost;
         }
 
         public String getTitle() {
@@ -67,6 +79,22 @@ public class LinkageItem extends BaseLinkageItem<LinkageItem.ItemInfo> {
 
         public void setContent(String content) {
             this.content = content;
+        }
+
+        public String getImgUrl() {
+            return imgUrl;
+        }
+
+        public void setImgUrl(String imgUrl) {
+            this.imgUrl = imgUrl;
+        }
+
+        public String getCost() {
+            return cost;
+        }
+
+        public void setCost(String cost) {
+            this.cost = cost;
         }
     }
 }

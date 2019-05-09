@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/iv_goods_item"
+    android:layout_width="120dp"
+    android:layout_height="200dp">
+
+    <ImageView
+        android:id="@+id/iv_goods_img"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/bg_food_sample"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/iv_goods_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin4"
+        android:textColor="@color/colorBlack"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="@+id/iv_goods_img"
+        app:layout_constraintTop_toBottomOf="@+id/iv_goods_img"
+        tools:text="@string/hint_cola" />
+
+    <TextView
+        android:id="@+id/iv_goods_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorGray"
+        android:textSize="10sp"
+        app:layout_constraintLeft_toLeftOf="@+id/iv_goods_img"
+        app:layout_constraintTop_toBottomOf="@+id/iv_goods_name"
+        tools:text="@string/hint_good_detail" />
+
+    <TextView
+        android:id="@+id/iv_goods_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/hint_price"
+        android:textColor="@color/colorRed"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="@+id/iv_goods_img"
+        app:layout_constraintTop_toBottomOf="@+id/iv_goods_detail" />
+
+    <ImageView
+        android:id="@+id/iv_goods_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/btn_add_food"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_goods_price" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

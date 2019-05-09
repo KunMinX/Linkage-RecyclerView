@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         if (mFragments[tag] != null) {
             return mFragments[tag];
         }
-        String name = "com.kunminx.linkagelistview." + mFragmentTitles[tag];
+        String name = "com.kunminx.linkagelistview.ui." + mFragmentTitles[tag];
         Fragment fragment = null;
         try {
             fragment = (Fragment) Class.forName(name).newInstance();

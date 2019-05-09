@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/iv_goods_item"
+    android:layout_height="100dp">
+
+    <ImageView
+        android:id="@+id/iv_goods_img"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/bg_food_sample"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_goods_img_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/tag_new_good"
+        app:layout_constraintLeft_toLeftOf="@+id/iv_goods_img"
+        app:layout_constraintTop_toTopOf="@+id/iv_goods_img" />
+
+    <TextView
+        android:id="@+id/iv_goods_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/colorBlack"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@+id/iv_goods_img"
+        app:layout_constraintTop_toTopOf="@+id/iv_goods_img"
+        tools:text="@string/hint_cola" />
+
+    <TextView
+        android:id="@+id/iv_goods_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hint_good_detail"
+        android:textColor="@color/colorGray"
+        android:textSize="10sp"
+        app:layout_constraintLeft_toLeftOf="@+id/iv_goods_name"
+        app:layout_constraintTop_toBottomOf="@+id/iv_goods_name" />
+
+    <TextView
+        android:id="@+id/iv_goods_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hint_good_comment"
+        android:textColor="@color/colorGray"
+        android:textSize="10sp"
+        app:layout_constraintLeft_toLeftOf="@+id/iv_goods_name"
+        app:layout_constraintTop_toBottomOf="@+id/iv_goods_detail" />
+
+    <TextView
+        android:id="@+id/iv_goods_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/hint_price"
+        android:textColor="@color/colorRed"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="@+id/iv_goods_name"
+        app:layout_constraintTop_toBottomOf="@+id/iv_goods_comment" />
+
+    <ImageView
+        android:id="@+id/iv_goods_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:src="@drawable/btn_add_food"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
