@@ -2,9 +2,9 @@
 
 ### 由来
 
-LinkageRecyclerView 是一款基于 MVP 架构开发的二级联动列表控件。它是因 “RxJava 魔法师” 这个项目的需求而存在。
+LinkageRecyclerView 是一款基于 MVP 架构开发的二级联动列表控件。它是因 [“RxJava 魔法师”](https://github.com/KunMinX/RxJava2-Operators-Sample) 这个项目的需求而存在。
 
-在最初寻遍了 GitHub 也没有找到合适的开源库（高度解耦、可远程依赖）之后，我决心研究参考现有开源项目关于二级联动的逻辑，并自己动手编写一个高度解耦、轻松配置、可通过 maven 仓库远程依赖的真正的第三方库。
+在最初寻遍了 GitHub 也没有找到合适的开源库（高度解耦、可远程依赖）之后，我决心研究参考现有开源项目关于二级联动的逻辑，并自己动手编写一个 **高度解耦、轻松配置、可通过 maven 仓库远程依赖** 的真正的第三方库。
 
 LinkageRecyclerView 的个性化配置十分简单，依托于 MVP 的 “配置解耦” 特性，使用者无需知道内部的实现细节，仅通过实现 Config 类即可完成功能的定制和扩展。
 
@@ -252,6 +252,9 @@ Home：[KunMinX 的个人博客](https://kunminx.github.io/)
 
 Juejin：[KunMinX 在掘金](https://juejin.im/user/58ab0de9ac502e006975d757/posts)
 
+<span id="wechatQrcode">KunMinX's WeChat Public Account（微信公众号）：</span>
+
+![公众号](https://upload-images.jianshu.io/upload_images/57036-dc3af94a5daf478c.jpg)
 
 # License
 
