@@ -1,14 +1,14 @@
-## LinkageRecyclerView：即使不用饿了么，也请不要错过这个库！
+## 联动 RecyclerView：即使不用饿了么订餐，也请务必收藏好该库！
 
 ### 由来
 
-LinkageRecyclerView 是一款基于 MVP 架构开发的二级联动列表控件。它是因 [“RxJava 魔法师”](https://github.com/KunMinX/RxJava2-Operators-Sample) 这个项目的需求而存在。
+Linkage-RecyclerView 是一款基于 MVP 架构开发的二级联动列表控件。它是因 [“RxJava 魔法师”](https://github.com/KunMinX/RxJava2-Operators-Sample) 这个项目的需求而存在。
 
 在最初寻遍了 GitHub 也没有找到合适的开源库（高度解耦、可远程依赖）之后，我决心研究参考现有开源项目关于二级联动的逻辑，并自己动手编写一个 **高度解耦、轻松配置、可通过 maven 仓库远程依赖** 的真正的第三方库。
 
-LinkageRecyclerView 的个性化配置十分简单，依托于 MVP 的 “配置解耦” 特性，使用者无需知道内部的实现细节，仅通过实现 Config 类即可完成功能的定制和扩展。
+Linkage-RecyclerView 的个性化配置十分简单，依托于 MVP 的 “配置解耦” 特性，使用者无需知道内部的实现细节，仅通过实现 Config 类即可完成功能的定制和扩展。
 
-此外，在不设置自定义配置的情况下，LinkageRecyclerView 最少只需一行代码即可运行起来。
+此外，在不设置自定义配置的情况下，LinkageRecyclerView 最少只需 **一行代码即可运行起来**。
 
 |                           RxMagic                            |                         Eleme Linear                         |                          Eleme Grid                          |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
@@ -18,7 +18,7 @@ LinkageRecyclerView 的个性化配置十分简单，依托于 MVP 的 “配置
 
 ### 目标
 
-LinkageRecyclerView 的目标是：**一行代码即可接入二级联动列表**。
+Linkage-RecyclerView 的目标是：**一行代码即可接入二级联动列表**。
 
 
 
@@ -46,7 +46,7 @@ LinkageRecyclerView 的目标是：**一行代码即可接入二级联动列表*
 implementation 'com.kunminx.linkage:linkage-recyclerview:1.2.0'
 ```
 
-2.依据联动实体类的结构简单配置 json。
+2.依据联动实体类的结构准备一串 json。
 
 ```json
 [
@@ -71,8 +71,6 @@ implementation 'com.kunminx.linkage:linkage-recyclerview:1.2.0'
     
 ```
 
-
-
 3.在布局中引入 LinkageRecyclerView 。
 
 ```xml
@@ -91,7 +89,7 @@ implementation 'com.kunminx.linkage:linkage-recyclerview:1.2.0'
 </LinearLayout>
 ```
 
-4.在代码中解析 json，并只用一行代码完成初始化。
+4.在代码中解析 json，最少只用一行代码即可完成初始化。
 
 ```java
 List<LinkageItem> items = gson.fromJson(...);
