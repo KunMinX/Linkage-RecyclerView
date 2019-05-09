@@ -17,11 +17,11 @@
     ~
 -->
 
-<com.kunminx.rxmagic.ui.widget.linkage.LinkageRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.kunminx.linkage.LinkageRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/linkage"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-</com.kunminx.rxmagic.ui.widget.linkage.LinkageRecyclerView>
+</com.kunminx.linkage.LinkageRecyclerView>
 
 

@@ -25,13 +25,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.kunminx.linkage.LinkageRecyclerView;
-import com.kunminx.linkage.bean.LinkageItem;
 import com.kunminx.linkagelistview.databinding.ActivityMainBinding;
-
-import java.util.List;
+import com.kunminx.linkagelistview.ui.manager.TabLayoutMediator;
 
 /**
  * Create by KunMinX at 19/4/27
