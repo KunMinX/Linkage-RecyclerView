@@ -1,28 +1,26 @@
-很高兴和大家见面！
+## LinkageRecyclerView：即使不用饿了么，也请不要错过这个库！
 
-关于上一期的[《Rx钥匙：为无聊而生的 Android 开发者工具》](<https://juejin.im/post/5cc698e3e51d456e845b428e>)，有网友追问，能不能提供 Release 包直接下载体验，如你所愿，目前已在 GitHub 项目概述中提供下载链接。
+### 由来
 
-尔后又有 “眼尖” 的网友注意到，该项目依赖了我开源的另一个库 **LinkageRecyclerView**。没错，二级联动列表，从我构思 RxJava 魔法师的交互设计之日起，便已纳入开发日程。
+LinkageRecyclerView 是一款基于 MVP 架构开发的二级联动列表控件。它是因 “RxJava 魔法师” 这个项目的需求而存在。
 
-|                         Eleme Linear                         |                          Eleme Grid                          |                        RxMagic Dialog                        |
+在最初寻遍了 GitHub 也没有找到合适的开源库（高度解耦、可远程依赖）之后，我决心研究参考现有开源项目关于二级联动的逻辑，并自己动手编写一个高度解耦、轻松配置、可通过 maven 仓库远程依赖的真正的第三方库。
+
+LinkageRecyclerView 的个性化配置十分简单，依托于 MVP 的 “配置解耦” 特性，使用者无需知道内部的实现细节，仅通过实现 Config 类即可完成功能的定制和扩展。
+
+此外，在不设置自定义配置的情况下，LinkageRecyclerView 最少只需一行代码即可运行起来。
+
+|                           RxMagic                            |                         Eleme Linear                         |                          Eleme Grid                          |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
-| ![7.gif](https://upload-images.jianshu.io/upload_images/57036-b4d61e70b43a07bb.gif) | ![6.gif](https://upload-images.jianshu.io/upload_images/57036-5d66eeeffcbd443f.gif) | ![8.gif](https://upload-images.jianshu.io/upload_images/57036-f460e0bd6af3ccee.gif) |
+| ![7.gif](https://upload-images.jianshu.io/upload_images/57036-b4d61e70b43a07bb.gif) | ![2.gif](https://upload-images.jianshu.io/upload_images/57036-04b42bddcdd6cf39.gif) | ![3.gif](https://upload-images.jianshu.io/upload_images/57036-5dc85c89ef486d57.gif) |
 
 
 
-最开始我是想，如果能像 Eleme 订单一样，将类别和选项相互关联，那么我的用户在寻找操作符时，便可以通过功能类别，轻松地匹配到对应的操作符。
-
-但是，在翻遍 GitHub 后发现，仿 Eleme 联动列表的项目不下十个，却没有一个是解耦的且能通过 Gradle 配置来远程依赖的第三方库！
-
-![](https://upload-images.jianshu.io/upload_images/57036-b9ab267618a7f843.png)
-
-二级列表的需求其实十分常见，万一哪天临时急需，却没有一个 **可以即插即用的控件**，那得多糟心呀！于是我前后花费五天时间，在多个开源项目之间来回研究，并最终自己动手编写和开源了一套真正的、可供使用者依赖的二级联动列表库。
+### 目标
 
 LinkageRecyclerView 的目标是：**一行代码即可接入二级联动列表**。
 
-|                         Eleme Linear                         |                          Eleme Grid                          |                         BottomSheet                          |
-| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
-| ![2.gif](https://upload-images.jianshu.io/upload_images/57036-04b42bddcdd6cf39.gif) | ![3.gif](https://upload-images.jianshu.io/upload_images/57036-5dc85c89ef486d57.gif) | ![5.gif](https://upload-images.jianshu.io/upload_images/57036-2483853731b30a14.gif) |
+
 
 除了一键接入而省去 99% 不必要的、复杂的、重复的工作外，你还可以从这个开源项目获得的内容包括：
 
@@ -254,9 +252,6 @@ Home：[KunMinX 的个人博客](https://kunminx.github.io/)
 
 Juejin：[KunMinX 在掘金](https://juejin.im/user/58ab0de9ac502e006975d757/posts)
 
-<span id="wechatQrcode">KunMinX's WeChat Public Account（微信公众号）：</span>
-
-![公众号](https://upload-images.jianshu.io/upload_images/57036-dc3af94a5daf478c.jpg)
 
 # License
 
