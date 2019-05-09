@@ -19,12 +19,15 @@
 
 
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimaryDark">#0277BD</color>
+    <color name="colorPrimary">#039BE5</color>
     <color name="colorAccent">#FF4081</color>
 
     <color name="colorRed">#fc3b3b</color>
     <color name="colorBlack">#000000</color>
     <color name="colorGray">#aa666666</color>
+    <color name="colorDarkBlue">#0091EA</color>
+    <color name="colorLightBlue">#81D4FA</color>
+
 
 </resources>

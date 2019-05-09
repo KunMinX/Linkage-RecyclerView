@@ -24,9 +24,10 @@
             android:layout_marginTop="@dimen/margin8"
             android:layout_marginBottom="@dimen/margin8"
             android:layout_weight="0"
-            android:backgroundTint="@color/colorPurple"
+            android:backgroundTint="@color/colorPrimary"
             android:text="@string/btn_name_eleme"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorWhite"
+            android:visibility="gone" />
 
     </LinearLayout>
 

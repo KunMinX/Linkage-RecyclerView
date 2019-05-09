@@ -18,11 +18,14 @@
 -->
 
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimaryDark">#0277BD</color>
+    <color name="colorPrimary">#039BE5</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorGray">#bbbbbb</color>
     <color name="colorLightGray">#eee</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorPurple">#6F0AEE</color>
+    <color name="colorDarkBlue">#0091EA</color>
+    <color name="colorLightBlue">#81D4FA</color>
+
 </resources>

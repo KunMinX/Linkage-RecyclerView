@@ -35,5 +35,6 @@
     <string name="hint_cola">cola</string>
     <string name="hint_price">¥18.8</string>
     <string name="hint_good_detail">好吃的食物，增肥神器，有求必应</string>
+    <string name="hint_good_detail_gird">爆款</string>
     <string name="hint_good_comment">月售10008 好评率100%</string>
 </resources>

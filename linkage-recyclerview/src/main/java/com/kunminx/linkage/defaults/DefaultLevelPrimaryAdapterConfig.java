@@ -64,7 +64,7 @@ public class DefaultLevelPrimaryAdapterConfig implements ILevelPrimaryAdapterCon
 
     @Override
     public void onItemSelected(boolean selected, TextView itemView) {
-        itemView.setBackgroundColor(mContext.getResources().getColor(selected ? R.color.colorPurple : R.color.colorWhite));
+        itemView.setBackgroundColor(mContext.getResources().getColor(selected ? R.color.colorLightBlue : R.color.colorWhite));
         itemView.setTextColor(ContextCompat.getColor(mContext, selected ? R.color.colorWhite : R.color.colorGray));
     }
 }
