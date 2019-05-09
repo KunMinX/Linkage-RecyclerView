@@ -107,7 +107,7 @@ public class SwitchSampleFragment extends Fragment {
             @Override
             public void onItemSelected(boolean selected, TextView itemView) {
                 itemView.setBackgroundColor(mContext.getResources().getColor(selected
-                        ? com.kunminx.linkage.R.color.colorLightBlue
+                        ? com.kunminx.linkage.R.color.colorPurple
                         : com.kunminx.linkage.R.color.colorWhite));
                 itemView.setTextColor(ContextCompat.getColor(mContext, selected
                         ? com.kunminx.linkage.R.color.colorWhite
