@@ -6,8 +6,10 @@
 
 尔后又有 “眼尖” 的网友注意到，该项目依赖了我开源的另一个库 **LinkageRecyclerView**。没错，二级联动列表，从我构思 RxJava 魔法师的交互设计之日起，便已纳入开发日程。
 
+|                         Eleme Linear                         |                          Eleme Grid                          |                        RxMagic Dialog                        |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| ![7.gif](https://upload-images.jianshu.io/upload_images/57036-b4d61e70b43a07bb.gif) | ![6.gif](https://upload-images.jianshu.io/upload_images/57036-5d66eeeffcbd443f.gif) | ![8.gif](https://upload-images.jianshu.io/upload_images/57036-f460e0bd6af3ccee.gif) |
 
-![](https://upload-images.jianshu.io/upload_images/57036-6a0de649e3222ef9.png)
 
 
 原本我是想，如果能像 ELEME 订单一样，将类别和选项相互关联，那么我的用户在寻找操作符时，便可以通过功能类别，轻松地匹配到对应的操作符。
@@ -20,9 +22,9 @@
 
 LinkageRecyclerView 的目标是：**一行代码即可接入二级联动列表**。
 
-|                         Eleme Linear                         |                          Eleme Grid                          |                        RxMagic Dialog                        |
+|                         Eleme Linear                         |                          Eleme Grid                          |                         BottomSheet                          |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
-| ![1.gif](https://upload-images.jianshu.io/upload_images/57036-2c1552029b927cec.gif) | ![2.gif](https://upload-images.jianshu.io/upload_images/57036-268cd9ace45759a0.gif) | ![4.gif](https://upload-images.jianshu.io/upload_images/57036-db0ba8283d65e68b.gif) |
+| ![2.gif](https://upload-images.jianshu.io/upload_images/57036-04b42bddcdd6cf39.gif) | ![3.gif](https://upload-images.jianshu.io/upload_images/57036-5dc85c89ef486d57.gif) | ![5.gif](https://upload-images.jianshu.io/upload_images/57036-2483853731b30a14.gif) |
 
 除了一键接入而省去 99% 不必要的重复工作外，你还可以从这个开源项目获得的内容包括：
 
@@ -34,11 +36,6 @@ LinkageRecyclerView 的目标是：**一行代码即可接入二级联动列表*
 6. AndroidX 和 Material Design 2 的全面使用。
 7. ConstraintLayout 约束布局的最佳实践。
 8. 绝不使用 Dagger，绝不使用奇技淫巧、编写艰深晦涩的代码。
-
-
-
-项目链接：[https://github.com/KunMinX/LinkageRecyclerView](https://github.com/KunMinX/LinkageRecyclerView)
-
 
 
 ### 简单使用：
