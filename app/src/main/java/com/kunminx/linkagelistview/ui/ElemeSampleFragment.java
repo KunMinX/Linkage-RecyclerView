@@ -35,12 +35,11 @@ import com.google.gson.reflect.TypeToken;
 import com.kunminx.linkage.LinkageRecyclerView;
 import com.kunminx.linkage.adapter.LinkageLevelPrimaryAdapter;
 import com.kunminx.linkage.adapter.LinkageLevelSecondaryAdapter;
-import com.kunminx.linkage.bean.BaseLinkageItem;
-import com.kunminx.linkage.bean.DefaultLinkageItem;
+import com.kunminx.linkage.bean.BaseGroupedItem;
 import com.kunminx.linkage.contract.ILevelPrimaryAdapterConfig;
 import com.kunminx.linkage.contract.ILevelSecondaryAdapterConfig;
 import com.kunminx.linkagelistview.R;
-import com.kunminx.linkagelistview.bean.ElemeLinkageItem;
+import com.kunminx.linkagelistview.bean.ElemeGroupedItem;
 import com.kunminx.linkagelistview.databinding.FragmentElemeBinding;
 
 import java.util.List;
@@ -69,8 +68,8 @@ public class ElemeSampleFragment extends Fragment {
 
     private void initLinkageDatas(LinkageRecyclerView linkage) {
         Gson gson = new Gson();
-        List<ElemeLinkageItem> items = gson.fromJson(getString(R.string.eleme_json),
-                new TypeToken<List<ElemeLinkageItem>>() {
+        List<ElemeGroupedItem> items = gson.fromJson(getString(R.string.eleme_json),
+                new TypeToken<List<ElemeGroupedItem>>() {
                 }.getType());
 
         linkage.init(items, new ILevelPrimaryAdapterConfig() {
@@ -113,7 +112,7 @@ public class ElemeSampleFragment extends Fragment {
                         : com.kunminx.linkage.R.color.colorGray));
             }
 
-        }, new ILevelSecondaryAdapterConfig<ElemeLinkageItem.ItemInfo>() {
+        }, new ILevelSecondaryAdapterConfig<ElemeGroupedItem.ItemInfo>() {
 
             private Context mContext;
             private boolean mIsGridMode;
@@ -169,10 +168,10 @@ public class ElemeSampleFragment extends Fragment {
 
             @Override
             public void onBindViewHolder(LinkageLevelSecondaryAdapter.LevelSecondaryViewHolder holder,
-                                         BaseLinkageItem<ElemeLinkageItem.ItemInfo> item, int position) {
+                                         BaseGroupedItem<ElemeGroupedItem.ItemInfo> item, int position) {
 
-                ((TextView) holder.getView(R.id.iv_goods_name)).setText(item.t.getTitle());
-                Glide.with(mContext).load(item.t.getImgUrl()).into((ImageView) holder.getView(R.id.iv_goods_img));
+                ((TextView) holder.getView(R.id.iv_goods_name)).setText(item.info.getTitle());
+                Glide.with(mContext).load(item.info.getImgUrl()).into((ImageView) holder.getView(R.id.iv_goods_img));
                 holder.getView(R.id.iv_goods_item).setOnClickListener(v -> {
                     //TODO
                 });

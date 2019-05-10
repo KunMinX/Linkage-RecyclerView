@@ -17,22 +17,22 @@ package com.kunminx.linkagelistview.bean;
  */
 
 
-import com.kunminx.linkage.bean.BaseLinkageItem;
+import com.kunminx.linkage.bean.BaseGroupedItem;
 
 /**
  * Create by KunMinX at 19/4/27
  */
-public class ElemeLinkageItem extends BaseLinkageItem<ElemeLinkageItem.ItemInfo> {
+public class ElemeGroupedItem extends BaseGroupedItem<ElemeGroupedItem.ItemInfo> {
 
-    public ElemeLinkageItem(boolean isHeader, String header) {
+    public ElemeGroupedItem(boolean isHeader, String header) {
         super(isHeader, header);
     }
 
-    public ElemeLinkageItem(ItemInfo item) {
+    public ElemeGroupedItem(ItemInfo item) {
         super(item);
     }
 
-    public static class ItemInfo extends BaseLinkageItem.ItemInfo {
+    public static class ItemInfo extends BaseGroupedItem.ItemInfo {
         private String content;
         private String imgUrl;
         private String cost;

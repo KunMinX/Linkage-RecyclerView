@@ -28,7 +28,7 @@ import androidx.fragment.app.Fragment;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.kunminx.linkage.LinkageRecyclerView;
-import com.kunminx.linkage.bean.DefaultLinkageItem;
+import com.kunminx.linkage.bean.DefaultGroupedItem;
 import com.kunminx.linkagelistview.R;
 import com.kunminx.linkagelistview.databinding.FragmentRxmagicBinding;
 
@@ -58,8 +58,8 @@ public class RxMagicSampleFragment extends Fragment {
 
     private void initLinkageDatas(LinkageRecyclerView linkage) {
         Gson gson = new Gson();
-        List<DefaultLinkageItem> items = gson.fromJson(getString(R.string.operators_json),
-                new TypeToken<List<DefaultLinkageItem>>() {
+        List<DefaultGroupedItem> items = gson.fromJson(getString(R.string.operators_json),
+                new TypeToken<List<DefaultGroupedItem>>() {
                 }.getType());
 
         linkage.init(items);

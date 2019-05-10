@@ -19,23 +19,25 @@ package com.kunminx.linkage.bean;
 import java.io.Serializable;
 
 /**
+ * items which support grouped
+ * <p>
  * Create by KunMinX at 19/4/29
  */
-public abstract class BaseLinkageItem<T extends BaseLinkageItem.ItemInfo> implements Serializable {
+public abstract class BaseGroupedItem<T extends BaseGroupedItem.ItemInfo> implements Serializable {
     public boolean isHeader;
-    public T t;
+    public T info;
     public String header;
 
-    public BaseLinkageItem(boolean isHeader, String header) {
+    public BaseGroupedItem(boolean isHeader, String header) {
         this.isHeader = isHeader;
         this.header = header;
-        this.t = null;
+        this.info = null;
     }
 
-    public BaseLinkageItem(T t) {
+    public BaseGroupedItem(T info) {
         this.isHeader = false;
         this.header = null;
-        this.t = t;
+        this.info = info;
     }
 
     public static class ItemInfo {

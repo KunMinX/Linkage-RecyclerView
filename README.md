@@ -8,7 +8,7 @@ Linkage-RecyclerView 是一款基于 MVP 架构开发的二级联动列表控件
 
 Linkage-RecyclerView 的个性化配置十分简单，依托于 MVP 的 “配置解耦” 特性，使用者无需知道内部的实现细节，仅通过实现 Config 类即可完成功能的定制和扩展。
 
-此外，在不设置自定义配置的情况下，LinkageRecyclerView 最少只需 **一行代码即可运行起来**。
+此外，在不设置自定义配置的情况下，Linkage-RecyclerView 最少只需 **一行代码即可运行起来**。
 
 |                           RxMagic                            |                         Eleme Linear                         |                          Eleme Grid                          |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
@@ -43,16 +43,16 @@ Linkage-RecyclerView 的目标是：**一行代码即可接入二级联动列表
 1.在 build.gradle 中添加对该库的依赖。
 
 ```
-implementation 'com.kunminx.linkage:linkage-recyclerview:1.2.0'
+implementation 'com.kunminx.linkage:linkage-recyclerview:1.3.2'
 ```
 
-2.依据默认的联动实体类（DefaultLinkageItem）的结构准备一串 JSON。
+2.依据默认的分组实体类（DefaultGroupedItem）的结构准备一串 JSON。
 
 ```java
-// DefaultLinkageItem.ItemInfo 包含三个字段：
-String title //二级选项的标题（必填）
-String group //二级选项所在分组的名称，要和对应的一级选项的标题相同（必填）
-String content //二级选项的内容（选填）
+// DefaultGroupedItem.ItemInfo 包含三个字段：
+String title //（必填）二级选项的标题
+String group //（必填）二级选项所在分组的名称，要和对应的一级选项的标题相同
+String content //（选填）二级选项的内容
 ```
 
 ```json
@@ -63,7 +63,7 @@ String content //二级选项的内容（选填）
   },
   {
     "isHeader": false,
-    "t": {
+    "info": {
       "content": "好吃的食物，增肥神器，有求必应",
       "group": "优惠",
       "title": "全家桶"
@@ -72,6 +72,14 @@ String content //二级选项的内容（选填）
   {
     "header": "热卖",
     "isHeader": true
+  },
+  {
+    "isHeader": false,
+    "info": {
+      "content": "爆款热卖，月销超过 999 件",
+      "group": "优惠",
+      "title": "烤全翅"
+    }
   }
 ]
     
@@ -98,7 +106,7 @@ String content //二级选项的内容（选填）
 4.在代码中解析 JSON，最少只需一行代码即可完成初始化。
 
 ```java
-List<DefaultLinkageItem> items = gson.fromJson(...);
+List<DefaultGroupedItem> items = gson.fromJson(...);
 
 //一行代码完成初始化
 linkage.init(items);
@@ -112,27 +120,26 @@ linkage.init(items);
 
 之所以设置成接口的形式，而非 Builder 的形式，是因为二级联动列表内部的联动逻辑需要指明关键的控件。接口相比 Builder 具有强制性，能够让使用者一目了然必须配置的内容，故而采用接口，通过 MVP 架构的方式来编写该库。
 
-关于个性化配置，具体可以参考我在 `ElemeLinkageItem` 和 `SwitchSampleFragment` 中编写的案例：
+关于个性化配置，具体可以参考我在 `ElemeGroupedItem` 和 `SwitchSampleFragment` 中编写的案例：
 
+### Step1：根据需求扩展实体类
 
-### Step1：
+你需要根据需求，在 `BaseGroupedItem` 的基础上扩展分组实体类，具体的办法是，编写一个实体类，该实体类须继承于 `BaseGroupedItem`；该实体类的内部类 `ItemInfo` 也须继承于 `BaseGroupedItem.ItemInfo`。
 
-你需要根据需求，在 `BaseLinkageItem` 的基础上扩展联动实体类，具体的办法是，编写一个实体类，该实体类须继承于 `BaseLinkageItem`；该实体类的内部类 `ItemInfo` 也须继承于 `BaseLinkageItem.ItemInfo`。
-
-以 Eleme 联动实体类为例：
+以 Eleme 分组实体类为例：
 
 ```java
-public class ElemeLinkageItem extends BaseLinkageItem<ElemeLinkageItem.ItemInfo> {
+public class ElemeGroupedItem extends BaseGroupedItem<ElemeGroupedItem.ItemInfo> {
 
-    public ElemeLinkageItem(boolean isHeader, String header) {
+    public ElemeGroupedItem(boolean isHeader, String header) {
         super(isHeader, header);
     }
 
-    public ElemeLinkageItem(ItemInfo item) {
+    public ElemeGroupedItem(ItemInfo item) {
         super(item);
     }
 
-    public static class ItemInfo extends BaseLinkageItem.ItemInfo {
+    public static class ItemInfo extends BaseGroupedItem.ItemInfo {
         private String content;
         private String imgUrl;
         private String cost;
@@ -179,14 +186,16 @@ public class ElemeLinkageItem extends BaseLinkageItem<ElemeLinkageItem.ItemInfo>
 }
 ```
 
-### Step2：
+
+
+### Step2：实现接口，完成自定义配置
 
 在装载数据和实现自定义配置时，泛型框中须指明你编写的实体类，注意 `List<ElemeLinkageItem>`，以及 `new ILevelSecondaryAdapterConfig<ElemeLinkageItem.ItemInfo>()` 这两处。
 
 ```java
 private void initLinkageDatas(LinkageRecyclerView linkage) {
         Gson gson = new Gson();
-        List<ElemeLinkageItem> items = gson.fromJson(...);
+        List<ElemeGroupedItem> items = gson.fromJson(...);
 
         linkage.init(items, new ILevelPrimaryAdapterConfig() {
 
@@ -231,7 +240,7 @@ private void initLinkageDatas(LinkageRecyclerView linkage) {
                         : com.kunminx.linkage.R.color.colorGray));
             }
 
-        }, new ILevelSecondaryAdapterConfig<ElemeLinkageItem.ItemInfo>() {
+        }, new ILevelSecondaryAdapterConfig<ElemeGroupedItem.ItemInfo>() {
 
             private Context mContext;
             private boolean mIsGridMode;
@@ -288,12 +297,12 @@ private void initLinkageDatas(LinkageRecyclerView linkage) {
             @Override
             public void onBindViewHolder(
                 LinkageLevelSecondaryAdapter.LevelSecondaryViewHolder holder, 
-                BaseLinkageItem<ElemeLinkageItem.ItemInfo> item, int position) {
+                BaseGroupedItem<ElemeGroupedItem.ItemInfo> item, int position) {
                 
                 ((TextView) holder.getView(R.id.iv_goods_name))
-                .setText(item.t.getTitle());
+                .setText(item.info.getTitle());
                 
-                Glide.with(mContext).load(item.t.getImgUrl())
+                Glide.with(mContext).load(item.info.getImgUrl())
                     .into((ImageView) holder.getView(R.id.iv_goods_img));
                 
                 holder.getView(R.id.iv_goods_item).setOnClickListener(v -> {

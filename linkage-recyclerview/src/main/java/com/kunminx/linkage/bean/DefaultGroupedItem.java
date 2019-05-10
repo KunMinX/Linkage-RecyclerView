@@ -20,17 +20,17 @@ package com.kunminx.linkage.bean;
 /**
  * Create by KunMinX at 19/4/27
  */
-public class DefaultLinkageItem extends BaseLinkageItem<DefaultLinkageItem.ItemInfo> {
+public class DefaultGroupedItem extends BaseGroupedItem<DefaultGroupedItem.ItemInfo> {
 
-    public DefaultLinkageItem(boolean isHeader, String header) {
+    public DefaultGroupedItem(boolean isHeader, String header) {
         super(isHeader, header);
     }
 
-    public DefaultLinkageItem(ItemInfo item) {
+    public DefaultGroupedItem(ItemInfo item) {
         super(item);
     }
 
-    public static class ItemInfo extends BaseLinkageItem.ItemInfo {
+    public static class ItemInfo extends BaseGroupedItem.ItemInfo {
         private String content;
 
         public ItemInfo(String title, String group, String content) {

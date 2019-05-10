@@ -68,9 +68,9 @@ public final class TabLayoutMediator {
          * Called to configure the tab for the page at the specified position. Typically calls
          * {@link TabLayout.Tab#setText(CharSequence)}, but any form of styling can be applied.
          *
-         * @param tab      The Tab which should be configured to represent the title of the item at the
+         * @param tab      The Tab which should be configured to represent the title of the info at the
          *                 given position in the data set.
-         * @param position The position of the item within the adapter's data set.
+         * @param position The position of the info within the adapter's data set.
          */
         void onConfigureTab(@NonNull TabLayout.Tab tab, int position);
     }
@@ -127,7 +127,7 @@ public final class TabLayoutMediator {
         mOnPageChangeCallback = new TabLayoutOnPageChangeCallback(mTabLayout);
         mViewPager.registerOnPageChangeCallback(mOnPageChangeCallback);
 
-        // Now we'll add a tab selected listener to set ViewPager's current item
+        // Now we'll add a tab selected listener to set ViewPager's current info
         mOnTabSelectedListener = new ViewPagerOnTabSelectedListener(mViewPager);
         mTabLayout.addOnTabSelectedListener(mOnTabSelectedListener);
 
@@ -141,7 +141,7 @@ public final class TabLayoutMediator {
 
         populateTabsFromPagerAdapter();
 
-        // Now update the scroll position to match the ViewPager's current item
+        // Now update the scroll position to match the ViewPager's current info
         mTabLayout.setScrollPosition(mViewPager.getCurrentItem(), 0f, true);
     }
 
@@ -170,7 +170,7 @@ public final class TabLayoutMediator {
                 mTabLayout.addTab(tab, false);
             }
 
-            // Make sure we reflect the currently set ViewPager item
+            // Make sure we reflect the currently set ViewPager info
             if (adapterCount > 0) {
                 int currItem = mViewPager.getCurrentItem();
                 if (currItem != mTabLayout.getSelectedTabPosition()) {

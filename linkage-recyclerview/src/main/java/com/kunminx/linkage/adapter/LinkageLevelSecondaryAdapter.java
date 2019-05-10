@@ -26,7 +26,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.kunminx.linkage.bean.BaseLinkageItem;
+import com.kunminx.linkage.bean.BaseGroupedItem;
 import com.kunminx.linkage.contract.ILevelSecondaryAdapterConfig;
 
 import java.util.ArrayList;
@@ -35,10 +35,10 @@ import java.util.List;
 /**
  * Create by KunMinX at 19/4/29
  */
-public class LinkageLevelSecondaryAdapter<T extends BaseLinkageItem.ItemInfo> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class LinkageLevelSecondaryAdapter<T extends BaseGroupedItem.ItemInfo> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
-    private List<BaseLinkageItem<T>> mItems;
+    private List<BaseGroupedItem<T>> mItems;
     private static final int IS_HEADER = 0;
     private static final int IS_LINEAR = 1;
     private static final int IS_GRID = 2;
@@ -49,7 +49,7 @@ public class LinkageLevelSecondaryAdapter<T extends BaseLinkageItem.ItemInfo> ex
         return mConfig;
     }
 
-    public List<BaseLinkageItem<T>> getItems() {
+    public List<BaseGroupedItem<T>> getItems() {
         return mItems;
     }
 
@@ -61,7 +61,7 @@ public class LinkageLevelSecondaryAdapter<T extends BaseLinkageItem.ItemInfo> ex
         mConfig.setGridMode(isGridMode);
     }
 
-    public LinkageLevelSecondaryAdapter(List<BaseLinkageItem<T>> items, ILevelSecondaryAdapterConfig config) {
+    public LinkageLevelSecondaryAdapter(List<BaseGroupedItem<T>> items, ILevelSecondaryAdapterConfig config) {
         mItems = items;
         if (mItems == null) {
             mItems = new ArrayList<>();
@@ -69,7 +69,7 @@ public class LinkageLevelSecondaryAdapter<T extends BaseLinkageItem.ItemInfo> ex
         mConfig = config;
     }
 
-    public void refreshList(List<BaseLinkageItem<T>> list) {
+    public void refreshList(List<BaseGroupedItem<T>> list) {
         mItems.clear();
         if (list != null) {
             mItems.addAll(list);
@@ -78,7 +78,7 @@ public class LinkageLevelSecondaryAdapter<T extends BaseLinkageItem.ItemInfo> ex
     }
 
     //TODO load more data...
-    public void refreshListLoadMore(List<BaseLinkageItem<T>> list) {
+    public void refreshListLoadMore(List<BaseGroupedItem<T>> list) {
         if (list != null) {
             mItems.addAll(list);
         }
@@ -115,13 +115,13 @@ public class LinkageLevelSecondaryAdapter<T extends BaseLinkageItem.ItemInfo> ex
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        final BaseLinkageItem<T> linkageItem = mItems.get(holder.getAdapterPosition());
+        final BaseGroupedItem<T> linkageItem = mItems.get(holder.getAdapterPosition());
         if (linkageItem.isHeader) {
             LevelSecondaryTitleViewHolder titleViewHolder = (LevelSecondaryTitleViewHolder) holder;
             titleViewHolder.mTvHeader.setText(linkageItem.header);
         } else {
             final LevelSecondaryViewHolder viewHolder = (LevelSecondaryViewHolder) holder;
-            viewHolder.mTvTitle.setText(linkageItem.t.getTitle());
+            viewHolder.mTvTitle.setText(linkageItem.info.getTitle());
 
             mConfig.onBindViewHolder(viewHolder, linkageItem, viewHolder.getAdapterPosition());
         }
