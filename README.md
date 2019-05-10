@@ -46,7 +46,14 @@ Linkage-RecyclerView 的目标是：**一行代码即可接入二级联动列表
 implementation 'com.kunminx.linkage:linkage-recyclerview:1.2.0'
 ```
 
-2.依据联动实体类的结构准备一串 json。
+2.依据默认的联动实体类（DefaultLinkageItem）的结构准备一串 JSON。
+
+```java
+//默认联动实体类包含三个字段
+String title //二级选项的标题（必填）
+String group //二级选项所在分组的名称，要和对应的一级选项的标题相同（必填）
+String content //二级选项的内容（选填）
+```
 
 ```json
 [
@@ -89,10 +96,10 @@ implementation 'com.kunminx.linkage:linkage-recyclerview:1.2.0'
 </LinearLayout>
 ```
 
-4.在代码中解析 json，最少只用一行代码即可完成初始化。
+4.在代码中解析 JSON，最少只用一行代码即可完成初始化。
 
 ```java
-List<LinkageItem> items = gson.fromJson(...);
+List<DefaultLinkageItem> items = gson.fromJson(...);
 
 //一行代码完成初始化
 linkage.init(items);
@@ -102,18 +109,84 @@ linkage.init(items);
 
 ### 个性化配置：
 
-该库分别为一级和二级 Adapter 准备了 Config 接口，自定义配置时，即是去实现这两个接口，从而取代默认的配置。
+该库为一级和二级 Adapter 分别准备了 Config 接口（`ILevelPrimaryAdapterConfig` 和 ` ILevelSecondaryAdapterConfig`），自定义配置时，即是去实现这两个接口，来取代默认的配置。
 
 之所以设置成接口的形式，而非 Builder 的形式，是因为二级联动列表内部的联动逻辑需要指明关键的控件。接口相比 Builder 具有强制性，能够让使用者一目了然必须配置的内容，故而采用接口，通过 MVP 架构的方式来编写该库。
 
-关于个性化配置，具体可以参考我在 SwitchSampleFragment 中编写的案例：
+关于个性化配置，具体可以参考我在 `ElemeLinkageItem` 和 `SwitchSampleFragment` 中编写的案例：
+
+
+
+1.首先，你需要根据需求，在 `BaseLinkageItem` 的基础上扩展联动实体类，具体的办法是，编写一个实体类，该实体类须继承于 `BaseLinkageItem`；该实体类的内部类 `ItemInfo` 也须继承于 `BaseLinkageItem.ItemInfo`。
+
+以 Eleme 联动实体类为例：
+
+```java
+public class ElemeLinkageItem extends BaseLinkageItem<ElemeLinkageItem.ItemInfo> {
+
+    public ElemeLinkageItem(boolean isHeader, String header) {
+        super(isHeader, header);
+    }
+
+    public ElemeLinkageItem(ItemInfo item) {
+        super(item);
+    }
+
+    public static class ItemInfo extends BaseLinkageItem.ItemInfo {
+        private String content;
+        private String imgUrl;
+        private String cost;
+
+        public ItemInfo(String title, String group, String content) {
+            super(title, group);
+            this.content = content;
+        }
+
+        public ItemInfo(String title, String group, String content, String imgUrl) {
+            this(title, group, content);
+            this.imgUrl = imgUrl;
+        }
+
+        public ItemInfo(String title, String group, String content, String imgUrl, String cost) {
+            this(title, group, content, imgUrl);
+            this.cost = cost;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
+
+        public String getImgUrl() {
+            return imgUrl;
+        }
+
+        public void setImgUrl(String imgUrl) {
+            this.imgUrl = imgUrl;
+        }
+
+        public String getCost() {
+            return cost;
+        }
+
+        public void setCost(String cost) {
+            this.cost = cost;
+        }
+    }
+}
+```
+
+
+
+2.其次，在装载数据和实现自定义配置时，泛型框中须指明你编写的实体类，注意 `List<ElemeLinkageItem>`，以及 `new ILevelSecondaryAdapterConfig<ElemeLinkageItem.ItemInfo>()` 这两处。
 
 ```java
 private void initLinkageDatas(LinkageRecyclerView linkage) {
         Gson gson = new Gson();
-        List<LinkageItem> items = gson.fromJson(getString(R.string.eleme_json),
-                new TypeToken<List<LinkageItem>>() {
-                }.getType());
+        List<ElemeLinkageItem> items = gson.fromJson(...);
 
         linkage.init(items, new ILevelPrimaryAdapterConfig() {
 
@@ -130,12 +203,12 @@ private void initLinkageDatas(LinkageRecyclerView linkage) {
 
             @Override
             public int getTextViewId() {
-                return com.kunminx.linkage.R.id.tv_group;
+                return R.id.tv_group;
             }
 
             @Override
             public int getRootViewId() {
-                return com.kunminx.linkage.R.id.layout_group;
+                return R.id.layout_group;
             }
 
             @Override
@@ -144,7 +217,7 @@ private void initLinkageDatas(LinkageRecyclerView linkage) {
                 String title, int position) {
                 
                 holder.getView(R.id.layout_group).setOnClickListener(v -> {
-
+					//TODO
                 });
             }
 
@@ -158,7 +231,7 @@ private void initLinkageDatas(LinkageRecyclerView linkage) {
                         : com.kunminx.linkage.R.color.colorGray));
             }
 
-        }, new ILevelSecondaryAdapterConfig() {
+        }, new ILevelSecondaryAdapterConfig<ElemeLinkageItem.ItemInfo>() {
 
             private Context mContext;
             private boolean mIsGridMode;
@@ -194,7 +267,7 @@ private void initLinkageDatas(LinkageRecyclerView linkage) {
 
             @Override
             public int getHeaderViewId() {
-                return com.kunminx.linkage.R.id.level_2_header;
+                return R.id.level_2_header;
             }
 
             @Override
@@ -215,7 +288,7 @@ private void initLinkageDatas(LinkageRecyclerView linkage) {
             @Override
             public void onBindViewHolder(
                 LinkageLevelSecondaryAdapter.LevelSecondaryViewHolder holder, 
-                LinkageItem item, int position) {
+                BaseLinkageItem<ElemeLinkageItem.ItemInfo> item, int position) {
                 
                 ((TextView) holder.getView(R.id.iv_goods_name))
                 .setText(item.t.getTitle());
