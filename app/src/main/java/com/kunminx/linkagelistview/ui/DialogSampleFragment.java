@@ -30,7 +30,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.kunminx.linkage.LinkageRecyclerView;
-import com.kunminx.linkage.bean.LinkageItem;
+import com.kunminx.linkage.bean.DefaultLinkageItem;
 import com.kunminx.linkagelistview.R;
 import com.kunminx.linkagelistview.databinding.FragmentDialogBinding;
 
@@ -68,8 +68,8 @@ public class DialogSampleFragment extends Fragment {
 
     private void initLinkageDatas(LinkageRecyclerView linkage) {
         Gson gson = new Gson();
-        List<LinkageItem> items = gson.fromJson(getString(R.string.operators_json),
-                new TypeToken<List<LinkageItem>>() {
+        List<DefaultLinkageItem> items = gson.fromJson(getString(R.string.operators_json),
+                new TypeToken<List<DefaultLinkageItem>>() {
                 }.getType());
 
         linkage.init(items);

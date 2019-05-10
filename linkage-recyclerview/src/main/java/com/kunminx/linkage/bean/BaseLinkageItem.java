@@ -21,7 +21,7 @@ import java.io.Serializable;
 /**
  * Create by KunMinX at 19/4/29
  */
-public abstract class BaseLinkageItem<T> implements Serializable {
+public abstract class BaseLinkageItem<T extends BaseLinkageItem.ItemInfo> implements Serializable {
     public boolean isHeader;
     public T t;
     public String header;
@@ -36,5 +36,31 @@ public abstract class BaseLinkageItem<T> implements Serializable {
         this.isHeader = false;
         this.header = null;
         this.t = t;
+    }
+
+    public static class ItemInfo {
+        private String group;
+        private String title;
+
+        public ItemInfo(String title, String group) {
+            this.title = title;
+            this.group = group;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getGroup() {
+            return group;
+        }
+
+        public void setGroup(String group) {
+            this.group = group;
+        }
     }
 }

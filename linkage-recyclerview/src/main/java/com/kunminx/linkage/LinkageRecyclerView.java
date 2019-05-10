@@ -34,7 +34,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.kunminx.linkage.adapter.LinkageLevelPrimaryAdapter;
 import com.kunminx.linkage.adapter.LinkageLevelSecondaryAdapter;
-import com.kunminx.linkage.bean.LinkageItem;
+import com.kunminx.linkage.bean.BaseLinkageItem;
 import com.kunminx.linkage.contract.ILevelPrimaryAdapterConfig;
 import com.kunminx.linkage.contract.ILevelSecondaryAdapterConfig;
 import com.kunminx.linkage.defaults.DefaultLevelPrimaryAdapterConfig;
@@ -46,7 +46,7 @@ import java.util.List;
 /**
  * Create by KunMinX at 19/4/27
  */
-public class LinkageRecyclerView extends RelativeLayout {
+public class LinkageRecyclerView<T extends BaseLinkageItem.ItemInfo> extends RelativeLayout {
 
     private Context mContext;
 
@@ -59,7 +59,7 @@ public class LinkageRecyclerView extends RelativeLayout {
     private TextView mTvLevel2Header;
 
     private List<String> mGroupNames;
-    private List<LinkageItem> mItems;
+    private List<BaseLinkageItem<T>> mItems;
 
     private List<Integer> mHeaderPositions = new ArrayList<>();
     private int mTitleHeight;
@@ -98,7 +98,7 @@ public class LinkageRecyclerView extends RelativeLayout {
             ((GridLayoutManager) mLevel2LayoutManager).setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                 @Override
                 public int getSpanSize(int position) {
-                    if (mLevel2Adapter.getItems().get(position).isHeader) {
+                    if (((BaseLinkageItem<T>) mLevel2Adapter.getItems().get(position)).isHeader) {
                         return mLevel2Adapter.getConfig().getSpanCount();
                     }
                     return 1;
@@ -200,11 +200,11 @@ public class LinkageRecyclerView extends RelativeLayout {
         mRvLevel2.requestLayout();
     }
 
-    public void init(List<LinkageItem> linkageItems) {
+    public void init(List<BaseLinkageItem<T>> linkageItems) {
         init(linkageItems, new DefaultLevelPrimaryAdapterConfig(), new DefaultLevelSecondaryAdapterConfig());
     }
 
-    public void init(List<LinkageItem> linkageItems, ILevelPrimaryAdapterConfig primaryAdapterConfig,
+    public void init(List<BaseLinkageItem<T>> linkageItems, ILevelPrimaryAdapterConfig primaryAdapterConfig,
                      ILevelSecondaryAdapterConfig secondaryAdapterConfig) {
 
         initRecyclerView(primaryAdapterConfig, secondaryAdapterConfig);
@@ -213,7 +213,7 @@ public class LinkageRecyclerView extends RelativeLayout {
 
         List<String> groupNames = new ArrayList<>();
         if (mItems != null && mItems.size() > 0) {
-            for (LinkageItem item1 : mItems) {
+            for (BaseLinkageItem<T> item1 : mItems) {
                 if (item1.isHeader) {
                     groupNames.add(item1.header);
                 }

@@ -1,4 +1,4 @@
-package com.kunminx.linkage.bean;
+package com.kunminx.linkagelistview.bean;
 
 /*
  * Copyright (c) 2018-2019. KunMinX
@@ -17,33 +17,28 @@ package com.kunminx.linkage.bean;
  */
 
 
+import com.kunminx.linkage.bean.BaseLinkageItem;
+
 /**
  * Create by KunMinX at 19/4/27
  */
-public class LinkageItem extends BaseLinkageItem<LinkageItem.ItemInfo> {
+public class ElemeLinkageItem extends BaseLinkageItem<ElemeLinkageItem.ItemInfo> {
 
-    public LinkageItem(boolean isHeader, String header) {
+    public ElemeLinkageItem(boolean isHeader, String header) {
         super(isHeader, header);
     }
 
-    public LinkageItem(ItemInfo item) {
+    public ElemeLinkageItem(ItemInfo item) {
         super(item);
     }
 
-    public static class ItemInfo {
-        private String group;
-        private String title;
+    public static class ItemInfo extends BaseLinkageItem.ItemInfo {
         private String content;
         private String imgUrl;
         private String cost;
 
-        public ItemInfo(String title, String group) {
-            this.title = title;
-            this.group = group;
-        }
-
         public ItemInfo(String title, String group, String content) {
-            this(title, group);
+            super(title, group);
             this.content = content;
         }
 
@@ -55,22 +50,6 @@ public class LinkageItem extends BaseLinkageItem<LinkageItem.ItemInfo> {
         public ItemInfo(String title, String group, String content, String imgUrl, String cost) {
             this(title, group, content, imgUrl);
             this.cost = cost;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public String getGroup() {
-            return group;
-        }
-
-        public void setGroup(String group) {
-            this.group = group;
         }
 
         public String getContent() {

@@ -35,10 +35,12 @@ import com.google.gson.reflect.TypeToken;
 import com.kunminx.linkage.LinkageRecyclerView;
 import com.kunminx.linkage.adapter.LinkageLevelPrimaryAdapter;
 import com.kunminx.linkage.adapter.LinkageLevelSecondaryAdapter;
-import com.kunminx.linkage.bean.LinkageItem;
+import com.kunminx.linkage.bean.BaseLinkageItem;
+import com.kunminx.linkage.bean.DefaultLinkageItem;
 import com.kunminx.linkage.contract.ILevelPrimaryAdapterConfig;
 import com.kunminx.linkage.contract.ILevelSecondaryAdapterConfig;
 import com.kunminx.linkagelistview.R;
+import com.kunminx.linkagelistview.bean.ElemeLinkageItem;
 import com.kunminx.linkagelistview.databinding.FragmentSwitchBinding;
 
 import java.util.List;
@@ -70,8 +72,8 @@ public class SwitchSampleFragment extends Fragment {
 
     private void initLinkageDatas(LinkageRecyclerView linkage) {
         Gson gson = new Gson();
-        List<LinkageItem> items = gson.fromJson(getString(R.string.eleme_json),
-                new TypeToken<List<LinkageItem>>() {
+        List<ElemeLinkageItem> items = gson.fromJson(getString(R.string.eleme_json),
+                new TypeToken<List<ElemeLinkageItem>>() {
                 }.getType());
 
         linkage.init(items, new ILevelPrimaryAdapterConfig() {
@@ -98,7 +100,9 @@ public class SwitchSampleFragment extends Fragment {
             }
 
             @Override
-            public void onBindViewHolder(LinkageLevelPrimaryAdapter.LevelPrimaryViewHolder holder, String title, int position) {
+            public void onBindViewHolder(LinkageLevelPrimaryAdapter.LevelPrimaryViewHolder holder,
+                                         String title, int position) {
+
                 holder.getView(com.kunminx.linkage.R.id.layout_group).setOnClickListener(v -> {
 
                 });
@@ -114,7 +118,7 @@ public class SwitchSampleFragment extends Fragment {
                         : com.kunminx.linkage.R.color.colorGray));
             }
 
-        }, new ILevelSecondaryAdapterConfig() {
+        }, new ILevelSecondaryAdapterConfig<ElemeLinkageItem.ItemInfo>() {
 
             private Context mContext;
             private boolean mIsGridMode;
@@ -169,7 +173,8 @@ public class SwitchSampleFragment extends Fragment {
             }
 
             @Override
-            public void onBindViewHolder(LinkageLevelSecondaryAdapter.LevelSecondaryViewHolder holder, LinkageItem item, int position) {
+            public void onBindViewHolder(LinkageLevelSecondaryAdapter.LevelSecondaryViewHolder holder,
+                                         BaseLinkageItem<ElemeLinkageItem.ItemInfo> item, int position) {
                 ((TextView) holder.getView(R.id.iv_goods_name)).setText(item.t.getTitle());
                 Glide.with(mContext).load(item.t.getImgUrl()).into((ImageView) holder.getView(R.id.iv_goods_img));
                 holder.getView(R.id.iv_goods_item).setOnClickListener(v -> {

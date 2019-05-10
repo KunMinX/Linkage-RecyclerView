@@ -19,12 +19,12 @@ package com.kunminx.linkage.contract;
 import android.content.Context;
 
 import com.kunminx.linkage.adapter.LinkageLevelSecondaryAdapter;
-import com.kunminx.linkage.bean.LinkageItem;
+import com.kunminx.linkage.bean.BaseLinkageItem;
 
 /**
  * Create by KunMinX at 19/5/8
  */
-public interface ILevelSecondaryAdapterConfig {
+public interface ILevelSecondaryAdapterConfig<T extends BaseLinkageItem.ItemInfo> {
 
     /**
      * setContext
@@ -101,6 +101,6 @@ public interface ILevelSecondaryAdapterConfig {
      * @param item     linkageItem of this position
      * @param position holder.getAdapterPosition()
      */
-    void onBindViewHolder(LinkageLevelSecondaryAdapter.LevelSecondaryViewHolder holder, LinkageItem item, int position);
+    void onBindViewHolder(LinkageLevelSecondaryAdapter.LevelSecondaryViewHolder holder, BaseLinkageItem<T> item, int position);
 
 }

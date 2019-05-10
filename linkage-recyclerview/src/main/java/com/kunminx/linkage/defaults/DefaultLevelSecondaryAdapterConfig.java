@@ -22,13 +22,14 @@ import android.widget.TextView;
 
 import com.kunminx.linkage.R;
 import com.kunminx.linkage.adapter.LinkageLevelSecondaryAdapter;
-import com.kunminx.linkage.bean.LinkageItem;
+import com.kunminx.linkage.bean.BaseLinkageItem;
+import com.kunminx.linkage.bean.DefaultLinkageItem;
 import com.kunminx.linkage.contract.ILevelSecondaryAdapterConfig;
 
 /**
  * Create by KunMinX at 19/5/8
  */
-public class DefaultLevelSecondaryAdapterConfig implements ILevelSecondaryAdapterConfig {
+public class DefaultLevelSecondaryAdapterConfig implements ILevelSecondaryAdapterConfig<DefaultLinkageItem.ItemInfo> {
 
     private Context mContext;
     private boolean mIsGridMode;
@@ -84,7 +85,7 @@ public class DefaultLevelSecondaryAdapterConfig implements ILevelSecondaryAdapte
     }
 
     @Override
-    public void onBindViewHolder(LinkageLevelSecondaryAdapter.LevelSecondaryViewHolder holder, LinkageItem item, int position) {
+    public void onBindViewHolder(LinkageLevelSecondaryAdapter.LevelSecondaryViewHolder holder, BaseLinkageItem<DefaultLinkageItem.ItemInfo> item, int position) {
         ((TextView) holder.getView(R.id.level_2_content)).setText(item.t.getContent());
         holder.getView(R.id.level_2_item).setOnClickListener(new View.OnClickListener() {
             @Override
