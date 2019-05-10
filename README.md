@@ -66,7 +66,6 @@ String content //二级选项的内容（选填）
     "t": {
       "content": "好吃的食物，增肥神器，有求必应",
       "group": "优惠",
-      "imgUrl": "https://upload-images.io/0a94.png",
       "title": "全家桶"
     }
   },
@@ -96,7 +95,7 @@ String content //二级选项的内容（选填）
 </LinearLayout>
 ```
 
-4.在代码中解析 JSON，最少只用一行代码即可完成初始化。
+4.在代码中解析 JSON，最少只需一行代码即可完成初始化。
 
 ```java
 List<DefaultLinkageItem> items = gson.fromJson(...);
@@ -109,15 +108,16 @@ linkage.init(items);
 
 ### 个性化配置：
 
-该库为一级和二级 Adapter 分别准备了 Config 接口（`ILevelPrimaryAdapterConfig` 和 ` ILevelSecondaryAdapterConfig`），自定义配置时，即是去实现这两个接口，来取代默认的配置。
+该库为一级和二级 Adapter 分别准备了 Config 接口（`ILevelPrimaryAdapterConfig` 和 ` ILevelSecondaryAdapterConfig`），**自定义配置时，即是去实现这两个接口，来取代默认的配置**。
 
 之所以设置成接口的形式，而非 Builder 的形式，是因为二级联动列表内部的联动逻辑需要指明关键的控件。接口相比 Builder 具有强制性，能够让使用者一目了然必须配置的内容，故而采用接口，通过 MVP 架构的方式来编写该库。
 
 关于个性化配置，具体可以参考我在 `ElemeLinkageItem` 和 `SwitchSampleFragment` 中编写的案例：
 
 
+### Step1：
 
-1.首先，你需要根据需求，在 `BaseLinkageItem` 的基础上扩展联动实体类，具体的办法是，编写一个实体类，该实体类须继承于 `BaseLinkageItem`；该实体类的内部类 `ItemInfo` 也须继承于 `BaseLinkageItem.ItemInfo`。
+你需要根据需求，在 `BaseLinkageItem` 的基础上扩展联动实体类，具体的办法是，编写一个实体类，该实体类须继承于 `BaseLinkageItem`；该实体类的内部类 `ItemInfo` 也须继承于 `BaseLinkageItem.ItemInfo`。
 
 以 Eleme 联动实体类为例：
 
@@ -179,9 +179,9 @@ public class ElemeLinkageItem extends BaseLinkageItem<ElemeLinkageItem.ItemInfo>
 }
 ```
 
+### Step2：
 
-
-2.其次，在装载数据和实现自定义配置时，泛型框中须指明你编写的实体类，注意 `List<ElemeLinkageItem>`，以及 `new ILevelSecondaryAdapterConfig<ElemeLinkageItem.ItemInfo>()` 这两处。
+在装载数据和实现自定义配置时，泛型框中须指明你编写的实体类，注意 `List<ElemeLinkageItem>`，以及 `new ILevelSecondaryAdapterConfig<ElemeLinkageItem.ItemInfo>()` 这两处。
 
 ```java
 private void initLinkageDatas(LinkageRecyclerView linkage) {
