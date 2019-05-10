@@ -49,7 +49,7 @@ implementation 'com.kunminx.linkage:linkage-recyclerview:1.2.0'
 2.依据默认的联动实体类（DefaultLinkageItem）的结构准备一串 JSON。
 
 ```java
-//默认联动实体类包含三个字段
+// DefaultLinkageItem.ItemInfo 包含三个字段：
 String title //二级选项的标题（必填）
 String group //二级选项所在分组的名称，要和对应的一级选项的标题相同（必填）
 String content //二级选项的内容（选填）
