@@ -112,6 +112,11 @@ List<DefaultGroupedItem> items = gson.fromJson(...);
 linkage.init(items);
 ```
 
+注意：由于使用了 JSON 实体类，在打包成 Apk 前须将其配置到混淆白名单：
+
+```java
+-keep class com.kunminx.linkage.bean.** {*;}
+```
 
 
 ### 个性化配置：
@@ -186,6 +191,7 @@ public class ElemeGroupedItem extends BaseGroupedItem<ElemeGroupedItem.ItemInfo>
 }
 ```
 
+注意：由于使用了 JSON 实体类，在打包成 Apk 前须将其配置到混淆白名单。
 
 
 ### Step2：实现接口，完成自定义配置
