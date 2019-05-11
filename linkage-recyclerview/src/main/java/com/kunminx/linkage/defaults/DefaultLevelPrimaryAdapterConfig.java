@@ -32,7 +32,13 @@ import com.kunminx.linkage.contract.ILevelPrimaryAdapterConfig;
 public class DefaultLevelPrimaryAdapterConfig implements ILevelPrimaryAdapterConfig {
 
     private Context mContext;
+    private OnPrimaryItemBindListener mListener;
 
+    public void setListener(OnPrimaryItemBindListener listener) {
+        mListener = listener;
+    }
+
+    @Override
     public void setContext(Context context) {
         mContext = context;
     }
@@ -54,17 +60,18 @@ public class DefaultLevelPrimaryAdapterConfig implements ILevelPrimaryAdapterCon
 
     @Override
     public void onBindViewHolder(LinkageLevelPrimaryAdapter.LevelPrimaryViewHolder holder, String title, int position) {
-        holder.getView(R.id.layout_group).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO
-            }
-        });
+        if (mListener != null) {
+            mListener.onBindViewHolder(holder, title, position);
+        }
     }
 
     @Override
     public void onItemSelected(boolean selected, TextView itemView) {
         itemView.setBackgroundColor(mContext.getResources().getColor(selected ? R.color.colorPurple : R.color.colorWhite));
         itemView.setTextColor(ContextCompat.getColor(mContext, selected ? R.color.colorWhite : R.color.colorGray));
+    }
+
+    public interface OnPrimaryItemBindListener {
+        void onBindViewHolder(LinkageLevelPrimaryAdapter.LevelPrimaryViewHolder holder, String title, int position);
     }
 }

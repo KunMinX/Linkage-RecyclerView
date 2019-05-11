@@ -25,6 +25,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.kunminx.linkage.LinkageRecyclerView;
@@ -63,5 +64,17 @@ public class RxMagicSampleFragment extends Fragment {
                 }.getType());
 
         linkage.init(items);
+        linkage.setOnItemDefaultBindListener(
+                (holder, title, position) -> {
+                    holder.getView(R.id.tv_group).setOnClickListener(v -> {
+                        Snackbar.make(v, title, Snackbar.LENGTH_SHORT).show();
+                    });
+                },
+                (holder, item, position) -> {
+                    holder.getView(R.id.level_2_title).setOnClickListener(v -> {
+                        Snackbar.make(v, item.info.getTitle(), Snackbar.LENGTH_SHORT).show();
+                    });
+                }
+        );
     }
 }

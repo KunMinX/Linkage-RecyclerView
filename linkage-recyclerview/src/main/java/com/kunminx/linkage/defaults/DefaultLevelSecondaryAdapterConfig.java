@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.kunminx.linkage.R;
+import com.kunminx.linkage.adapter.LinkageLevelPrimaryAdapter;
 import com.kunminx.linkage.adapter.LinkageLevelSecondaryAdapter;
 import com.kunminx.linkage.bean.BaseGroupedItem;
 import com.kunminx.linkage.bean.DefaultGroupedItem;
@@ -33,6 +34,11 @@ public class DefaultLevelSecondaryAdapterConfig implements ILevelSecondaryAdapte
 
     private Context mContext;
     private boolean mIsGridMode;
+    private OnSecondaryItemBindListener mListener;
+
+    public void setListener(OnSecondaryItemBindListener listener) {
+        mListener = listener;
+    }
 
     @Override
     public void setContext(Context context) {
@@ -85,13 +91,18 @@ public class DefaultLevelSecondaryAdapterConfig implements ILevelSecondaryAdapte
     }
 
     @Override
-    public void onBindViewHolder(LinkageLevelSecondaryAdapter.LevelSecondaryViewHolder holder, BaseGroupedItem<DefaultGroupedItem.ItemInfo> item, int position) {
+    public void onBindViewHolder(LinkageLevelSecondaryAdapter.LevelSecondaryViewHolder holder,
+                                 BaseGroupedItem<DefaultGroupedItem.ItemInfo> item, int position) {
+
         ((TextView) holder.getView(R.id.level_2_content)).setText(item.info.getContent());
-        holder.getView(R.id.level_2_item).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO
-            }
-        });
+
+        if (mListener != null) {
+            mListener.onBindViewHolder(holder, item, position);
+        }
+    }
+
+    public interface OnSecondaryItemBindListener {
+        void onBindViewHolder(LinkageLevelSecondaryAdapter.LevelSecondaryViewHolder holder,
+                              BaseGroupedItem<DefaultGroupedItem.ItemInfo> item, int position);
     }
 }

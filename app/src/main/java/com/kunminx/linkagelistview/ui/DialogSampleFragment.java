@@ -27,6 +27,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.kunminx.linkage.LinkageRecyclerView;
@@ -43,6 +44,7 @@ public class DialogSampleFragment extends Fragment {
 
     private FragmentDialogBinding mBinding;
     private static float DIALOG_HEIGHT = 400;
+    private AlertDialog mDialog;
 
     @Nullable
     @Override
@@ -61,7 +63,7 @@ public class DialogSampleFragment extends Fragment {
             LinkageRecyclerView linkage = view2.findViewById(R.id.linkage);
             initLinkageDatas(linkage);
             MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
-            AlertDialog dialog = builder.setView(linkage).show();
+            mDialog = builder.setView(linkage).show();
             linkage.setLayoutHeight(DIALOG_HEIGHT);
         });
     }
@@ -73,5 +75,19 @@ public class DialogSampleFragment extends Fragment {
                 }.getType());
 
         linkage.init(items);
+        linkage.setOnItemDefaultBindListener(
+                (holder, title, position) -> {
+                    holder.getView(R.id.tv_group).setOnClickListener(v -> {
+                        Snackbar.make(v, title, Snackbar.LENGTH_SHORT).show();
+                    });
+                },
+                (holder, item, position) -> {
+                    holder.getView(R.id.level_2_title).setOnClickListener(v -> {
+                        if (mDialog != null && mDialog.isShowing()) {
+                            mDialog.dismiss();
+                        }
+                    });
+                }
+        );
     }
 }

@@ -26,6 +26,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.kunminx.linkage.LinkageRecyclerView;
@@ -41,6 +42,7 @@ import java.util.List;
 public class BottomSheetSampleFragment extends Fragment {
 
     private FragmentBottomsheetBinding mBinding;
+    private BottomSheetDialog mSheetDialog;
 
     @Nullable
     @Override
@@ -55,11 +57,11 @@ public class BottomSheetSampleFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mBinding.btnPreview.setOnClickListener(v -> {
-            BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
-            bottomSheetDialog.setContentView(R.layout.layout_linkage);
-            LinkageRecyclerView linkage = bottomSheetDialog.findViewById(R.id.linkage);
+            mSheetDialog = new BottomSheetDialog(getContext());
+            mSheetDialog.setContentView(R.layout.layout_linkage);
+            LinkageRecyclerView linkage = mSheetDialog.findViewById(R.id.linkage);
             initLinkageDatas(linkage);
-            bottomSheetDialog.show();
+            mSheetDialog.show();
         });
     }
 
@@ -70,5 +72,19 @@ public class BottomSheetSampleFragment extends Fragment {
                 }.getType());
 
         linkage.init(items);
+        linkage.setOnItemDefaultBindListener(
+                (holder, title, position) -> {
+                    holder.getView(R.id.tv_group).setOnClickListener(v -> {
+                        Snackbar.make(v, title, Snackbar.LENGTH_SHORT).show();
+                    });
+                },
+                (holder, item, position) -> {
+                    holder.getView(R.id.level_2_title).setOnClickListener(v -> {
+                        if (mSheetDialog != null && mSheetDialog.isShowing()) {
+                            mSheetDialog.dismiss();
+                        }
+                    });
+                }
+        );
     }
 }

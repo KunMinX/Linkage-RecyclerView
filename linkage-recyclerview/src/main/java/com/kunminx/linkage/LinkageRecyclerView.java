@@ -233,6 +233,17 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
         initLinkageLevel2();
     }
 
+    public void setOnItemDefaultBindListener(DefaultLevelPrimaryAdapterConfig.OnPrimaryItemBindListener primaryItemBindListener,
+                                             DefaultLevelSecondaryAdapterConfig.OnSecondaryItemBindListener secondaryItemBindListener) {
+
+        if (mLevel1Adapter.getConfig() != null) {
+            ((DefaultLevelPrimaryAdapterConfig) mLevel1Adapter.getConfig()).setListener(primaryItemBindListener);
+        }
+        if (mLevel2Adapter.getConfig() != null) {
+            ((DefaultLevelSecondaryAdapterConfig) mLevel2Adapter.getConfig()).setListener(secondaryItemBindListener);
+        }
+    }
+
     public void setLayoutHeight(float dp) {
         ViewGroup.LayoutParams lp = mLinkageLayout.getLayoutParams();
         lp.height = dpToPx(getContext(), dp);
