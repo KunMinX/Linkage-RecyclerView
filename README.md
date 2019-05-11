@@ -77,7 +77,7 @@ String content //（选填）二级选项的内容
     "isHeader": false,
     "info": {
       "content": "爆款热卖，月销超过 999 件",
-      "group": "优惠",
+      "group": "热卖",
       "title": "烤全翅"
     }
   }
@@ -126,7 +126,7 @@ linkage.init(items);
 
 你需要根据需求，在 `BaseGroupedItem` 的基础上扩展分组实体类，具体的办法是，编写一个实体类，该实体类须继承于 `BaseGroupedItem`；该实体类的内部类 `ItemInfo` 也须继承于 `BaseGroupedItem.ItemInfo`。
 
-以 Eleme 分组实体类为例：
+以 Eleme 分组实体类为例，扩充 `content`、`imgUrl`、`cost` 三个字段：
 
 ```java
 public class ElemeGroupedItem extends BaseGroupedItem<ElemeGroupedItem.ItemInfo> {
@@ -314,6 +314,7 @@ private void initLinkageDatas(LinkageRecyclerView linkage) {
                 });
             }
         });
+}
 ```
 
 

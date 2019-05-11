@@ -7,16 +7,20 @@
         <item name="switch">SwitchSampleFragment</item>
         <item name="dialog">DialogSampleFragment</item>
         <item name="bottomsheet">BottomSheetSampleFragment</item>
+        <item name="youmi">YoumiStoreSampleFragment</item>
+        <item name="dangdang">DangdangSampleFragment</item>
+        <item name="findgoodphone">FindGoodPhoneSampleFragment</item>
     </string-array>
 
-    <string-array name="bgColors">
-
-        <item name="rxmagic">#8b81c3</item>
-        <item name="eleme">#33a6b8</item>
-        <item name="switch">#0089a7</item>
-        <item name="dialog">#f4a789</item>
-        <item name="bottomsheet">#Fc9f4d</item>
-
+    <string-array name="fragments_packages">
+        <item name="rxmagic">RxMagicSampleFragment</item>
+        <item name="eleme">ElemeSampleFragment</item>
+        <item name="switch">SwitchSampleFragment</item>
+        <item name="dialog">DialogSampleFragment</item>
+        <item name="bottomsheet">BottomSheetSampleFragment</item>
+        <item name="youmi">YoumiStoreSampleFragment</item>
+        <item name="dangdang">DangdangSampleFragment</item>
+        <item name="findgoodphone">FindGoodPhoneSampleFragment</item>
     </string-array>
 
 </resources>
