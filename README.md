@@ -43,7 +43,7 @@ Linkage-RecyclerView 的目标是：**一行代码即可接入二级联动列表
 1.在 build.gradle 中添加对该库的依赖。
 
 ```
-implementation 'com.kunminx.linkage:linkage-recyclerview:1.3.2'
+implementation 'com.kunminx.linkage:linkage-recyclerview:1.3.5'
 ```
 
 2.依据默认的分组实体类（DefaultGroupedItem）的结构准备一串 JSON。
