@@ -1,93 +1,88 @@
-## 联动 RecyclerView：即使不用饿了么订餐，也请务必收藏好该库！
+## Even if you don't need Amazon to shop, be sure to collect the library!
 
-### [Click here for reading English guide](https://github.com/KunMinX/Linkage-RecyclerView/blob/master/README_EN.md)
+### origin
 
-### 由来
+Linkage-RecyclerView is a secondary linkage list widget developed based on the MVP architecture. It exists because of the needs of the "RxJava Magician" project.
 
-Linkage-RecyclerView 是一款基于 MVP 架构开发的二级联动列表控件。它是因 [“RxJava 魔法师”](https://github.com/KunMinX/RxJava2-Operators-Sample) 这个项目的需求而存在。
+After I found over around GitHub didn't find a suitable open source library (highly decoupled, remotely dependence), I decided to study the logic of the secondary linkage with existing open source projects and write a highly decoupled, Easy to configure, true third-party libraries that can be remotely dependent on the maven repository.
 
-在最初寻遍了 GitHub 也没有找到合适的开源库（高度解耦、可远程依赖）之后，我决心研究参考现有开源项目关于二级联动的逻辑，并自己动手编写一个 **高度解耦、轻松配置、可通过 maven 仓库远程依赖** 的真正的第三方库。
+The personalized configuration of Linkage-RecyclerView is very simple. Based on MVP's “configuration decoupling” feature, users do not need to know the internal implementation details. Only by implementing the Config class can the function be customized and extended.
 
-Linkage-RecyclerView 的个性化配置十分简单，依托于 MVP 的 “配置解耦” 特性，使用者无需知道内部的实现细节，仅通过实现 Config 类即可完成功能的定制和扩展。
-
-此外，在不设置自定义配置的情况下，Linkage-RecyclerView 最少只需 **一行代码即可运行起来**。
+In addition, Linkage-RecyclerView can **run by at least one line of code** while without setting up a custom configuration.
 
 |                           RxMagic                            |                         Eleme Linear                         |                          Eleme Grid                          |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
-| ![7.gif](https://upload-images.jianshu.io/upload_images/57036-b4d61e70b43a07bb.gif) | ![2.gif](https://upload-images.jianshu.io/upload_images/57036-04b42bddcdd6cf39.gif) | ![3.gif](https://upload-images.jianshu.io/upload_images/57036-ada31ea077f0144d.gif) |
+| ![7.gif](https://i.loli.net/2019/05/14/5cda1fd9402ad16046.gif) | ![2.gif](https://i.loli.net/2019/05/14/5cda1fd959ed861197.gif) | ![3.gif](https://i.loli.net/2019/05/14/5cda1fd945af885525.gif) |
+
+### aims
+
+The goal of LinkageRecyclerView is to access the secondary linkage list by just one line of code.
 
 
 
-### 目标
+In addition to one-line access and eliminating 99% of unnecessary, complex, and repetitive tasks, what extra you can get from this open source project include:
 
-Linkage-RecyclerView 的目标是：**一行代码即可接入二级联动列表**。
-
-
-
-除了一键接入而省去 99% 不必要的、复杂的、重复的工作外，你还可以从这个开源项目获得的内容包括：
-
-1. 整洁的代码风格和标准的资源命名规范。
-2. **MVP 架构在第三库中的最佳实践：使用者无需了解内部逻辑，通过实现接口即可轻松完成个性化配置**。
-3. 优秀的代码分层和封装思想，在不做任何个性化配置的情况下，一行代码即可接入。
-4. 主体工程基于前沿的、遵循关注点分离的 JetPack MVVM 架构。
-5. AndroidX 和 Material Design 2 的全面使用。
-6. ConstraintLayout 约束布局的最佳实践。
-7. 绝不使用 Dagger，绝不使用奇技淫巧、编写艰深晦涩的代码。
+1. Neat code style and standard resource naming conventions.
+2. **The best practice for writing third-party libraries by MVP architecture: users don't need to understand internal logic, and they can easily do personalized configuration by implementing interfaces.**
+3. Excellent code layering and encapsulation ideas, one line of code can be accessed without any personalized configuration.
+4. The main project is based on the cutting-edge JetPack MVVM architecture that follows the separation of concerns.
+5. Full use of AndroidX and Material Design 2.
+6. Best practices for ConstraintLayout.
+7. Never use Dagger, never use geeks and write hard-coded code.
 
 
 
-如果你正在思考 **如何为项目挑选合适的架构** 的话，这个项目值得你参考！
+If you are thinking about **how to choose the right architecture for your project**, this project is worth your reference!
 
 
 
-### 简单使用：
+### Simple Guide:
 
-1.在 build.gradle 中添加对该库的依赖。
+1. Add a dependency on the library in build.gradle.
 
-```
+```groovy
 implementation 'com.kunminx.linkage:linkage-recyclerview:1.3.5'
 ```
 
-2.依据默认的分组实体类（DefaultGroupedItem）的结构准备一串 JSON。
+2. Prepare a bunch of JSONs according to the structure of the default grouping entity class (DefaultGroupedItem).
 
 ```java
-// DefaultGroupedItem.ItemInfo 包含三个字段：
-String title //（必填）二级选项的标题
-String group //（必填）二级选项所在分组的名称，要和对应的一级选项的标题相同
-String content //（选填）二级选项的内容
+// DefaultGroupedItem.ItemInfo Contains three fields：
+String title //(Required) Title of the secondary option
+String group //(Required) The name of the group in which the secondary option is located, which is the same as the title of the corresponding primary option.
+String content //(optional) content of the secondary option
 ```
 
 ```json
 [
   {
-    "header": "优惠",
+    "header": "Offer",
     "isHeader": true
   },
   {
     "isHeader": false,
     "info": {
-      "content": "好吃的食物，增肥神器，有求必应",
-      "group": "优惠",
-      "title": "全家桶"
+      "content": "Good food, fattening artifact, responsive",
+      "group": "Offer",
+      "title": "Family bucket"
     }
   },
   {
-    "header": "热卖",
+    "header": "Selling",
     "isHeader": true
   },
   {
     "isHeader": false,
     "info": {
-      "content": "爆款热卖，月销超过 999 件",
-      "group": "热卖",
-      "title": "烤全翅"
+      "content": "Explosive models are hot",
+      "group": "Selling",
+      "title": "Roasted whole wings"
     }
   }
 ]
-    
 ```
 
-3.在布局中引入 LinkageRecyclerView 。
+3. Introduce LinkageRecyclerView in the layout.
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -105,37 +100,42 @@ String content //（选填）二级选项的内容
 </LinearLayout>
 ```
 
-4.在代码中解析 JSON，最少只需一行代码即可完成初始化。
+4. Parse JSON in code, and you can initialize it with at least one line of code.
 
 ```java
 List<DefaultGroupedItem> items = gson.fromJson(...);
 
-//一行代码完成初始化
+//initialize it with just one line of code
 linkage.init(items);
 ```
 
-注意：由于使用了 JSON 实体类，在打包成 Apk 前须将其配置到混淆白名单：
+Note: Since JSON entity classes are used, they must be configured to ProGuard rule before being packaged into Apk:
 
 ```java
 -keep class com.kunminx.linkage.bean.** {*;}
 ```
 
 
-### 个性化配置：
 
-该库为一级和二级 Adapter 分别准备了 Config 接口（`ILevelPrimaryAdapterConfig` 和 ` ILevelSecondaryAdapterConfig`），**自定义配置时，即是去实现这两个接口，来取代默认的配置**。
 
-之所以设置成接口的形式，而非 Builder 的形式，是因为二级联动列表内部的联动逻辑需要指明关键的控件。接口相比 Builder 具有强制性，能够让使用者一目了然必须配置的内容，故而采用接口，通过 MVP 架构的方式来编写该库。
 
-关于个性化配置，具体可以参考我在 `ElemeGroupedItem` 和 `SwitchSampleFragment` 中编写的案例：
+### Personalized configuration:
 
-### Step1：根据需求扩展实体类
+The library prepares the Config interface (`ILevelPrimaryAdapterConfig` and `ILevelSecondaryAdapterConfig`) for the primary and secondary Adapters respectively. **When the configuration is customized, the two interfaces are implemented to replace the default configuration**.
 
-你需要根据需求，在 `BaseGroupedItem` 的基础上扩展分组实体类，具体的办法是，编写一个实体类，该实体类须继承于 `BaseGroupedItem`；该实体类的内部类 `ItemInfo` 也须继承于 `BaseGroupedItem.ItemInfo`。
+It is set to the form of the interface, not the form of the Builder, because the linkage logic inside the secondary linkage list needs to indicate the key controls. The interface is mandatory compared to the Builder, which allows the user to understand the content that must be configured at a glance. Therefore, the interface is used to write the library through the MVP architecture.
 
-以 Eleme 分组实体类为例，扩充 `content`、`imgUrl`、`cost` 三个字段：
+For specific configuration, please refer to the case I wrote in `ElemeGroupedItem` and `SwitchSampleFragment`:
 
-```java
+
+
+### Step1: Extend the entity class according to your needs
+
+You need to extend the grouping entity class based on the requirement, based on `BaseGroupedItem`. The specific method is to write an entity class that inherits from `BaseGroupedItem`; the inner class `ItemInfo` of the entity class must also inherit from `BaseGroupedItem.ItemInfo`.
+
+Take the Eleme grouping entity class as an example, and expand the three fields `content`, `imgUrl`, `cost`:
+
+```jav
 public class ElemeGroupedItem extends BaseGroupedItem<ElemeGroupedItem.ItemInfo> {
 
     public ElemeGroupedItem(boolean isHeader, String header) {
@@ -193,12 +193,13 @@ public class ElemeGroupedItem extends BaseGroupedItem<ElemeGroupedItem.ItemInfo>
 }
 ```
 
-注意：由于使用了 JSON 实体类，在打包成 Apk 前须将其配置到混淆白名单。
+Note: Since JSON entity classes are used, they must be configured to ProGuard rule before being packaged into Apk.
 
 
-### Step2：实现接口，完成自定义配置
 
-在装载数据和实现自定义配置时，泛型框中须指明你编写的实体类，注意 `List<ElemeLinkageItem>`，以及 `new ILevelSecondaryAdapterConfig<ElemeLinkageItem.ItemInfo>()` 这两处。
+### Step2: Implement the interface and complete the custom configuration
+
+When loading data and implementing a custom configuration, the generic box must indicate the entity class you wrote, noting `List<ElemeLinkageItem>`, and `new ILevelSecondaryAdapterConfig<ElemeLinkageItem.ItemInfo>()`.
 
 ```java
 private void initLinkageDatas(LinkageRecyclerView linkage) {
@@ -322,7 +323,6 @@ private void initLinkageDatas(LinkageRecyclerView linkage) {
                 });
             }
         });
-}
 ```
 
 
@@ -333,11 +333,13 @@ private void initLinkageDatas(LinkageRecyclerView linkage) {
 
 [AndroidX](https://developer.android.google.cn/jetpack/androidx)
 
+
+
 # My Pages
 
 Email：[kunminx@gmail.com](mailto:kunminx@gmail.com)
 
-Home：[KunMinX 的个人博客](https://kunminx.github.io/)
+Blog：[KunMinX 的个人博客](https://kunminx.github.io/)
 
 Juejin：[KunMinX 在掘金](https://juejin.im/user/58ab0de9ac502e006975d757/posts)
 
