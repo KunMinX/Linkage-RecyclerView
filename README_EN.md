@@ -1,8 +1,8 @@
-## Even if you don't need Amazon to shop, be sure to collect the library!
+## Even if you don't order by Eleme, please be sure to collect the library!
 
 ### origin
 
-Linkage-RecyclerView is a secondary linkage list widget developed based on the MVP architecture. It exists because of the needs of the "RxJava Magician" project.
+Linkage-RecyclerView is a secondary linkage list widget developed based on the MVP architecture. It exists because of the needs of the ["RxJava Magician"](https://github.com/KunMinX/RxJava2-Operators-Sample) project.
 
 After I found over around GitHub didn't find a suitable open source library (highly decoupled, remotely dependence), I decided to study the logic of the secondary linkage with existing open source projects and write a highly decoupled, Easy to configure, true third-party libraries that can be remotely dependent on the maven repository.
 

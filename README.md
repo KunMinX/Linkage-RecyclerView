@@ -1,6 +1,6 @@
 ## 联动 RecyclerView：即使不用饿了么订餐，也请务必收藏好该库！
 
-### [Click here for reading English guide](https://github.com/KunMinX/Linkage-RecyclerView/blob/master/README_EN.md)
+### [< Click here for reading English guide >](https://github.com/KunMinX/Linkage-RecyclerView/blob/master/README_EN.md)
 
 ### 由来
 
