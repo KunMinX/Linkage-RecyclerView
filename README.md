@@ -48,7 +48,7 @@ Linkage-RecyclerView 的目标是：**一行代码即可接入二级联动列表
 implementation 'com.kunminx.linkage:linkage-recyclerview:1.3.5'
 ```
 
-2.依据默认的分组实体类（DefaultGroupedItem）的结构准备一串 JSON。
+2.依据默认的分组实体类 `DefaultGroupedItem` 的结构准备一串数据（以下以  JSON 为例）。
 
 ```java
 // DefaultGroupedItem.ItemInfo 包含三个字段：
@@ -105,7 +105,7 @@ String content //（选填）二级选项的内容
 </LinearLayout>
 ```
 
-4.在代码中解析 JSON，最少只需一行代码即可完成初始化。
+4.在得到数据后，最少只需一行代码即可完成初始化。
 
 ```java
 List<DefaultGroupedItem> items = gson.fromJson(...);
@@ -114,7 +114,7 @@ List<DefaultGroupedItem> items = gson.fromJson(...);
 linkage.init(items);
 ```
 
-注意：由于使用了 JSON 实体类，在打包成 Apk 前须将其配置到混淆白名单：
+注意：如使用 JSON，请在 ProGuard Rules 中为该实体类配置混淆白名单：
 
 ```java
 -keep class com.kunminx.linkage.bean.** {*;}
@@ -193,7 +193,7 @@ public class ElemeGroupedItem extends BaseGroupedItem<ElemeGroupedItem.ItemInfo>
 }
 ```
 
-注意：由于使用了 JSON 实体类，在打包成 Apk 前须将其配置到混淆白名单。
+注意：如使用 JSON，请在 ProGuard Rules 中为该实体类配置混淆白名单。
 
 
 ### Step2：实现接口，完成自定义配置

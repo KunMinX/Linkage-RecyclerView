@@ -1,20 +1,20 @@
 ## Even if you don't order by Eleme, please be sure to collect the library!
 
-### origin
+### Origin
 
 Linkage-RecyclerView is a secondary linkage list widget developed based on the MVP architecture. It exists because of the needs of the ["RxJava Magician"](https://github.com/KunMinX/RxJava2-Operators-Sample) project.
 
-After I found over around GitHub didn't find a suitable open source library (highly decoupled, remotely dependence), I decided to study the logic of the secondary linkage with existing open source projects and write a highly decoupled, Easy to configure, true third-party libraries that can be remotely dependent on the maven repository.
+After I searching all around GitHub and didn't find a suitable open source library that highly decoupled, remotely dependent, I decided to study the logic of the secondary linkage with existing open source projects and write a highly decoupled, Easy to configure, true third-party libraries that can be remotely dependent on the maven repository.
 
 The personalized configuration of Linkage-RecyclerView is very simple. Based on MVP's “configuration decoupling” feature, users do not need to know the internal implementation details. Only by implementing the Config class can the function be customized and extended.
 
-In addition, Linkage-RecyclerView can **run by at least one line of code** while without setting up a custom configuration.
+In addition, Linkage-RecyclerView can be **ran by only one line of code** while without setting up a custom configuration.
 
 |                           RxMagic                            |                         Eleme Linear                         |                          Eleme Grid                          |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 | ![7.gif](https://i.loli.net/2019/05/14/5cda1fd9402ad16046.gif) | ![2.gif](https://i.loli.net/2019/05/14/5cda1fd959ed861197.gif) | ![3.gif](https://i.loli.net/2019/05/14/5cda1fd945af885525.gif) |
 
-### aims
+### Aims
 
 The goal of LinkageRecyclerView is to access the secondary linkage list by just one line of code.
 
@@ -44,7 +44,7 @@ If you are thinking about **how to choose the right architecture for your projec
 implementation 'com.kunminx.linkage:linkage-recyclerview:1.3.5'
 ```
 
-2. Prepare a bunch of JSONs according to the structure of the default grouping entity class (DefaultGroupedItem).
+2. Prepare a string of data according to the structure of the default grouping entity class `DefaultGroupedItem`. (The following is JSON as an example).
 
 ```java
 // DefaultGroupedItem.ItemInfo Contains three fields：
@@ -100,7 +100,7 @@ String content //(optional) content of the secondary option
 </LinearLayout>
 ```
 
-4. Parse JSON in code, and you can initialize it with at least one line of code.
+4. After getting the data, you can complete the initialization with at least one line of code..
 
 ```java
 List<DefaultGroupedItem> items = gson.fromJson(...);
@@ -109,7 +109,7 @@ List<DefaultGroupedItem> items = gson.fromJson(...);
 linkage.init(items);
 ```
 
-Note: Since JSON entity classes are used, they must be configured to ProGuard rule before being packaged into Apk:
+Note: If using JSON, configure an obfuscated whitelist for this entity class in ProGuard Rules:
 
 ```java
 -keep class com.kunminx.linkage.bean.** {*;}
@@ -135,7 +135,7 @@ You need to extend the grouping entity class based on the requirement, based on 
 
 Take the Eleme grouping entity class as an example, and expand the three fields `content`, `imgUrl`, `cost`:
 
-```jav
+```java
 public class ElemeGroupedItem extends BaseGroupedItem<ElemeGroupedItem.ItemInfo> {
 
     public ElemeGroupedItem(boolean isHeader, String header) {
@@ -193,7 +193,7 @@ public class ElemeGroupedItem extends BaseGroupedItem<ElemeGroupedItem.ItemInfo>
 }
 ```
 
-Note: Since JSON entity classes are used, they must be configured to ProGuard rule before being packaged into Apk.
+Note: If using JSON, configure an obfuscated whitelist for this entity class in ProGuard Rules.
 
 
 
