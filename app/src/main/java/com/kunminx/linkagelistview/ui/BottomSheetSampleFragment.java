@@ -30,7 +30,11 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.kunminx.linkage.LinkageRecyclerView;
+import com.kunminx.linkage.adapter.viewholder.LevelSecondaryHeaderViewHolder;
+import com.kunminx.linkage.adapter.viewholder.LevelSecondaryViewHolder;
+import com.kunminx.linkage.bean.BaseGroupedItem;
 import com.kunminx.linkage.bean.DefaultGroupedItem;
+import com.kunminx.linkage.defaults.DefaultLevelSecondaryAdapterConfig;
 import com.kunminx.linkagelistview.R;
 import com.kunminx.linkagelistview.databinding.FragmentBottomsheetBinding;
 
@@ -73,17 +77,23 @@ public class BottomSheetSampleFragment extends Fragment {
 
         linkage.init(items);
         linkage.setOnItemDefaultBindListener(
-                (holder, title, position) -> {
-                    holder.getView(R.id.tv_group).setOnClickListener(v -> {
+                (primaryView, title, position) -> {
+                    //TODO
+                },
+                (primaryHolder, title, position) -> {
+                    primaryHolder.getView(R.id.tv_group).setOnClickListener(v -> {
                         Snackbar.make(v, title, Snackbar.LENGTH_SHORT).show();
                     });
                 },
-                (holder, item, position) -> {
-                    holder.getView(R.id.level_2_title).setOnClickListener(v -> {
+                (secondaryHolder, item, position) -> {
+                    secondaryHolder.getView(R.id.level_2_title).setOnClickListener(v -> {
                         if (mSheetDialog != null && mSheetDialog.isShowing()) {
                             mSheetDialog.dismiss();
                         }
                     });
+                },
+                (headerHolder, item, position) -> {
+                    //TODO
                 }
         );
     }

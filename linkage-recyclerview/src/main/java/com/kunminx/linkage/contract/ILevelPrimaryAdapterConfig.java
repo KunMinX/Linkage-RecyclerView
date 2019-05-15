@@ -17,9 +17,9 @@ package com.kunminx.linkage.contract;
 
 
 import android.content.Context;
-import android.widget.TextView;
+import android.view.View;
 
-import com.kunminx.linkage.adapter.LinkageLevelPrimaryAdapter;
+import com.kunminx.linkage.adapter.viewholder.LevelPrimaryViewHolder;
 
 /**
  * Create by KunMinX at 19/5/8
@@ -45,7 +45,7 @@ public interface ILevelPrimaryAdapterConfig {
      *
      * @return textView id of layout
      */
-    int getTextViewId();
+    int getGroupTitleViewId();
 
     /**
      * get rootView id of layout
@@ -61,7 +61,7 @@ public interface ILevelPrimaryAdapterConfig {
      * @param title    title of this position
      * @param position holder.getAdapterPosition()
      */
-    void onBindViewHolder(LinkageLevelPrimaryAdapter.LevelPrimaryViewHolder holder, String title, int position);
+    void onBindViewHolder(LevelPrimaryViewHolder holder, String title, int position);
 
     /**
      * configurations of textView when selected or not
@@ -69,6 +69,7 @@ public interface ILevelPrimaryAdapterConfig {
      * @param selected if selected
      * @param itemView textView which you choose to config the expression.
      */
-    void onItemSelected(boolean selected, TextView itemView);
+    void onItemSelected(boolean selected, View itemView);
 
+    void onItemClick();
 }

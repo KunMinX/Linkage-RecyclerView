@@ -17,17 +17,14 @@ package com.kunminx.linkage.adapter;
 
 
 import android.content.Context;
-import android.text.TextUtils;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.kunminx.linkage.adapter.viewholder.LevelPrimaryViewHolder;
 import com.kunminx.linkage.contract.ILevelPrimaryAdapterConfig;
 
 import java.util.ArrayList;
@@ -36,14 +33,15 @@ import java.util.List;
 /**
  * Create by KunMinX at 19/4/29
  */
-public class LinkageLevelPrimaryAdapter extends RecyclerView.Adapter<LinkageLevelPrimaryAdapter.LevelPrimaryViewHolder> {
+public class LinkageLevelPrimaryAdapter extends RecyclerView.Adapter<LevelPrimaryViewHolder> {
 
     private List<String> mStrings;
-    private List<TextView> mTextViews = new ArrayList<>();
+    private List<View> mGroupTitleViews = new ArrayList<>();
     private Context mContext;
 
     private ILevelPrimaryAdapterConfig mConfig;
-    private OnLinkageListener mListener;
+    private OnLinkageListener mLinkageListener;
+    private OnItemClickListener mItemClickListener;
 
     public List<String> getStrings() {
         return mStrings;
@@ -53,13 +51,15 @@ public class LinkageLevelPrimaryAdapter extends RecyclerView.Adapter<LinkageLeve
         return mConfig;
     }
 
-    public LinkageLevelPrimaryAdapter(List<String> strings, ILevelPrimaryAdapterConfig config, OnLinkageListener listener) {
+    public LinkageLevelPrimaryAdapter(List<String> strings, ILevelPrimaryAdapterConfig config,
+                                      OnLinkageListener linkageListener, OnItemClickListener onItemClickListener) {
         mStrings = strings;
         if (mStrings == null) {
             mStrings = new ArrayList<>();
         }
         mConfig = config;
-        mListener = listener;
+        mLinkageListener = linkageListener;
+        mItemClickListener = onItemClickListener;
     }
 
     public void refreshList(List<String> list) {
@@ -76,29 +76,35 @@ public class LinkageLevelPrimaryAdapter extends RecyclerView.Adapter<LinkageLeve
         mContext = parent.getContext();
         mConfig.setContext(mContext);
         View view = LayoutInflater.from(mContext).inflate(mConfig.getLayoutId(), parent, false);
-        return new LevelPrimaryViewHolder(view);
+        return new LevelPrimaryViewHolder(view, mConfig);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final LevelPrimaryViewHolder holder, int position) {
 
-        holder.mTvGroup.setText(mStrings.get(holder.getAdapterPosition()));
-        if (!mTextViews.contains(holder.mTvGroup)) {
-            mTextViews.add(holder.mTvGroup);
-        }
-        if (mTextViews != null && mTextViews.size() == mStrings.size()) {
-            selectItem(0);
-        }
+        // for textView MARQUEE available.
         holder.mLayout.setSelected(true);
+
         mConfig.onBindViewHolder(holder, mStrings.get(holder.getAdapterPosition()), holder.getAdapterPosition());
-        holder.mLayout.setOnClickListener(new View.OnClickListener() {
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mListener != null) {
-                    mListener.onLinkageClick(holder, mStrings.get(holder.getAdapterPosition()), holder.getAdapterPosition());
+                if (mLinkageListener != null) {
+                    mLinkageListener.onLinkageClick(holder, mStrings.get(holder.getAdapterPosition()), holder.getAdapterPosition());
+                }
+                if (mItemClickListener != null) {
+                    mItemClickListener.onItemClick(v, mStrings.get(holder.getAdapterPosition()), holder.getAdapterPosition());
                 }
             }
         });
+
+        if (!mGroupTitleViews.contains(holder.mGroupTitle)) {
+            mGroupTitleViews.add(holder.mGroupTitle);
+        }
+        if (mGroupTitleViews != null && mGroupTitleViews.size() == mStrings.size()) {
+            selectItem(0);
+        }
     }
 
     @Override
@@ -108,43 +114,7 @@ public class LinkageLevelPrimaryAdapter extends RecyclerView.Adapter<LinkageLeve
 
     public void selectItem(int position) {
         for (int i = 0; i < mStrings.size(); i++) {
-            if (position == i) {
-                mConfig.onItemSelected(true, mTextViews.get(i));
-                mTextViews.get(i).setEllipsize(TextUtils.TruncateAt.MARQUEE);
-                mTextViews.get(i).setFocusable(true);
-                mTextViews.get(i).setFocusableInTouchMode(true);
-                mTextViews.get(i).setMarqueeRepeatLimit(-1);
-            } else {
-                mConfig.onItemSelected(false, mTextViews.get(i));
-                mTextViews.get(i).setEllipsize(TextUtils.TruncateAt.END);
-                mTextViews.get(i).setFocusable(false);
-                mTextViews.get(i).setFocusableInTouchMode(false);
-                mTextViews.get(i).setMarqueeRepeatLimit(0);
-            }
-        }
-    }
-
-    public class LevelPrimaryViewHolder extends RecyclerView.ViewHolder {
-
-        private View mConvertView;
-        private SparseArray<View> mViews = new SparseArray<>();
-        private TextView mTvGroup;
-        private LinearLayout mLayout;
-
-        public LevelPrimaryViewHolder(@NonNull View itemView) {
-            super(itemView);
-            mConvertView = itemView;
-            mTvGroup = (TextView) itemView.findViewById(mConfig.getTextViewId());
-            mLayout = (LinearLayout) itemView.findViewById(mConfig.getRootViewId());
-        }
-
-        public <T extends View> T getView(int viewId) {
-            View view = mViews.get(viewId);
-            if (view == null) {
-                view = mConvertView.findViewById(viewId);
-                mViews.put(viewId, view);
-            }
-            return (T) view;
+            mConfig.onItemSelected(position == i, mGroupTitleViews.get(i));
         }
     }
 
@@ -153,6 +123,10 @@ public class LinkageLevelPrimaryAdapter extends RecyclerView.Adapter<LinkageLeve
      * users can archive onLinkageClick in configs instead.
      */
     public interface OnLinkageListener {
-        void onLinkageClick(LinkageLevelPrimaryAdapter.LevelPrimaryViewHolder holder, String title, int position);
+        void onLinkageClick(LevelPrimaryViewHolder holder, String title, int position);
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, String title, int position);
     }
 }

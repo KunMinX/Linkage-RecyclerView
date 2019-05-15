@@ -17,15 +17,15 @@ package com.kunminx.linkage.adapter;
 
 
 import android.content.Context;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.kunminx.linkage.adapter.viewholder.LevelSecondaryHeaderViewHolder;
+import com.kunminx.linkage.adapter.viewholder.LevelSecondaryViewHolder;
 import com.kunminx.linkage.bean.BaseGroupedItem;
 import com.kunminx.linkage.contract.ILevelSecondaryAdapterConfig;
 
@@ -103,7 +103,7 @@ public class LinkageLevelSecondaryAdapter<T extends BaseGroupedItem.ItemInfo> ex
         mConfig.setContext(mContext);
         if (viewType == IS_HEADER) {
             View view = LayoutInflater.from(mContext).inflate(mConfig.getHeaderLayoutId(), parent, false);
-            return new LevelSecondaryTitleViewHolder(view);
+            return new LevelSecondaryHeaderViewHolder(view);
         } else if (viewType == IS_GRID && mConfig.getGridLayoutId() != 0) {
             View view = LayoutInflater.from(mContext).inflate(mConfig.getGridLayoutId(), parent, false);
             return new LevelSecondaryViewHolder(view);
@@ -117,65 +117,17 @@ public class LinkageLevelSecondaryAdapter<T extends BaseGroupedItem.ItemInfo> ex
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         final BaseGroupedItem<T> linkageItem = mItems.get(holder.getAdapterPosition());
         if (linkageItem.isHeader) {
-            LevelSecondaryTitleViewHolder titleViewHolder = (LevelSecondaryTitleViewHolder) holder;
-            titleViewHolder.mTvHeader.setText(linkageItem.header);
+            LevelSecondaryHeaderViewHolder headerViewHolder = (LevelSecondaryHeaderViewHolder) holder;
+            mConfig.onBindHeaderViewHolder(headerViewHolder, linkageItem, headerViewHolder.getAdapterPosition());
         } else {
-            final LevelSecondaryViewHolder viewHolder = (LevelSecondaryViewHolder) holder;
-            viewHolder.mTvTitle.setText(linkageItem.info.getTitle());
-
-            mConfig.onBindViewHolder(viewHolder, linkageItem, viewHolder.getAdapterPosition());
+            final LevelSecondaryViewHolder secondaryViewHolder = (LevelSecondaryViewHolder) holder;
+            mConfig.onBindViewHolder(secondaryViewHolder, linkageItem, secondaryViewHolder.getAdapterPosition());
         }
     }
 
     @Override
     public int getItemCount() {
         return mItems.size();
-    }
-
-    public class LevelSecondaryViewHolder extends RecyclerView.ViewHolder {
-
-        private SparseArray<View> mViews = new SparseArray<>();
-        private View mConvertView;
-        private ViewGroup mLayout;
-        private TextView mTvTitle;
-
-        public LevelSecondaryViewHolder(@NonNull View itemView) {
-            super(itemView);
-            mConvertView = itemView;
-            mLayout = itemView.findViewById(mConfig.getRootViewId());
-            mTvTitle = (TextView) itemView.findViewById(mConfig.getTextViewId());
-        }
-
-        public <T extends View> T getView(int viewId) {
-            View view = mViews.get(viewId);
-            if (view == null) {
-                view = mConvertView.findViewById(viewId);
-                mViews.put(viewId, view);
-            }
-            return (T) view;
-        }
-    }
-
-    public class LevelSecondaryTitleViewHolder extends RecyclerView.ViewHolder {
-
-        private SparseArray<View> mHeaderViews = new SparseArray<>();
-        private View mHeaderConvertView;
-        private TextView mTvHeader;
-
-        public LevelSecondaryTitleViewHolder(@NonNull View itemView) {
-            super(itemView);
-            mHeaderConvertView = itemView;
-            mTvHeader = (TextView) itemView.findViewById(mConfig.getHeaderViewId());
-        }
-
-        public <T extends View> T getView(int viewId) {
-            View view = mHeaderViews.get(viewId);
-            if (view == null) {
-                view = mHeaderConvertView.findViewById(viewId);
-                mHeaderViews.put(viewId, view);
-            }
-            return (T) view;
-        }
     }
 
 }

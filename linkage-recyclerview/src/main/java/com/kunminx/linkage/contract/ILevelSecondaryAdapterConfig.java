@@ -18,7 +18,8 @@ package com.kunminx.linkage.contract;
 
 import android.content.Context;
 
-import com.kunminx.linkage.adapter.LinkageLevelSecondaryAdapter;
+import com.kunminx.linkage.adapter.viewholder.LevelSecondaryHeaderViewHolder;
+import com.kunminx.linkage.adapter.viewholder.LevelSecondaryViewHolder;
 import com.kunminx.linkage.bean.BaseGroupedItem;
 
 /**
@@ -101,6 +102,15 @@ public interface ILevelSecondaryAdapterConfig<T extends BaseGroupedItem.ItemInfo
      * @param item     linkageItem of this position
      * @param position holder.getAdapterPosition()
      */
-    void onBindViewHolder(LinkageLevelSecondaryAdapter.LevelSecondaryViewHolder holder, BaseGroupedItem<T> item, int position);
+    void onBindViewHolder(LevelSecondaryViewHolder holder, BaseGroupedItem<T> item, int position);
+
+    /**
+     * achieve the onBindHeaderViewHolder logic on outside
+     *
+     * @param holder   LevelSecondaryViewHolder
+     * @param item
+     * @param position
+     */
+    void onBindHeaderViewHolder(LevelSecondaryHeaderViewHolder holder, BaseGroupedItem<T> item, int position);
 
 }

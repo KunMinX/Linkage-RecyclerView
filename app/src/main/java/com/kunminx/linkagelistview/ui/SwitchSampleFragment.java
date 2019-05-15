@@ -18,6 +18,7 @@ package com.kunminx.linkagelistview.ui;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,8 +34,9 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.kunminx.linkage.LinkageRecyclerView;
-import com.kunminx.linkage.adapter.LinkageLevelPrimaryAdapter;
-import com.kunminx.linkage.adapter.LinkageLevelSecondaryAdapter;
+import com.kunminx.linkage.adapter.viewholder.LevelPrimaryViewHolder;
+import com.kunminx.linkage.adapter.viewholder.LevelSecondaryHeaderViewHolder;
+import com.kunminx.linkage.adapter.viewholder.LevelSecondaryViewHolder;
 import com.kunminx.linkage.bean.BaseGroupedItem;
 import com.kunminx.linkage.contract.ILevelPrimaryAdapterConfig;
 import com.kunminx.linkage.contract.ILevelSecondaryAdapterConfig;
@@ -89,7 +91,7 @@ public class SwitchSampleFragment extends Fragment {
             }
 
             @Override
-            public int getTextViewId() {
+            public int getGroupTitleViewId() {
                 return com.kunminx.linkage.R.id.tv_group;
             }
 
@@ -99,22 +101,27 @@ public class SwitchSampleFragment extends Fragment {
             }
 
             @Override
-            public void onBindViewHolder(LinkageLevelPrimaryAdapter.LevelPrimaryViewHolder holder,
-                                         String title, int position) {
+            public void onBindViewHolder(LevelPrimaryViewHolder holder, String title, int position) {
 
-                holder.getView(com.kunminx.linkage.R.id.layout_group).setOnClickListener(v -> {
-
-                });
+                //TODO
             }
 
             @Override
-            public void onItemSelected(boolean selected, TextView itemView) {
-                itemView.setBackgroundColor(mContext.getResources().getColor(selected
-                        ? com.kunminx.linkage.R.color.colorPurple
-                        : com.kunminx.linkage.R.color.colorWhite));
-                itemView.setTextColor(ContextCompat.getColor(mContext, selected
-                        ? com.kunminx.linkage.R.color.colorWhite
-                        : com.kunminx.linkage.R.color.colorGray));
+            public void onItemSelected(boolean selected, View itemView) {
+                TextView textView = (TextView) itemView;
+                textView.setBackgroundColor(mContext.getResources().getColor(
+                        selected ? com.kunminx.linkage.R.color.colorPurple : com.kunminx.linkage.R.color.colorWhite));
+                textView.setTextColor(ContextCompat.getColor(mContext,
+                        selected ? com.kunminx.linkage.R.color.colorWhite : com.kunminx.linkage.R.color.colorGray));
+                textView.setEllipsize(selected ? TextUtils.TruncateAt.MARQUEE : TextUtils.TruncateAt.END);
+                textView.setFocusable(selected);
+                textView.setFocusableInTouchMode(selected);
+                textView.setMarqueeRepeatLimit(selected ? -1 : 0);
+            }
+
+            @Override
+            public void onItemClick() {
+                //TODO
             }
 
         }, new ILevelSecondaryAdapterConfig<ElemeGroupedItem.ItemInfo>() {
@@ -172,8 +179,9 @@ public class SwitchSampleFragment extends Fragment {
             }
 
             @Override
-            public void onBindViewHolder(LinkageLevelSecondaryAdapter.LevelSecondaryViewHolder holder,
+            public void onBindViewHolder(LevelSecondaryViewHolder holder,
                                          BaseGroupedItem<ElemeGroupedItem.ItemInfo> item, int position) {
+
                 ((TextView) holder.getView(R.id.iv_goods_name)).setText(item.info.getTitle());
                 Glide.with(mContext).load(item.info.getImgUrl()).into((ImageView) holder.getView(R.id.iv_goods_img));
                 holder.getView(R.id.iv_goods_item).setOnClickListener(v -> {
@@ -183,6 +191,12 @@ public class SwitchSampleFragment extends Fragment {
                 holder.getView(R.id.iv_goods_add).setOnClickListener(v -> {
                     //TODO
                 });
+            }
+
+            @Override
+            public void onBindHeaderViewHolder(LevelSecondaryHeaderViewHolder holder,
+                                               BaseGroupedItem<ElemeGroupedItem.ItemInfo> item, int position) {
+                //TODO
             }
         });
     }

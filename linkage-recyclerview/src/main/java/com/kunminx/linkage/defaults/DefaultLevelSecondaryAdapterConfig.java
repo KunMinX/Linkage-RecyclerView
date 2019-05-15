@@ -20,7 +20,8 @@ import android.content.Context;
 import android.widget.TextView;
 
 import com.kunminx.linkage.R;
-import com.kunminx.linkage.adapter.LinkageLevelSecondaryAdapter;
+import com.kunminx.linkage.adapter.viewholder.LevelSecondaryHeaderViewHolder;
+import com.kunminx.linkage.adapter.viewholder.LevelSecondaryViewHolder;
 import com.kunminx.linkage.bean.BaseGroupedItem;
 import com.kunminx.linkage.bean.DefaultGroupedItem;
 import com.kunminx.linkage.contract.ILevelSecondaryAdapterConfig;
@@ -32,10 +33,12 @@ public class DefaultLevelSecondaryAdapterConfig implements ILevelSecondaryAdapte
 
     private Context mContext;
     private boolean mIsGridMode;
-    private OnSecondaryItemBindListener mListener;
+    private OnSecondaryItemBindListener mItemBindListener;
+    private OnSecondaryHeaderBindListener mHeaderBindListener;
 
-    public void setListener(OnSecondaryItemBindListener listener) {
-        mListener = listener;
+    public void setItemBindListener(OnSecondaryItemBindListener itemBindListener, OnSecondaryHeaderBindListener headerBindListener) {
+        mItemBindListener = itemBindListener;
+        mHeaderBindListener = headerBindListener;
     }
 
     @Override
@@ -89,18 +92,35 @@ public class DefaultLevelSecondaryAdapterConfig implements ILevelSecondaryAdapte
     }
 
     @Override
-    public void onBindViewHolder(LinkageLevelSecondaryAdapter.LevelSecondaryViewHolder holder,
+    public void onBindViewHolder(LevelSecondaryViewHolder holder,
                                  BaseGroupedItem<DefaultGroupedItem.ItemInfo> item, int position) {
 
+        ((TextView) holder.getView(getTextViewId())).setText(item.info.getTitle());
         ((TextView) holder.getView(R.id.level_2_content)).setText(item.info.getContent());
 
-        if (mListener != null) {
-            mListener.onBindViewHolder(holder, item, position);
+        if (mItemBindListener != null) {
+            mItemBindListener.onBindViewHolder(holder, item, position);
+        }
+    }
+
+    @Override
+    public void onBindHeaderViewHolder(LevelSecondaryHeaderViewHolder holder,
+                                       BaseGroupedItem<DefaultGroupedItem.ItemInfo> item, int position) {
+
+        ((TextView) holder.getView(getHeaderViewId())).setText(item.header);
+
+        if (mHeaderBindListener != null) {
+            mHeaderBindListener.onBindHeaderViewHolder(holder, item, position);
         }
     }
 
     public interface OnSecondaryItemBindListener {
-        void onBindViewHolder(LinkageLevelSecondaryAdapter.LevelSecondaryViewHolder holder,
+        void onBindViewHolder(LevelSecondaryViewHolder secondaryHolder,
                               BaseGroupedItem<DefaultGroupedItem.ItemInfo> item, int position);
+    }
+
+    public interface OnSecondaryHeaderBindListener {
+        void onBindHeaderViewHolder(LevelSecondaryHeaderViewHolder headerHolder,
+                                    BaseGroupedItem<DefaultGroupedItem.ItemInfo> item, int position);
     }
 }

@@ -219,7 +219,7 @@ private void initLinkageDatas(LinkageRecyclerView linkage) {
         }
 
         @Override
-        public int getTextViewId() {
+        public int getGroupTitleViewId() {
             return R.id.tv_group;
         }
 
@@ -273,7 +273,7 @@ private void initLinkageDatas(LinkageRecyclerView linkage) {
         }
 
         @Override
-        public int getTextViewId() {
+        public int getGroupTitleViewId() {
             return R.id.iv_goods_name;
         }
 

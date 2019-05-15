@@ -76,17 +76,23 @@ public class DialogSampleFragment extends Fragment {
 
         linkage.init(items);
         linkage.setOnItemDefaultBindListener(
-                (holder, title, position) -> {
-                    holder.getView(R.id.tv_group).setOnClickListener(v -> {
+                (primaryView, title, position) -> {
+                    //TODO
+                },
+                (primaryHolder, title, position) -> {
+                    primaryHolder.getView(R.id.tv_group).setOnClickListener(v -> {
                         Snackbar.make(v, title, Snackbar.LENGTH_SHORT).show();
                     });
                 },
-                (holder, item, position) -> {
-                    holder.getView(R.id.level_2_title).setOnClickListener(v -> {
+                (secondaryHolder, item, position) -> {
+                    secondaryHolder.getView(R.id.level_2_title).setOnClickListener(v -> {
                         if (mDialog != null && mDialog.isShowing()) {
                             mDialog.dismiss();
                         }
                     });
+                },
+                (headerHolder, item, position) -> {
+                    //TODO
                 }
         );
     }

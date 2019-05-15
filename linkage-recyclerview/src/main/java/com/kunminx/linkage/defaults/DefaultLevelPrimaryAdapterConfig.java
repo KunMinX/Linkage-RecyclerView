@@ -17,12 +17,14 @@ package com.kunminx.linkage.defaults;
 
 
 import android.content.Context;
+import android.text.TextUtils;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
 import com.kunminx.linkage.R;
-import com.kunminx.linkage.adapter.LinkageLevelPrimaryAdapter;
+import com.kunminx.linkage.adapter.viewholder.LevelPrimaryViewHolder;
 import com.kunminx.linkage.contract.ILevelPrimaryAdapterConfig;
 
 /**
@@ -48,7 +50,7 @@ public class DefaultLevelPrimaryAdapterConfig implements ILevelPrimaryAdapterCon
     }
 
     @Override
-    public int getTextViewId() {
+    public int getGroupTitleViewId() {
         return R.id.tv_group;
     }
 
@@ -58,19 +60,39 @@ public class DefaultLevelPrimaryAdapterConfig implements ILevelPrimaryAdapterCon
     }
 
     @Override
-    public void onBindViewHolder(LinkageLevelPrimaryAdapter.LevelPrimaryViewHolder holder, String title, int position) {
+    public void onBindViewHolder(LevelPrimaryViewHolder holder, String title, int position) {
+
+        ((TextView) holder.mGroupTitle).setText(title);
+
         if (mListener != null) {
             mListener.onBindViewHolder(holder, title, position);
         }
     }
 
     @Override
-    public void onItemSelected(boolean selected, TextView itemView) {
-        itemView.setBackgroundColor(mContext.getResources().getColor(selected ? R.color.colorPurple : R.color.colorWhite));
-        itemView.setTextColor(ContextCompat.getColor(mContext, selected ? R.color.colorWhite : R.color.colorGray));
+    public void onItemSelected(boolean selected, View itemView) {
+        TextView textView = (TextView) itemView;
+        textView.setBackgroundColor(mContext.getResources().getColor(selected ? R.color.colorPurple : R.color.colorWhite));
+        textView.setTextColor(ContextCompat.getColor(mContext, selected ? R.color.colorWhite : R.color.colorGray));
+        textView.setEllipsize(selected ? TextUtils.TruncateAt.MARQUEE : TextUtils.TruncateAt.END);
+        textView.setFocusable(selected);
+        textView.setFocusableInTouchMode(selected);
+        textView.setMarqueeRepeatLimit(selected ? -1 : 0);
+    }
+
+    @Override
+    public void onItemClick() {
+
     }
 
     public interface OnPrimaryItemBindListener {
-        void onBindViewHolder(LinkageLevelPrimaryAdapter.LevelPrimaryViewHolder holder, String title, int position);
+        /**
+         * Note: Please do not override rootView click listener in here, because of linkage selection rely on it.
+         *
+         * @param primaryHolder primaryHolder
+         * @param title         groupTitle
+         * @param position      position
+         */
+        void onBindViewHolder(LevelPrimaryViewHolder primaryHolder, String title, int position);
     }
 }

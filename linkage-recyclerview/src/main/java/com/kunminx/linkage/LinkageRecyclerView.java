@@ -34,6 +34,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.kunminx.linkage.adapter.LinkageLevelPrimaryAdapter;
 import com.kunminx.linkage.adapter.LinkageLevelSecondaryAdapter;
+import com.kunminx.linkage.adapter.viewholder.LevelPrimaryViewHolder;
 import com.kunminx.linkage.bean.BaseGroupedItem;
 import com.kunminx.linkage.contract.ILevelPrimaryAdapterConfig;
 import com.kunminx.linkage.contract.ILevelSecondaryAdapterConfig;
@@ -65,6 +66,8 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
     private int mTitleHeight;
     private int mFirstPosition = 0;
     private LinearLayoutManager mLevel2LayoutManager;
+
+    private OnPrimaryItemClickListener mPrimaryItemClickListener;
 
     private List<Integer> getHeaderPositions() {
         return mHeaderPositions;
@@ -113,14 +116,23 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
     private void initRecyclerView(ILevelPrimaryAdapterConfig primaryAdapterConfig,
                                   ILevelSecondaryAdapterConfig secondaryAdapterConfig) {
 
-        mLevel1Adapter = new LinkageLevelPrimaryAdapter(mGroupNames,
-                primaryAdapterConfig, new LinkageLevelPrimaryAdapter.OnLinkageListener() {
-            @Override
-            public void onLinkageClick(LinkageLevelPrimaryAdapter.LevelPrimaryViewHolder holder, String title, int position) {
-                mLevel1Adapter.selectItem(position);
-                mLevel2LayoutManager.scrollToPositionWithOffset(mHeaderPositions.get(position), 0);
-            }
-        });
+        mLevel1Adapter = new LinkageLevelPrimaryAdapter(mGroupNames, primaryAdapterConfig,
+                new LinkageLevelPrimaryAdapter.OnLinkageListener() {
+                    @Override
+                    public void onLinkageClick(LevelPrimaryViewHolder holder, String title, int position) {
+                        mLevel1Adapter.selectItem(position);
+                        mLevel2LayoutManager.scrollToPositionWithOffset(mHeaderPositions.get(position), 0);
+
+                    }
+                },
+                new LinkageLevelPrimaryAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View v, String title, int position) {
+                        if (mPrimaryItemClickListener != null) {
+                            mPrimaryItemClickListener.onItemClick(v, title, position);
+                        }
+                    }
+                });
 
         mRvLevel1.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
         mRvLevel1.setAdapter(mLevel1Adapter);
@@ -233,14 +245,21 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
         initLinkageLevel2();
     }
 
-    public void setOnItemDefaultBindListener(DefaultLevelPrimaryAdapterConfig.OnPrimaryItemBindListener primaryItemBindListener,
-                                             DefaultLevelSecondaryAdapterConfig.OnSecondaryItemBindListener secondaryItemBindListener) {
+    public void setOnItemDefaultBindListener(
+            OnPrimaryItemClickListener onPrimaryItemClickListener,
+            DefaultLevelPrimaryAdapterConfig.OnPrimaryItemBindListener primaryItemBindListener,
+            DefaultLevelSecondaryAdapterConfig.OnSecondaryItemBindListener secondaryItemBindListener,
+            DefaultLevelSecondaryAdapterConfig.OnSecondaryHeaderBindListener headerBindListener) {
+
+        mPrimaryItemClickListener = onPrimaryItemClickListener;
 
         if (mLevel1Adapter.getConfig() != null) {
-            ((DefaultLevelPrimaryAdapterConfig) mLevel1Adapter.getConfig()).setListener(primaryItemBindListener);
+            ((DefaultLevelPrimaryAdapterConfig) mLevel1Adapter.getConfig())
+                    .setListener(primaryItemBindListener);
         }
         if (mLevel2Adapter.getConfig() != null) {
-            ((DefaultLevelSecondaryAdapterConfig) mLevel2Adapter.getConfig()).setListener(secondaryItemBindListener);
+            ((DefaultLevelSecondaryAdapterConfig) mLevel2Adapter.getConfig())
+                    .setItemBindListener(secondaryItemBindListener, headerBindListener);
         }
     }
 
@@ -250,4 +269,7 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
         mLinkageLayout.setLayoutParams(lp);
     }
 
+    public interface OnPrimaryItemClickListener {
+        void onItemClick(View primaryView, String title, int position);
+    }
 }
