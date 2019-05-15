@@ -40,6 +40,7 @@ import com.kunminx.linkage.contract.ILevelPrimaryAdapterConfig;
 import com.kunminx.linkage.contract.ILevelSecondaryAdapterConfig;
 import com.kunminx.linkage.defaults.DefaultLevelPrimaryAdapterConfig;
 import com.kunminx.linkage.defaults.DefaultLevelSecondaryAdapterConfig;
+import com.kunminx.linkage.manager.RecyclerViewScrollHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +67,8 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
     private int mTitleHeight;
     private int mFirstPosition = 0;
     private LinearLayoutManager mLevel2LayoutManager;
+
+    private boolean scrollSmoothly = true;
 
     private OnPrimaryItemClickListener mPrimaryItemClickListener;
 
@@ -121,8 +124,11 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
                     @Override
                     public void onLinkageClick(LevelPrimaryViewHolder holder, String title, int position) {
                         mLevel1Adapter.selectItem(position);
-                        mLevel2LayoutManager.scrollToPositionWithOffset(mHeaderPositions.get(position), 0);
-
+                        if (isScrollSmoothly()) {
+                            RecyclerViewScrollHelper.scrollToPosition(mRvLevel2, mHeaderPositions.get(position));
+                        } else {
+                            mLevel2LayoutManager.scrollToPositionWithOffset(mHeaderPositions.get(position), 0);
+                        }
                     }
                 },
                 new LinkageLevelPrimaryAdapter.OnItemClickListener() {
@@ -267,6 +273,14 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
         ViewGroup.LayoutParams lp = mLinkageLayout.getLayoutParams();
         lp.height = dpToPx(getContext(), dp);
         mLinkageLayout.setLayoutParams(lp);
+    }
+
+    public boolean isScrollSmoothly() {
+        return scrollSmoothly;
+    }
+
+    public void setScrollSmoothly(boolean scrollSmoothly) {
+        this.scrollSmoothly = scrollSmoothly;
     }
 
     public interface OnPrimaryItemClickListener {

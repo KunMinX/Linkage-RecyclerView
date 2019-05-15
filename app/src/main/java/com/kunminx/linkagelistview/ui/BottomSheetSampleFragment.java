@@ -78,12 +78,10 @@ public class BottomSheetSampleFragment extends Fragment {
         linkage.init(items);
         linkage.setOnItemDefaultBindListener(
                 (primaryView, title, position) -> {
-                    //TODO
+                    Snackbar.make(primaryView, title, Snackbar.LENGTH_SHORT).show();
                 },
                 (primaryHolder, title, position) -> {
-                    primaryHolder.getView(R.id.tv_group).setOnClickListener(v -> {
-                        Snackbar.make(v, title, Snackbar.LENGTH_SHORT).show();
-                    });
+                    //TODO
                 },
                 (secondaryHolder, item, position) -> {
                     secondaryHolder.getView(R.id.level_2_title).setOnClickListener(v -> {

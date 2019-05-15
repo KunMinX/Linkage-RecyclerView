@@ -102,8 +102,7 @@ public class SwitchSampleFragment extends Fragment {
 
             @Override
             public void onBindViewHolder(LevelPrimaryViewHolder holder, String title, int position) {
-
-                //TODO
+                ((TextView) holder.mGroupTitle).setText(title);
             }
 
             @Override

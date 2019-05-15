@@ -101,10 +101,8 @@ public class DangdangSampleFragment extends Fragment {
             }
 
             @Override
-            public void onBindViewHolder(LevelPrimaryViewHolder holder,
-                                         String title, int position) {
-
-                //TODO
+            public void onBindViewHolder(LevelPrimaryViewHolder holder, String title, int position) {
+                ((TextView) holder.mGroupTitle).setText(title);
             }
 
             @Override
