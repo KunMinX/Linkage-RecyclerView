@@ -55,7 +55,7 @@ public class LinkageLevelSecondaryAdapter<T extends BaseGroupedItem.ItemInfo> ex
     }
 
     public boolean isGridMode() {
-        return mIsGridMode;
+        return mIsGridMode && mConfig.getGridLayoutId() != 0;
     }
 
     public void setGridMode(boolean isGridMode) {

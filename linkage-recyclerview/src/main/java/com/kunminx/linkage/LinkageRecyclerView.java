@@ -50,6 +50,9 @@ import java.util.List;
  */
 public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends RelativeLayout {
 
+    private static final int DEFAULT_SPAN_COUNT = 1;
+    private static final int SCROLL_OFFSET = 0;
+
     private Context mContext;
 
     private RecyclerView mRvLevel1;
@@ -71,10 +74,6 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
     private boolean scrollSmoothly = true;
 
     private OnPrimaryItemClickListener mPrimaryItemClickListener;
-
-    private List<Integer> getHeaderPositions() {
-        return mHeaderPositions;
-    }
 
     public LinkageRecyclerView(Context context) {
         super(context);
@@ -107,7 +106,7 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
                     if (((BaseGroupedItem<T>) mLevel2Adapter.getItems().get(position)).isHeader) {
                         return mLevel2Adapter.getConfig().getSpanCountOfGridMode();
                     }
-                    return 1;
+                    return DEFAULT_SPAN_COUNT;
                 }
             });
         } else {
@@ -123,11 +122,11 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
                 new LinkageLevelPrimaryAdapter.OnLinkageListener() {
                     @Override
                     public void onLinkageClick(LevelPrimaryViewHolder holder, String title, int position) {
-                        mLevel1Adapter.selectItem(position);
                         if (isScrollSmoothly()) {
                             RecyclerViewScrollHelper.scrollToPosition(mRvLevel2, mHeaderPositions.get(position));
                         } else {
-                            mLevel2LayoutManager.scrollToPositionWithOffset(mHeaderPositions.get(position), 0);
+                            mLevel1Adapter.selectItem(position);
+                            mLevel2LayoutManager.scrollToPositionWithOffset(mHeaderPositions.get(position), SCROLL_OFFSET);
                         }
                     }
                 },
@@ -142,7 +141,6 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
 
         mRvLevel1.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
         mRvLevel1.setAdapter(mLevel1Adapter);
-
 
         mLevel2Adapter = new LinkageLevelSecondaryAdapter(mItems, secondaryAdapterConfig);
         setLevel2LayoutManager();
@@ -222,7 +220,8 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
         init(linkageItems, new DefaultLevelPrimaryAdapterConfig(), new DefaultLevelSecondaryAdapterConfig());
     }
 
-    public void init(List<BaseGroupedItem<T>> linkageItems, ILevelPrimaryAdapterConfig primaryAdapterConfig,
+    public void init(List<BaseGroupedItem<T>> linkageItems,
+                     ILevelPrimaryAdapterConfig primaryAdapterConfig,
                      ILevelSecondaryAdapterConfig secondaryAdapterConfig) {
 
         initRecyclerView(primaryAdapterConfig, secondaryAdapterConfig);
@@ -240,7 +239,7 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
         if (mItems != null) {
             for (int i = 0; i < mItems.size(); i++) {
                 if (mItems.get(i).isHeader) {
-                    getHeaderPositions().add(i);
+                    mHeaderPositions.add(i);
                 }
             }
         }
