@@ -44,8 +44,8 @@ Linkage-RecyclerView 的目标是：**一行代码即可接入二级联动列表
 
 1.在 build.gradle 中添加对该库的依赖。
 
-```
-implementation 'com.kunminx.linkage:linkage-recyclerview:1.3.5'
+```groovy
+implementation 'com.kunminx.linkage:linkage-recyclerview:1.4.3'
 ```
 
 2.依据默认的分组实体类 `DefaultGroupedItem` 的结构准备一串数据（以下以  JSON 为例）。
@@ -233,9 +233,7 @@ private void initLinkageDatas(LinkageRecyclerView linkage) {
             LinkageLevelPrimaryAdapter.LevelPrimaryViewHolder holder, 
             String title, int position) {
             
-            holder.getView(R.id.layout_group).setOnClickListener(v -> {
-				//TODO
-            });
+            ((TextView) holder.mGroupTitle).setText(title);
         }
 
         @Override
@@ -251,7 +249,6 @@ private void initLinkageDatas(LinkageRecyclerView linkage) {
     }, new ILevelSecondaryAdapterConfig<ElemeGroupedItem.ItemInfo>() {
 
         private Context mContext;
-        private boolean mIsGridMode;
 
         public void setContext(Context context) {
             mContext = context;
@@ -273,38 +270,13 @@ private void initLinkageDatas(LinkageRecyclerView linkage) {
         }
 
         @Override
-        public int getGroupTitleViewId() {
-            return R.id.iv_goods_name;
-        }
-
-        @Override
-        public int getRootViewId() {
-            return R.id.iv_goods_item;
-        }
-
-        @Override
-        public int getHeaderViewId() {
-            return R.id.level_2_header;
-        }
-
-        @Override
-        public boolean isGridMode() {
-            return mIsGridMode;
-        }
-
-        @Override
-        public void setGridMode(boolean isGridMode) {
-            mIsGridMode = isGridMode;
-        }
-
-        @Override
-        public int getSpanCount() {
+        public int getSpanCountOfGridMode() {
             return 2;
         }
 
         @Override
         public void onBindViewHolder(
-            LinkageLevelSecondaryAdapter.LevelSecondaryViewHolder holder, 
+            LevelSecondaryViewHolder holder, 
             BaseGroupedItem<ElemeGroupedItem.ItemInfo> item, int position) {
             
             ((TextView) holder.getView(R.id.iv_goods_name))
@@ -321,8 +293,15 @@ private void initLinkageDatas(LinkageRecyclerView linkage) {
                 //TODO
             });
         }
+        
+        @Override
+        public void onBindHeaderViewHolder(
+            LevelSecondaryHeaderViewHolder holder,
+            BaseGroupedItem<ElemeGroupedItem.ItemInfo> item, int position) {
+            //TODO
+        }
     });
-}
+}	
 ```
 
 

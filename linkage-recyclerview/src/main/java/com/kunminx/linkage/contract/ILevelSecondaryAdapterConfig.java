@@ -56,44 +56,9 @@ public interface ILevelSecondaryAdapterConfig<T extends BaseGroupedItem.ItemInfo
     int getHeaderLayoutId();
 
     /**
-     * get textView id of layout
-     *
-     * @return textView id of layout
-     */
-    int getTextViewId();
-
-    /**
-     * get rootView id of layout
-     *
-     * @return rootView id of layout
-     */
-    int getRootViewId();
-
-    /**
-     * get headerView id of layout
-     *
-     * @return headerView id of layout
-     */
-    int getHeaderViewId();
-
-    /**
-     * if is grid layout now
-     *
-     * @return is grid layout
-     */
-    boolean isGridMode();
-
-    /**
-     * set Grid Mode
-     *
-     * @param isGridMode isGridMode
-     */
-    void setGridMode(boolean isGridMode);
-
-    /**
      * get SpanCount of grid mode
      */
-    int getSpanCount();
+    int getSpanCountOfGridMode();
 
     /**
      * achieve the onBindViewHolder logic on outside

@@ -71,5 +71,4 @@ public interface ILevelPrimaryAdapterConfig {
      */
     void onItemSelected(boolean selected, View itemView);
 
-    void onItemClick();
 }

@@ -42,6 +42,7 @@ public class LinkageLevelSecondaryAdapter<T extends BaseGroupedItem.ItemInfo> ex
     private static final int IS_HEADER = 0;
     private static final int IS_LINEAR = 1;
     private static final int IS_GRID = 2;
+    private boolean mIsGridMode;
 
     private ILevelSecondaryAdapterConfig mConfig;
 
@@ -54,11 +55,11 @@ public class LinkageLevelSecondaryAdapter<T extends BaseGroupedItem.ItemInfo> ex
     }
 
     public boolean isGridMode() {
-        return mConfig.isGridMode();
+        return mIsGridMode;
     }
 
     public void setGridMode(boolean isGridMode) {
-        mConfig.setGridMode(isGridMode);
+        mIsGridMode = isGridMode;
     }
 
     public LinkageLevelSecondaryAdapter(List<BaseGroupedItem<T>> items, ILevelSecondaryAdapterConfig config) {
@@ -89,7 +90,7 @@ public class LinkageLevelSecondaryAdapter<T extends BaseGroupedItem.ItemInfo> ex
     public int getItemViewType(int position) {
         if (mItems.get(position).isHeader) {
             return IS_HEADER;
-        } else if (mConfig.isGridMode()) {
+        } else if (isGridMode()) {
             return IS_GRID;
         } else {
             return IS_LINEAR;

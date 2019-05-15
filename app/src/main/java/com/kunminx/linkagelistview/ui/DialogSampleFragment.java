@@ -75,6 +75,7 @@ public class DialogSampleFragment extends Fragment {
                 }.getType());
 
         linkage.init(items);
+        linkage.setScrollSmoothly(false);
         linkage.setOnItemDefaultBindListener(
                 (primaryView, title, position) -> {
                     Snackbar.make(primaryView, title, Snackbar.LENGTH_SHORT).show();

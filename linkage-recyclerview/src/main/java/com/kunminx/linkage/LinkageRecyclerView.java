@@ -100,12 +100,12 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
 
     private void setLevel2LayoutManager() {
         if (mLevel2Adapter.isGridMode()) {
-            mLevel2LayoutManager = new GridLayoutManager(mContext, mLevel2Adapter.getConfig().getSpanCount());
+            mLevel2LayoutManager = new GridLayoutManager(mContext, mLevel2Adapter.getConfig().getSpanCountOfGridMode());
             ((GridLayoutManager) mLevel2LayoutManager).setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                 @Override
                 public int getSpanSize(int position) {
                     if (((BaseGroupedItem<T>) mLevel2Adapter.getItems().get(position)).isHeader) {
-                        return mLevel2Adapter.getConfig().getSpanCount();
+                        return mLevel2Adapter.getConfig().getSpanCountOfGridMode();
                     }
                     return 1;
                 }

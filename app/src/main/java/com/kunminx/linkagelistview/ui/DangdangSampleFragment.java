@@ -118,11 +118,6 @@ public class DangdangSampleFragment extends Fragment {
                 textView.setMarqueeRepeatLimit(selected ? -1 : 0);
             }
 
-            @Override
-            public void onItemClick() {
-                //TODO
-            }
-
         }, new ILevelSecondaryAdapterConfig<ElemeGroupedItem.ItemInfo>() {
 
             private Context mContext;
@@ -148,32 +143,7 @@ public class DangdangSampleFragment extends Fragment {
             }
 
             @Override
-            public int getTextViewId() {
-                return R.id.iv_goods_name;
-            }
-
-            @Override
-            public int getRootViewId() {
-                return R.id.iv_goods_item;
-            }
-
-            @Override
-            public int getHeaderViewId() {
-                return com.kunminx.linkage.R.id.level_2_header;
-            }
-
-            @Override
-            public boolean isGridMode() {
-                return mIsGridMode;
-            }
-
-            @Override
-            public void setGridMode(boolean isGridMode) {
-                mIsGridMode = isGridMode;
-            }
-
-            @Override
-            public int getSpanCount() {
+            public int getSpanCountOfGridMode() {
                 return 2;
             }
 

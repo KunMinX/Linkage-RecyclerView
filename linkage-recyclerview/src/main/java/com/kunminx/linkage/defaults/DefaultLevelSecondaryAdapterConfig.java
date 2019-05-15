@@ -32,9 +32,9 @@ import com.kunminx.linkage.contract.ILevelSecondaryAdapterConfig;
 public class DefaultLevelSecondaryAdapterConfig implements ILevelSecondaryAdapterConfig<DefaultGroupedItem.ItemInfo> {
 
     private Context mContext;
-    private boolean mIsGridMode;
     private OnSecondaryItemBindListener mItemBindListener;
     private OnSecondaryHeaderBindListener mHeaderBindListener;
+    private static final int SPAN_COUNT = 3;
 
     public void setItemBindListener(OnSecondaryItemBindListener itemBindListener, OnSecondaryHeaderBindListener headerBindListener) {
         mItemBindListener = itemBindListener;
@@ -62,40 +62,15 @@ public class DefaultLevelSecondaryAdapterConfig implements ILevelSecondaryAdapte
     }
 
     @Override
-    public int getTextViewId() {
-        return R.id.level_2_title;
-    }
-
-    @Override
-    public int getRootViewId() {
-        return R.id.level_2_item;
-    }
-
-    @Override
-    public int getHeaderViewId() {
-        return R.id.level_2_header;
-    }
-
-    @Override
-    public boolean isGridMode() {
-        return mIsGridMode;
-    }
-
-    @Override
-    public void setGridMode(boolean isGridMode) {
-        mIsGridMode = isGridMode;
-    }
-
-    @Override
-    public int getSpanCount() {
-        return 3;
+    public int getSpanCountOfGridMode() {
+        return SPAN_COUNT;
     }
 
     @Override
     public void onBindViewHolder(LevelSecondaryViewHolder holder,
                                  BaseGroupedItem<DefaultGroupedItem.ItemInfo> item, int position) {
 
-        ((TextView) holder.getView(getTextViewId())).setText(item.info.getTitle());
+        ((TextView) holder.getView(R.id.level_2_title)).setText(item.info.getTitle());
         ((TextView) holder.getView(R.id.level_2_content)).setText(item.info.getContent());
 
         if (mItemBindListener != null) {
@@ -107,7 +82,7 @@ public class DefaultLevelSecondaryAdapterConfig implements ILevelSecondaryAdapte
     public void onBindHeaderViewHolder(LevelSecondaryHeaderViewHolder holder,
                                        BaseGroupedItem<DefaultGroupedItem.ItemInfo> item, int position) {
 
-        ((TextView) holder.getView(getHeaderViewId())).setText(item.header);
+        ((TextView) holder.getView(R.id.level_2_header)).setText(item.header);
 
         if (mHeaderBindListener != null) {
             mHeaderBindListener.onBindHeaderViewHolder(holder, item, position);

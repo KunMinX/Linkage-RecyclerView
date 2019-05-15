@@ -80,11 +80,6 @@ public class DefaultLevelPrimaryAdapterConfig implements ILevelPrimaryAdapterCon
         textView.setMarqueeRepeatLimit(selected ? -1 : 0);
     }
 
-    @Override
-    public void onItemClick() {
-
-    }
-
     public interface OnPrimaryItemBindListener {
         /**
          * Note: Please do not override rootView click listener in here, because of linkage selection rely on it.
