@@ -17,7 +17,6 @@ package com.kunminx.linkage.defaults;
 
 
 import android.content.Context;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;

@@ -4,11 +4,11 @@
 
 Linkage-RecyclerView is a secondary linkage list widget developed based on the MVP architecture. It exists because of the needs of the ["RxJava Magician"](https://github.com/KunMinX/RxJava2-Operators-Sample) project.
 
-After I searching all around GitHub and didn't find a suitable open source library that highly decoupled, remotely dependent, I decided to study the logic of the secondary linkage with existing open source projects and write a highly decoupled, Easy to configure, true third-party libraries that can be remotely dependent on the maven repository.
+After I searching all around GitHub and didn't find a suitable open source library that highly decoupled, remotely dependent, I decided to study the logic of the secondary linkage with existing open source projects and write **a highly decoupled, Easy to configure, true third-party libraries that can be remotely dependent on the Maven repository**.
 
 The personalized configuration of Linkage-RecyclerView is very simple. Based on MVP's “configuration decoupling” feature, users do not need to know the internal implementation details. Only by implementing the Config class can the function be customized and extended.
 
-In addition, Linkage-RecyclerView can be **ran by only one line of code** while without setting up a custom configuration.
+In addition, Linkage-RecyclerView can be **extreme ran by only one line of code** while without setting up a custom configuration.
 
 |                           RxMagic                            |                         Eleme Linear                         |                          Eleme Grid                          |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
@@ -203,126 +203,127 @@ When loading data and implementing a custom configuration, the generic box must 
 
 ```java
 private void initLinkageDatas(LinkageRecyclerView linkage) {
-        Gson gson = new Gson();
-        List<ElemeGroupedItem> items = gson.fromJson(...);
+    Gson gson = new Gson();
+    List<ElemeGroupedItem> items = gson.fromJson(...);
 
-        linkage.init(items, new ILevelPrimaryAdapterConfig() {
+    linkage.init(items, new ILevelPrimaryAdapterConfig() {
 
-            private Context mContext;
+        private Context mContext;
 
-            public void setContext(Context context) {
-                mContext = context;
-            }
+        public void setContext(Context context) {
+            mContext = context;
+        }
 
-            @Override
-            public int getLayoutId() {
-                return R.layout.default_adapter_linkage_level_primary;
-            }
+        @Override
+        public int getLayoutId() {
+            return R.layout.default_adapter_linkage_level_primary;
+        }
 
-            @Override
-            public int getTextViewId() {
-                return R.id.tv_group;
-            }
+        @Override
+        public int getTextViewId() {
+            return R.id.tv_group;
+        }
 
-            @Override
-            public int getRootViewId() {
-                return R.id.layout_group;
-            }
+        @Override
+        public int getRootViewId() {
+            return R.id.layout_group;
+        }
 
-            @Override
-            public void onBindViewHolder(
-                LinkageLevelPrimaryAdapter.LevelPrimaryViewHolder holder, 
-                String title, int position) {
-                
-                holder.getView(R.id.layout_group).setOnClickListener(v -> {
-					//TODO
-                });
-            }
+        @Override
+        public void onBindViewHolder(
+            LinkageLevelPrimaryAdapter.LevelPrimaryViewHolder holder, 
+            String title, int position) {
+            
+            holder.getView(R.id.layout_group).setOnClickListener(v -> {
+				//TODO
+            });
+        }
 
-            @Override
-            public void onItemSelected(boolean selected, TextView itemView) {
-                itemView.setBackgroundColor(mContext.getResources().getColor(selected
-                        ? com.kunminx.linkage.R.color.colorLightBlue
-                        : com.kunminx.linkage.R.color.colorWhite));
-                itemView.setTextColor(ContextCompat.getColor(mContext, selected
-                        ? com.kunminx.linkage.R.color.colorWhite
-                        : com.kunminx.linkage.R.color.colorGray));
-            }
+        @Override
+        public void onItemSelected(boolean selected, TextView itemView) {
+            itemView.setBackgroundColor(mContext.getResources().getColor(selected
+                    ? com.kunminx.linkage.R.color.colorLightBlue
+                    : com.kunminx.linkage.R.color.colorWhite));
+            itemView.setTextColor(ContextCompat.getColor(mContext, selected
+                    ? com.kunminx.linkage.R.color.colorWhite
+                    : com.kunminx.linkage.R.color.colorGray));
+        }
 
-        }, new ILevelSecondaryAdapterConfig<ElemeGroupedItem.ItemInfo>() {
+    }, new ILevelSecondaryAdapterConfig<ElemeGroupedItem.ItemInfo>() {
 
-            private Context mContext;
-            private boolean mIsGridMode;
+        private Context mContext;
+        private boolean mIsGridMode;
 
-            public void setContext(Context context) {
-                mContext = context;
-            }
+        public void setContext(Context context) {
+            mContext = context;
+        }
 
-            @Override
-            public int getGridLayoutId() {
-                return R.layout.adapter_eleme_secondary_grid;
-            }
+        @Override
+        public int getGridLayoutId() {
+            return R.layout.adapter_eleme_secondary_grid;
+        }
 
-            @Override
-            public int getLinearLayoutId() {
-                return R.layout.adapter_eleme_secondary_linear;
-            }
+        @Override
+        public int getLinearLayoutId() {
+            return R.layout.adapter_eleme_secondary_linear;
+        }
 
-            @Override
-            public int getHeaderLayoutId() {
-                return R.layout.default_adapter_linkage_level_secondary_header;
-            }
+        @Override
+        public int getHeaderLayoutId() {
+            return R.layout.default_adapter_linkage_level_secondary_header;
+        }
 
-            @Override
-            public int getTextViewId() {
-                return R.id.iv_goods_name;
-            }
+        @Override
+        public int getTextViewId() {
+            return R.id.iv_goods_name;
+        }
 
-            @Override
-            public int getRootViewId() {
-                return R.id.iv_goods_item;
-            }
+        @Override
+        public int getRootViewId() {
+            return R.id.iv_goods_item;
+        }
 
-            @Override
-            public int getHeaderViewId() {
-                return R.id.level_2_header;
-            }
+        @Override
+        public int getHeaderViewId() {
+            return R.id.level_2_header;
+        }
 
-            @Override
-            public boolean isGridMode() {
-                return mIsGridMode;
-            }
+        @Override
+        public boolean isGridMode() {
+            return mIsGridMode;
+        }
 
-            @Override
-            public void setGridMode(boolean isGridMode) {
-                mIsGridMode = isGridMode;
-            }
+        @Override
+        public void setGridMode(boolean isGridMode) {
+            mIsGridMode = isGridMode;
+        }
 
-            @Override
-            public int getSpanCount() {
-                return 2;
-            }
+        @Override
+        public int getSpanCount() {
+            return 2;
+        }
 
-            @Override
-            public void onBindViewHolder(
-                LinkageLevelSecondaryAdapter.LevelSecondaryViewHolder holder, 
-                BaseGroupedItem<ElemeGroupedItem.ItemInfo> item, int position) {
-                
-                ((TextView) holder.getView(R.id.iv_goods_name))
-                .setText(item.info.getTitle());
-                
-                Glide.with(mContext).load(item.info.getImgUrl())
-                    .into((ImageView) holder.getView(R.id.iv_goods_img));
-                
-                holder.getView(R.id.iv_goods_item).setOnClickListener(v -> {
-                    //TODO
-                });
+        @Override
+        public void onBindViewHolder(
+            LinkageLevelSecondaryAdapter.LevelSecondaryViewHolder holder, 
+            BaseGroupedItem<ElemeGroupedItem.ItemInfo> item, int position) {
+            
+            ((TextView) holder.getView(R.id.iv_goods_name))
+            .setText(item.info.getTitle());
+            
+            Glide.with(mContext).load(item.info.getImgUrl())
+                .into((ImageView) holder.getView(R.id.iv_goods_img));
+            
+            holder.getView(R.id.iv_goods_item).setOnClickListener(v -> {
+                //TODO
+            });
 
-                holder.getView(R.id.iv_goods_add).setOnClickListener(v -> {
-                    //TODO
-                });
-            }
-        });
+            holder.getView(R.id.iv_goods_add).setOnClickListener(v -> {
+                //TODO
+            });
+        }
+    });
+}
 ```
 
 

@@ -98,7 +98,7 @@ public class ElemeSampleFragment extends Fragment {
             @Override
             public void onBindViewHolder(LinkageLevelPrimaryAdapter.LevelPrimaryViewHolder holder, String title, int position) {
                 holder.getView(com.kunminx.linkage.R.id.layout_group).setOnClickListener(v -> {
-
+                    //TODO
                 });
             }
 

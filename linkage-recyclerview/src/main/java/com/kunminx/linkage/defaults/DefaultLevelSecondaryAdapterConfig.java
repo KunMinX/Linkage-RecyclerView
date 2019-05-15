@@ -17,11 +17,9 @@ package com.kunminx.linkage.defaults;
 
 
 import android.content.Context;
-import android.view.View;
 import android.widget.TextView;
 
 import com.kunminx.linkage.R;
-import com.kunminx.linkage.adapter.LinkageLevelPrimaryAdapter;
 import com.kunminx.linkage.adapter.LinkageLevelSecondaryAdapter;
 import com.kunminx.linkage.bean.BaseGroupedItem;
 import com.kunminx.linkage.bean.DefaultGroupedItem;
