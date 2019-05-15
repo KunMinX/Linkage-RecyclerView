@@ -24,10 +24,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.kunminx.linkage.adapter.viewholder.LevelSecondaryHeaderViewHolder;
-import com.kunminx.linkage.adapter.viewholder.LevelSecondaryViewHolder;
+import com.kunminx.linkage.adapter.viewholder.LinkageSecondaryHeaderViewHolder;
+import com.kunminx.linkage.adapter.viewholder.LinkageSecondaryViewHolder;
 import com.kunminx.linkage.bean.BaseGroupedItem;
-import com.kunminx.linkage.contract.ILevelSecondaryAdapterConfig;
+import com.kunminx.linkage.contract.ILinkageSecondaryAdapterConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ import java.util.List;
 /**
  * Create by KunMinX at 19/4/29
  */
-public class LinkageLevelSecondaryAdapter<T extends BaseGroupedItem.ItemInfo> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class LinkageSecondaryAdapter<T extends BaseGroupedItem.ItemInfo> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
     private List<BaseGroupedItem<T>> mItems;
@@ -44,9 +44,9 @@ public class LinkageLevelSecondaryAdapter<T extends BaseGroupedItem.ItemInfo> ex
     private static final int IS_GRID = 2;
     private boolean mIsGridMode;
 
-    private ILevelSecondaryAdapterConfig mConfig;
+    private ILinkageSecondaryAdapterConfig mConfig;
 
-    public ILevelSecondaryAdapterConfig getConfig() {
+    public ILinkageSecondaryAdapterConfig getConfig() {
         return mConfig;
     }
 
@@ -62,7 +62,7 @@ public class LinkageLevelSecondaryAdapter<T extends BaseGroupedItem.ItemInfo> ex
         mIsGridMode = isGridMode;
     }
 
-    public LinkageLevelSecondaryAdapter(List<BaseGroupedItem<T>> items, ILevelSecondaryAdapterConfig config) {
+    public LinkageSecondaryAdapter(List<BaseGroupedItem<T>> items, ILinkageSecondaryAdapterConfig config) {
         mItems = items;
         if (mItems == null) {
             mItems = new ArrayList<>();
@@ -104,13 +104,13 @@ public class LinkageLevelSecondaryAdapter<T extends BaseGroupedItem.ItemInfo> ex
         mConfig.setContext(mContext);
         if (viewType == IS_HEADER) {
             View view = LayoutInflater.from(mContext).inflate(mConfig.getHeaderLayoutId(), parent, false);
-            return new LevelSecondaryHeaderViewHolder(view);
+            return new LinkageSecondaryHeaderViewHolder(view);
         } else if (viewType == IS_GRID && mConfig.getGridLayoutId() != 0) {
             View view = LayoutInflater.from(mContext).inflate(mConfig.getGridLayoutId(), parent, false);
-            return new LevelSecondaryViewHolder(view);
+            return new LinkageSecondaryViewHolder(view);
         } else {
             View view = LayoutInflater.from(mContext).inflate(mConfig.getLinearLayoutId(), parent, false);
-            return new LevelSecondaryViewHolder(view);
+            return new LinkageSecondaryViewHolder(view);
         }
     }
 
@@ -118,10 +118,10 @@ public class LinkageLevelSecondaryAdapter<T extends BaseGroupedItem.ItemInfo> ex
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         final BaseGroupedItem<T> linkageItem = mItems.get(holder.getAdapterPosition());
         if (linkageItem.isHeader) {
-            LevelSecondaryHeaderViewHolder headerViewHolder = (LevelSecondaryHeaderViewHolder) holder;
+            LinkageSecondaryHeaderViewHolder headerViewHolder = (LinkageSecondaryHeaderViewHolder) holder;
             mConfig.onBindHeaderViewHolder(headerViewHolder, linkageItem, headerViewHolder.getAdapterPosition());
         } else {
-            final LevelSecondaryViewHolder secondaryViewHolder = (LevelSecondaryViewHolder) holder;
+            final LinkageSecondaryViewHolder secondaryViewHolder = (LinkageSecondaryViewHolder) holder;
             mConfig.onBindViewHolder(secondaryViewHolder, linkageItem, secondaryViewHolder.getAdapterPosition());
         }
     }

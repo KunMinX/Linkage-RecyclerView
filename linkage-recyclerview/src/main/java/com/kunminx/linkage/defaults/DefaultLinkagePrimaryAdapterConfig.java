@@ -24,13 +24,13 @@ import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 
 import com.kunminx.linkage.R;
-import com.kunminx.linkage.adapter.viewholder.LevelPrimaryViewHolder;
-import com.kunminx.linkage.contract.ILevelPrimaryAdapterConfig;
+import com.kunminx.linkage.adapter.viewholder.LinkagePrimaryViewHolder;
+import com.kunminx.linkage.contract.ILinkagePrimaryAdapterConfig;
 
 /**
  * Create by KunMinX at 19/5/8
  */
-public class DefaultLevelPrimaryAdapterConfig implements ILevelPrimaryAdapterConfig {
+public class DefaultLinkagePrimaryAdapterConfig implements ILinkagePrimaryAdapterConfig {
 
     private Context mContext;
     private OnPrimaryItemBindListener mListener;
@@ -60,7 +60,7 @@ public class DefaultLevelPrimaryAdapterConfig implements ILevelPrimaryAdapterCon
     }
 
     @Override
-    public void onBindViewHolder(LevelPrimaryViewHolder holder, String title, int position) {
+    public void onBindViewHolder(LinkagePrimaryViewHolder holder, String title, int position) {
 
         ((TextView) holder.mGroupTitle).setText(title);
 
@@ -88,6 +88,6 @@ public class DefaultLevelPrimaryAdapterConfig implements ILevelPrimaryAdapterCon
          * @param title         groupTitle
          * @param position      position
          */
-        void onBindViewHolder(LevelPrimaryViewHolder primaryHolder, String title, int position);
+        void onBindViewHolder(LinkagePrimaryViewHolder primaryHolder, String title, int position);
     }
 }

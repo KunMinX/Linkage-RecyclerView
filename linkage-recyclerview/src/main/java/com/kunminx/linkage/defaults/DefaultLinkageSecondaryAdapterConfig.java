@@ -20,16 +20,16 @@ import android.content.Context;
 import android.widget.TextView;
 
 import com.kunminx.linkage.R;
-import com.kunminx.linkage.adapter.viewholder.LevelSecondaryHeaderViewHolder;
-import com.kunminx.linkage.adapter.viewholder.LevelSecondaryViewHolder;
+import com.kunminx.linkage.adapter.viewholder.LinkageSecondaryHeaderViewHolder;
+import com.kunminx.linkage.adapter.viewholder.LinkageSecondaryViewHolder;
 import com.kunminx.linkage.bean.BaseGroupedItem;
 import com.kunminx.linkage.bean.DefaultGroupedItem;
-import com.kunminx.linkage.contract.ILevelSecondaryAdapterConfig;
+import com.kunminx.linkage.contract.ILinkageSecondaryAdapterConfig;
 
 /**
  * Create by KunMinX at 19/5/8
  */
-public class DefaultLevelSecondaryAdapterConfig implements ILevelSecondaryAdapterConfig<DefaultGroupedItem.ItemInfo> {
+public class DefaultLinkageSecondaryAdapterConfig implements ILinkageSecondaryAdapterConfig<DefaultGroupedItem.ItemInfo> {
 
     private Context mContext;
     private OnSecondaryItemBindListener mItemBindListener;
@@ -67,7 +67,7 @@ public class DefaultLevelSecondaryAdapterConfig implements ILevelSecondaryAdapte
     }
 
     @Override
-    public void onBindViewHolder(LevelSecondaryViewHolder holder,
+    public void onBindViewHolder(LinkageSecondaryViewHolder holder,
                                  BaseGroupedItem<DefaultGroupedItem.ItemInfo> item, int position) {
 
         ((TextView) holder.getView(R.id.level_2_title)).setText(item.info.getTitle());
@@ -79,7 +79,7 @@ public class DefaultLevelSecondaryAdapterConfig implements ILevelSecondaryAdapte
     }
 
     @Override
-    public void onBindHeaderViewHolder(LevelSecondaryHeaderViewHolder holder,
+    public void onBindHeaderViewHolder(LinkageSecondaryHeaderViewHolder holder,
                                        BaseGroupedItem<DefaultGroupedItem.ItemInfo> item, int position) {
 
         ((TextView) holder.getView(R.id.level_2_header)).setText(item.header);
@@ -90,12 +90,12 @@ public class DefaultLevelSecondaryAdapterConfig implements ILevelSecondaryAdapte
     }
 
     public interface OnSecondaryItemBindListener {
-        void onBindViewHolder(LevelSecondaryViewHolder secondaryHolder,
+        void onBindViewHolder(LinkageSecondaryViewHolder secondaryHolder,
                               BaseGroupedItem<DefaultGroupedItem.ItemInfo> item, int position);
     }
 
     public interface OnSecondaryHeaderBindListener {
-        void onBindHeaderViewHolder(LevelSecondaryHeaderViewHolder headerHolder,
+        void onBindHeaderViewHolder(LinkageSecondaryHeaderViewHolder headerHolder,
                                     BaseGroupedItem<DefaultGroupedItem.ItemInfo> item, int position);
     }
 }

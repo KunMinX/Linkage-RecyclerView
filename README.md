@@ -1,4 +1,4 @@
-## 联动 RecyclerView：即使不用饿了么订餐，也请务必收藏好该库！
+## 真香警告：即使不用饿了么订餐，也请务必收藏好该库！
 
 ### [Click here for reading English guide](https://github.com/KunMinX/Linkage-RecyclerView/blob/master/README_EN.md)
 
@@ -27,7 +27,7 @@ Linkage-RecyclerView 的目标是：**一行代码即可接入二级联动列表
 除了一键接入而省去 99% 不必要的、复杂的、重复的工作外，你还可以从这个开源项目获得的内容包括：
 
 1. 整洁的代码风格和标准的资源命名规范。
-2. **MVP 架构在第三库中的最佳实践：使用者无需了解内部逻辑，通过实现接口即可轻松完成个性化配置**。
+2. **MVP 架构在第三方库中的最佳实践：使用者无需了解内部逻辑，通过实现接口即可轻松完成个性化配置**。
 3. 优秀的代码分层和封装思想，在不做任何个性化配置的情况下，一行代码即可接入。
 4. 主体工程基于前沿的、遵循关注点分离的 JetPack MVVM 架构。
 5. AndroidX 和 Material Design 2 的全面使用。

@@ -30,11 +30,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.kunminx.linkage.LinkageRecyclerView;
-import com.kunminx.linkage.adapter.viewholder.LevelSecondaryHeaderViewHolder;
-import com.kunminx.linkage.adapter.viewholder.LevelSecondaryViewHolder;
-import com.kunminx.linkage.bean.BaseGroupedItem;
 import com.kunminx.linkage.bean.DefaultGroupedItem;
-import com.kunminx.linkage.defaults.DefaultLevelSecondaryAdapterConfig;
 import com.kunminx.linkagelistview.R;
 import com.kunminx.linkagelistview.databinding.FragmentBottomsheetBinding;
 
@@ -77,15 +73,15 @@ public class BottomSheetSampleFragment extends Fragment {
 
         linkage.init(items);
         linkage.setScrollSmoothly(false);
-        linkage.setOnItemDefaultBindListener(
-                (primaryView, title, position) -> {
-                    Snackbar.make(primaryView, title, Snackbar.LENGTH_SHORT).show();
+        linkage.setDefaultOnItemBindListener(
+                (primaryClickView, title, position) -> {
+                    Snackbar.make(primaryClickView, title, Snackbar.LENGTH_SHORT).show();
                 },
                 (primaryHolder, title, position) -> {
                     //TODO
                 },
                 (secondaryHolder, item, position) -> {
-                    secondaryHolder.getView(R.id.level_2_title).setOnClickListener(v -> {
+                    secondaryHolder.getView(R.id.level_2_item).setOnClickListener(v -> {
                         if (mSheetDialog != null && mSheetDialog.isShowing()) {
                             mSheetDialog.dismiss();
                         }

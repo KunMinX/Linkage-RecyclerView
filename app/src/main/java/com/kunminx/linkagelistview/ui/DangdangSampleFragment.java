@@ -34,12 +34,12 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.kunminx.linkage.LinkageRecyclerView;
-import com.kunminx.linkage.adapter.viewholder.LevelPrimaryViewHolder;
-import com.kunminx.linkage.adapter.viewholder.LevelSecondaryHeaderViewHolder;
-import com.kunminx.linkage.adapter.viewholder.LevelSecondaryViewHolder;
+import com.kunminx.linkage.adapter.viewholder.LinkagePrimaryViewHolder;
+import com.kunminx.linkage.adapter.viewholder.LinkageSecondaryHeaderViewHolder;
+import com.kunminx.linkage.adapter.viewholder.LinkageSecondaryViewHolder;
 import com.kunminx.linkage.bean.BaseGroupedItem;
-import com.kunminx.linkage.contract.ILevelPrimaryAdapterConfig;
-import com.kunminx.linkage.contract.ILevelSecondaryAdapterConfig;
+import com.kunminx.linkage.contract.ILinkagePrimaryAdapterConfig;
+import com.kunminx.linkage.contract.ILinkageSecondaryAdapterConfig;
 import com.kunminx.linkagelistview.R;
 import com.kunminx.linkagelistview.bean.ElemeGroupedItem;
 import com.kunminx.linkagelistview.databinding.FragmentDangDangBinding;
@@ -51,6 +51,9 @@ import java.util.List;
  */
 public class DangdangSampleFragment extends Fragment {
 
+    private static final int SPAN_COUNT_FOR_GRID_MODE = 2;
+    private static final int MARQUEE_REPEAT_LOOP_MODE = -1;
+    private static final int MARQUEE_REPEAT_NONE_MODE = 0;
     private FragmentDangDangBinding mBinding;
 
     @Nullable
@@ -77,7 +80,7 @@ public class DangdangSampleFragment extends Fragment {
                 new TypeToken<List<ElemeGroupedItem>>() {
                 }.getType());
 
-        linkage.init(items, new ILevelPrimaryAdapterConfig() {
+        linkage.init(items, new ILinkagePrimaryAdapterConfig() {
 
             private Context mContext;
 
@@ -101,7 +104,7 @@ public class DangdangSampleFragment extends Fragment {
             }
 
             @Override
-            public void onBindViewHolder(LevelPrimaryViewHolder holder, String title, int position) {
+            public void onBindViewHolder(LinkagePrimaryViewHolder holder, String title, int position) {
                 ((TextView) holder.mGroupTitle).setText(title);
             }
 
@@ -115,10 +118,10 @@ public class DangdangSampleFragment extends Fragment {
                 textView.setEllipsize(selected ? TextUtils.TruncateAt.MARQUEE : TextUtils.TruncateAt.END);
                 textView.setFocusable(selected);
                 textView.setFocusableInTouchMode(selected);
-                textView.setMarqueeRepeatLimit(selected ? -1 : 0);
+                textView.setMarqueeRepeatLimit(selected ? MARQUEE_REPEAT_LOOP_MODE : MARQUEE_REPEAT_NONE_MODE);
             }
 
-        }, new ILevelSecondaryAdapterConfig<ElemeGroupedItem.ItemInfo>() {
+        }, new ILinkageSecondaryAdapterConfig<ElemeGroupedItem.ItemInfo>() {
 
             private Context mContext;
             private boolean mIsGridMode;
@@ -144,11 +147,11 @@ public class DangdangSampleFragment extends Fragment {
 
             @Override
             public int getSpanCountOfGridMode() {
-                return 2;
+                return SPAN_COUNT_FOR_GRID_MODE;
             }
 
             @Override
-            public void onBindViewHolder(LevelSecondaryViewHolder holder,
+            public void onBindViewHolder(LinkageSecondaryViewHolder holder,
                                          BaseGroupedItem<ElemeGroupedItem.ItemInfo> item, int position) {
 
                 ((TextView) holder.getView(R.id.iv_goods_name)).setText(item.info.getTitle());
@@ -163,7 +166,7 @@ public class DangdangSampleFragment extends Fragment {
             }
 
             @Override
-            public void onBindHeaderViewHolder(LevelSecondaryHeaderViewHolder holder,
+            public void onBindHeaderViewHolder(LinkageSecondaryHeaderViewHolder holder,
                                                BaseGroupedItem<ElemeGroupedItem.ItemInfo> item, int position) {
                 //TODO
             }

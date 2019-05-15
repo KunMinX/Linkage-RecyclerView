@@ -20,22 +20,13 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
-import com.kunminx.linkage.contract.ILevelPrimaryAdapterConfig;
-
 /**
  * Create by KunMinX at 19/5/15
  */
-public class LevelPrimaryViewHolder extends BaseViewHolder {
+public class LinkageSecondaryHeaderViewHolder extends BaseViewHolder {
 
-    public View mGroupTitle;
-    public View mLayout;
-    private ILevelPrimaryAdapterConfig mConfig;
-
-    public LevelPrimaryViewHolder(@NonNull View itemView, ILevelPrimaryAdapterConfig config) {
+    public LinkageSecondaryHeaderViewHolder(@NonNull View itemView) {
         super(itemView);
-        mConfig = config;
-        mGroupTitle = itemView.findViewById(mConfig.getGroupTitleViewId());
-        //need bind root layout by users, because rootLayout may not viewGroup, which can not getChild(0).
-        mLayout = itemView.findViewById(mConfig.getRootViewId());
     }
+
 }

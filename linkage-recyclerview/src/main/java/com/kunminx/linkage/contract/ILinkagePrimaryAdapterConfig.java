@@ -19,12 +19,12 @@ package com.kunminx.linkage.contract;
 import android.content.Context;
 import android.view.View;
 
-import com.kunminx.linkage.adapter.viewholder.LevelPrimaryViewHolder;
+import com.kunminx.linkage.adapter.viewholder.LinkagePrimaryViewHolder;
 
 /**
  * Create by KunMinX at 19/5/8
  */
-public interface ILevelPrimaryAdapterConfig {
+public interface ILinkagePrimaryAdapterConfig {
 
     /**
      * setContext
@@ -57,11 +57,11 @@ public interface ILevelPrimaryAdapterConfig {
     /**
      * achieve the onBindViewHolder logic on outside
      *
-     * @param holder   LevelPrimaryViewHolder
+     * @param holder   LinkagePrimaryViewHolder
      * @param title    title of this position
      * @param position holder.getAdapterPosition()
      */
-    void onBindViewHolder(LevelPrimaryViewHolder holder, String title, int position);
+    void onBindViewHolder(LinkagePrimaryViewHolder holder, String title, int position);
 
     /**
      * configurations of textView when selected or not

@@ -64,15 +64,15 @@ public class RxMagicSampleFragment extends Fragment {
                 }.getType());
 
         linkage.init(items);
-        linkage.setOnItemDefaultBindListener(
-                (primaryView, title, position) -> {
-                    Snackbar.make(primaryView, title, Snackbar.LENGTH_SHORT).show();
+        linkage.setDefaultOnItemBindListener(
+                (primaryClickView, title, position) -> {
+                    Snackbar.make(primaryClickView, title, Snackbar.LENGTH_SHORT).show();
                 },
                 (primaryHolder, title, position) -> {
                     //TODO
                 },
                 (secondaryHolder, item, position) -> {
-                    secondaryHolder.getView(R.id.level_2_title).setOnClickListener(v -> {
+                    secondaryHolder.getView(R.id.level_2_item).setOnClickListener(v -> {
                         Snackbar.make(v, item.info.getTitle(), Snackbar.LENGTH_SHORT).show();
                     });
                 },

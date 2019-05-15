@@ -23,9 +23,9 @@ import androidx.annotation.NonNull;
 /**
  * Create by KunMinX at 19/5/15
  */
-public class LevelSecondaryViewHolder extends BaseViewHolder {
+public class LinkageSecondaryViewHolder extends BaseViewHolder {
 
-    public LevelSecondaryViewHolder(@NonNull View itemView) {
+    public LinkageSecondaryViewHolder(@NonNull View itemView) {
         super(itemView);
     }
 }

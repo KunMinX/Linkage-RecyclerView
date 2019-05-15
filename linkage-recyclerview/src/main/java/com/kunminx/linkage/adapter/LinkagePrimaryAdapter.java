@@ -24,8 +24,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.kunminx.linkage.adapter.viewholder.LevelPrimaryViewHolder;
-import com.kunminx.linkage.contract.ILevelPrimaryAdapterConfig;
+import com.kunminx.linkage.adapter.viewholder.LinkagePrimaryViewHolder;
+import com.kunminx.linkage.contract.ILinkagePrimaryAdapterConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,13 +33,13 @@ import java.util.List;
 /**
  * Create by KunMinX at 19/4/29
  */
-public class LinkageLevelPrimaryAdapter extends RecyclerView.Adapter<LevelPrimaryViewHolder> {
+public class LinkagePrimaryAdapter extends RecyclerView.Adapter<LinkagePrimaryViewHolder> {
 
     private List<String> mStrings;
     private List<View> mGroupTitleViews = new ArrayList<>();
     private Context mContext;
 
-    private ILevelPrimaryAdapterConfig mConfig;
+    private ILinkagePrimaryAdapterConfig mConfig;
     private OnLinkageListener mLinkageListener;
     private OnItemClickListener mItemClickListener;
 
@@ -47,12 +47,12 @@ public class LinkageLevelPrimaryAdapter extends RecyclerView.Adapter<LevelPrimar
         return mStrings;
     }
 
-    public ILevelPrimaryAdapterConfig getConfig() {
+    public ILinkagePrimaryAdapterConfig getConfig() {
         return mConfig;
     }
 
-    public LinkageLevelPrimaryAdapter(List<String> strings, ILevelPrimaryAdapterConfig config,
-                                      OnLinkageListener linkageListener, OnItemClickListener onItemClickListener) {
+    public LinkagePrimaryAdapter(List<String> strings, ILinkagePrimaryAdapterConfig config,
+                                 OnLinkageListener linkageListener, OnItemClickListener onItemClickListener) {
         mStrings = strings;
         if (mStrings == null) {
             mStrings = new ArrayList<>();
@@ -72,15 +72,15 @@ public class LinkageLevelPrimaryAdapter extends RecyclerView.Adapter<LevelPrimar
 
     @NonNull
     @Override
-    public LevelPrimaryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public LinkagePrimaryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mContext = parent.getContext();
         mConfig.setContext(mContext);
         View view = LayoutInflater.from(mContext).inflate(mConfig.getLayoutId(), parent, false);
-        return new LevelPrimaryViewHolder(view, mConfig);
+        return new LinkagePrimaryViewHolder(view, mConfig);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final LevelPrimaryViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final LinkagePrimaryViewHolder holder, int position) {
 
         // for textView MARQUEE available.
         holder.mLayout.setSelected(true);
@@ -123,7 +123,7 @@ public class LinkageLevelPrimaryAdapter extends RecyclerView.Adapter<LevelPrimar
      * users can archive onLinkageClick in configs instead.
      */
     public interface OnLinkageListener {
-        void onLinkageClick(LevelPrimaryViewHolder holder, String title, int position);
+        void onLinkageClick(LinkagePrimaryViewHolder holder, String title, int position);
     }
 
     public interface OnItemClickListener {
