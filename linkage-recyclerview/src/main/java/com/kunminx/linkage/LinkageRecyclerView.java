@@ -17,6 +17,7 @@ package com.kunminx.linkage;
 
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -69,6 +70,7 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
     private List<Integer> mHeaderPositions = new ArrayList<>();
     private int mTitleHeight;
     private int mFirstPosition = 0;
+    private String mLastGroupName;
     private LinearLayoutManager mLevel2LayoutManager;
 
     private boolean scrollSmoothly = true;
@@ -158,39 +160,48 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                mTitleHeight = mTvLevel2Header.getHeight();
+//                mTitleHeight = mTvLevel2Header.getMeasuredHeight();
             }
 
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-                if (mItems.get(mFirstPosition).isHeader) {
-                    View view = mLevel2LayoutManager.findViewByPosition(mFirstPosition);
+                //TODO for sticky head
+                /*if (mItems.get(mFirstPosition).isHeader) {
+                    View view = mLevel2LayoutManager.findViewByPosition(mFirstPosition + 1);
                     if (view != null) {
-                        if (view.getTop() >= mTitleHeight) {
-                            mTvLevel2Header.setY(view.getTop() - mTitleHeight);
+                        if (view.getTop() <= mTitleHeight) {
+                            mTvLevel2Header.setY(-(mTitleHeight - view.getTop()));
                         } else {
                             mTvLevel2Header.setY(0);
                         }
                     }
-                }
+                }*/
 
+                boolean groupNameChanged = false;
                 int firstPosition = mLevel2LayoutManager.findFirstVisibleItemPosition();
                 if (mFirstPosition != firstPosition && firstPosition >= 0) {
                     mFirstPosition = firstPosition;
-                    mTvLevel2Header.setY(0);
+//                    mTvLevel2Header.setY(0);
 
-                    if (mItems.get(mFirstPosition).isHeader) {
-                        mTvLevel2Header.setText(mItems.get(mFirstPosition).header);
-                    } else {
-                        mTvLevel2Header.setText(mItems.get(mFirstPosition).info.getGroup());
+                    // set title with first visible item's headerName or groupName
+                    String currentGroupName = mItems.get(mFirstPosition).isHeader
+                            ? mItems.get(mFirstPosition).header
+                            : mItems.get(mFirstPosition).info.getGroup();
+
+                    if (TextUtils.isEmpty(mLastGroupName) || !mLastGroupName.equals(currentGroupName)) {
+                        mLastGroupName = currentGroupName;
+                        groupNameChanged = true;
+                        mTvLevel2Header.setText(mLastGroupName);
                     }
                 }
 
-                for (int i = 0; i < mGroupNames.size(); i++) {
-                    if (mGroupNames.get(i).equals(mTvLevel2Header.getText().toString())) {
-                        mLevel1Adapter.selectItem(i);
+                if (groupNameChanged) {
+                    for (int i = 0; i < mGroupNames.size(); i++) {
+                        if (mGroupNames.get(i).equals(mTvLevel2Header.getText().toString())) {
+                            mLevel1Adapter.selectItem(i);
+                        }
                     }
                 }
 

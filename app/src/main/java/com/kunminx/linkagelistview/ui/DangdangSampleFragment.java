@@ -168,7 +168,8 @@ public class DangdangSampleFragment extends Fragment {
             @Override
             public void onBindHeaderViewHolder(LinkageSecondaryHeaderViewHolder holder,
                                                BaseGroupedItem<ElemeGroupedItem.ItemInfo> item, int position) {
-                //TODO
+
+                ((TextView) holder.getView(R.id.level_2_header)).setText(item.header);
             }
         });
     }
