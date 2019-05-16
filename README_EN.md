@@ -41,7 +41,7 @@ If you are thinking about **how to choose the right architecture for your projec
 1. Add a dependency on the library in build.gradle.
 
 ```groovy
-implementation 'com.kunminx.linkage:linkage-recyclerview:1.4.6'
+implementation 'com.kunminx.linkage:linkage-recyclerview:1.4.7'
 ```
 
 2. Prepare a string of data according to the structure of the default grouping entity class `DefaultGroupedItem`. (The following is JSON as an example).

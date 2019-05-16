@@ -1,6 +1,8 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
 
+
+
+//
 def theVersionName = "1.4.7"
 
 android {
