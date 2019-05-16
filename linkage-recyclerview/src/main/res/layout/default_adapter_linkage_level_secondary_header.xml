@@ -28,5 +28,5 @@
         android:layout_height="wrap_content"
         android:background="@color/colorLightGray"
         android:padding="12dp"
-         />
+        android:singleLine="true" />
 </LinearLayout>

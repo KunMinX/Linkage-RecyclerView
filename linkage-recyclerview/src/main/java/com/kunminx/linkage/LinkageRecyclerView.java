@@ -172,7 +172,7 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
                     View view = mLevel2LayoutManager.findViewByPosition(mFirstPosition + 1);
                     if (view != null) {
                         if (view.getTop() <= mTitleHeight) {
-                            mTvLevel2Header.setY(-(mTitleHeight - view.getTop()));
+                            mTvLevel2Header.setY(view.getTop() - mTitleHeight);
                         } else {
                             mTvLevel2Header.setY(0);
                         }
