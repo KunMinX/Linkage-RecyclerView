@@ -1,7 +1,6 @@
 apply plugin: 'com.android.library'
 
 
-
 //
 def theVersionName = "1.4.7"
 
@@ -42,7 +41,3 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha05'
     implementation 'com.google.android.material:material:1.1.0-alpha06'
 }
-
-
-}
-
