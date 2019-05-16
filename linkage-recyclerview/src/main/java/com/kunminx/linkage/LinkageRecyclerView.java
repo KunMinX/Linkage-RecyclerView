@@ -160,32 +160,38 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-//                mTitleHeight = mTvLevel2Header.getMeasuredHeight();
+                mTitleHeight = mTvLevel2Header.getMeasuredHeight();
             }
 
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-                //TODO for sticky head
-                /*if (mItems.get(mFirstPosition).isHeader) {
-                    View view = mLevel2LayoutManager.findViewByPosition(mFirstPosition + 1);
-                    if (view != null) {
-                        if (view.getTop() <= mTitleHeight) {
-                            mTvLevel2Header.setY(view.getTop() - mTitleHeight);
-                        } else {
-                            mTvLevel2Header.setY(0);
-                        }
+                int firstPosition = mLevel2LayoutManager.findFirstVisibleItemPosition();
+
+                // Here is the logic of the switch animation of sticky:
+                // FirstPosition + 1 means that groupItem is next and entering.
+                // So while groupItem is approach, the headerView should offset and sticky moved with groupItem.
+
+                if (mItems.get(firstPosition + 1).isHeader) {
+                    View view = mLevel2LayoutManager.findViewByPosition(firstPosition + 1);
+                    if (view != null && view.getTop() <= mTitleHeight) {
+                        mTvLevel2Header.setY(view.getTop() - mTitleHeight);
                     }
-                }*/
+                }
+
+                // Here is the logic of groupTitle and linkage:
+                // When the firstPosition changes, that is, the top item changes, so re-acquire the group name.
+                // If the group name are the same to the previous one, that is, the group does not change.
+                // Otherwise, when the group changes, the headerName needs to be updated, and
+                // the corresponding item of primary linkage list should be selected.
 
                 boolean groupNameChanged = false;
-                int firstPosition = mLevel2LayoutManager.findFirstVisibleItemPosition();
+
                 if (mFirstPosition != firstPosition && firstPosition >= 0) {
                     mFirstPosition = firstPosition;
-//                    mTvLevel2Header.setY(0);
+                    mTvLevel2Header.setY(0);
 
-                    // set title with first visible item's headerName or groupName
                     String currentGroupName = mItems.get(mFirstPosition).isHeader
                             ? mItems.get(mFirstPosition).header
                             : mItems.get(mFirstPosition).info.getGroup();
