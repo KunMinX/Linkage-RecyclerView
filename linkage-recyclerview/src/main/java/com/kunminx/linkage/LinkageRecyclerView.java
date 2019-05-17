@@ -169,14 +169,7 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
 
                 int firstPosition = mLevel2LayoutManager.findFirstVisibleItemPosition();
 
-                // 以下是粘性头部切换的逻辑：
-                // (FirstPosition + 1).isHeader 意味着紧挨着 FirstVisibleItem 下方的 groupItem 即将上位，
-                // 因而当 groupItem 逼近且粘着 HeaderView 向上时（此时 groupItem 的 getTop 小于 HeaderView 的 height），
-                // HeaderView 应通过 setY 即时地调整相对于父容器的偏移量以配合 groupItem 出演。
-
-                // Here is the logic of the switch animation of sticky:
-                // (FirstPosition + 1).isHeader means that groupItem is next and entering.
-                // So while groupItem is approach, the headerView should offset and sticky moved with groupItem.
+                // Here is the logic of the sticky:
 
                 if (mItems.get(firstPosition + 1).isHeader) {
                     View view = mLevel2LayoutManager.findViewByPosition(firstPosition + 1);
@@ -185,15 +178,7 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
                     }
                 }
 
-                // 以下是分组标题切换和一级联动的逻辑：
-                // 每当 FirstPosition 发生变化，也即顶部 item 变化时，重新获取组名，
-                // 如果组名不变，意味着仍在同一分组，反之，headerName 需要改变，并且对应的一级联动 item 需被选中。
-
-                // Here is the logic of groupTitle and linkage:
-                // When the firstPosition changes, that is, the top item changes, so re-acquire the group name.
-                // If the group name are the same to the previous one, that is, the group does not change.
-                // Otherwise, when the group changes, the headerName needs to be updated, and
-                // the corresponding item of primary linkage list should be selected.
+                // Here is the logic of group title changes and linkage:
 
                 boolean groupNameChanged = false;
 

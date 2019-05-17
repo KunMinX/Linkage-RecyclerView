@@ -121,7 +121,6 @@ public class ElemeSampleFragment extends Fragment {
         }, new ILinkageSecondaryAdapterConfig<ElemeGroupedItem.ItemInfo>() {
 
             private Context mContext;
-            private boolean mIsGridMode;
 
             public void setContext(Context context) {
                 mContext = context;
