@@ -50,10 +50,21 @@ public interface ILinkageSecondaryAdapterConfig<T extends BaseGroupedItem.ItemIn
 
     /**
      * get header layout res id
+     * <p>
+     * Note: Secondary adapter's Header and HeaderView must share the same set of views
      *
      * @return header layout res id
      */
     int getHeaderLayoutId();
+
+    /**
+     * get the id of textView for bind title of HeaderView
+     * <p>
+     * Note: Secondary adapter's Header and HeaderView must share the same set of views
+     *
+     * @return
+     */
+    int getHeaderTextViewId();
 
     /**
      * get SpanCount of grid mode

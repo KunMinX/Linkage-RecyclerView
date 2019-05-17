@@ -24,7 +24,7 @@
     android:orientation="horizontal">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_level_1"
+        android:id="@+id/rv_primary"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1" />
@@ -36,20 +36,14 @@
         android:layout_weight="3">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_level_2"
+            android:id="@+id/rv_secondary"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <TextView
-            android:id="@+id/tv_level_2_header"
+        <FrameLayout
+            android:id="@+id/header_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorLightGray"
-            android:paddingStart="@dimen/margin12"
-            android:paddingTop="@dimen/margin12"
-            android:paddingEnd="@dimen/margin12"
-            android:paddingBottom="@dimen/margin12"
-            android:singleLine="true" />
+            android:layout_height="wrap_content" />
 
     </FrameLayout>
 

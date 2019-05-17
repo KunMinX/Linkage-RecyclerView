@@ -23,7 +23,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/level_2_header"
+        android:id="@+id/secondary_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorLightGray"

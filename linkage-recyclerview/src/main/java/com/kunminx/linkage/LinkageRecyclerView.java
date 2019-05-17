@@ -23,6 +23,7 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -56,22 +57,23 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
 
     private Context mContext;
 
-    private RecyclerView mRvLevel1;
-    private RecyclerView mRvLevel2;
+    private RecyclerView mRvPrimary;
+    private RecyclerView mRvSecondary;
     private LinearLayout mLinkageLayout;
 
-    private LinkagePrimaryAdapter mLevel1Adapter;
-    private LinkageSecondaryAdapter mLevel2Adapter;
-    private TextView mTvLevel2Header;
+    private LinkagePrimaryAdapter mPrimaryAdapter;
+    private LinkageSecondaryAdapter mSecondaryAdapter;
+    private TextView mTvHeader;
+    private FrameLayout mHeaderContainer;
 
     private List<String> mGroupNames;
     private List<BaseGroupedItem<T>> mItems;
 
     private List<Integer> mHeaderPositions = new ArrayList<>();
     private int mTitleHeight;
-    private int mFirstPosition = 0;
+    private int mFirstVisiblePosition = 0;
     private String mLastGroupName;
-    private LinearLayoutManager mLevel2LayoutManager;
+    private LinearLayoutManager mSecondaryLayoutManager;
 
     private boolean scrollSmoothly = true;
 
@@ -93,42 +95,42 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
     private void initView(Context context, @Nullable AttributeSet attrs) {
         this.mContext = context;
         View view = LayoutInflater.from(context).inflate(R.layout.layout_linkage_view, this);
-        mRvLevel1 = (RecyclerView) view.findViewById(R.id.rv_level_1);
-        mRvLevel2 = (RecyclerView) view.findViewById(R.id.rv_level_2);
-        mTvLevel2Header = (TextView) view.findViewById(R.id.tv_level_2_header);
+        mRvPrimary = (RecyclerView) view.findViewById(R.id.rv_primary);
+        mRvSecondary = (RecyclerView) view.findViewById(R.id.rv_secondary);
+        mHeaderContainer = (FrameLayout) view.findViewById(R.id.header_container);
         mLinkageLayout = (LinearLayout) view.findViewById(R.id.linkage_layout);
     }
 
     private void setLevel2LayoutManager() {
-        if (mLevel2Adapter.isGridMode()) {
-            mLevel2LayoutManager = new GridLayoutManager(mContext, mLevel2Adapter.getConfig().getSpanCountOfGridMode());
-            ((GridLayoutManager) mLevel2LayoutManager).setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+        if (mSecondaryAdapter.isGridMode()) {
+            mSecondaryLayoutManager = new GridLayoutManager(mContext, mSecondaryAdapter.getConfig().getSpanCountOfGridMode());
+            ((GridLayoutManager) mSecondaryLayoutManager).setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                 @Override
                 public int getSpanSize(int position) {
-                    if (((BaseGroupedItem<T>) mLevel2Adapter.getItems().get(position)).isHeader) {
-                        return mLevel2Adapter.getConfig().getSpanCountOfGridMode();
+                    if (((BaseGroupedItem<T>) mSecondaryAdapter.getItems().get(position)).isHeader) {
+                        return mSecondaryAdapter.getConfig().getSpanCountOfGridMode();
                     }
                     return DEFAULT_SPAN_COUNT;
                 }
             });
         } else {
-            mLevel2LayoutManager = new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false);
+            mSecondaryLayoutManager = new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false);
         }
-        mRvLevel2.setLayoutManager(mLevel2LayoutManager);
+        mRvSecondary.setLayoutManager(mSecondaryLayoutManager);
     }
 
     private void initRecyclerView(ILinkagePrimaryAdapterConfig primaryAdapterConfig,
                                   ILinkageSecondaryAdapterConfig secondaryAdapterConfig) {
 
-        mLevel1Adapter = new LinkagePrimaryAdapter(mGroupNames, primaryAdapterConfig,
+        mPrimaryAdapter = new LinkagePrimaryAdapter(mGroupNames, primaryAdapterConfig,
                 new LinkagePrimaryAdapter.OnLinkageListener() {
                     @Override
                     public void onLinkageClick(LinkagePrimaryViewHolder holder, String title, int position) {
                         if (isScrollSmoothly()) {
-                            RecyclerViewScrollHelper.scrollToPosition(mRvLevel2, mHeaderPositions.get(position));
+                            RecyclerViewScrollHelper.scrollToPosition(mRvSecondary, mHeaderPositions.get(position));
                         } else {
-                            mLevel1Adapter.selectItem(position);
-                            mLevel2LayoutManager.scrollToPositionWithOffset(mHeaderPositions.get(position), SCROLL_OFFSET);
+                            mPrimaryAdapter.selectItem(position);
+                            mSecondaryLayoutManager.scrollToPositionWithOffset(mHeaderPositions.get(position), SCROLL_OFFSET);
                         }
                     }
                 },
@@ -141,40 +143,50 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
                     }
                 });
 
-        mRvLevel1.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
-        mRvLevel1.setAdapter(mLevel1Adapter);
+        mRvPrimary.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
+        mRvPrimary.setAdapter(mPrimaryAdapter);
 
-        mLevel2Adapter = new LinkageSecondaryAdapter(mItems, secondaryAdapterConfig);
+        mSecondaryAdapter = new LinkageSecondaryAdapter(mItems, secondaryAdapterConfig);
         setLevel2LayoutManager();
-        mRvLevel2.setAdapter(mLevel2Adapter);
+        mRvSecondary.setAdapter(mSecondaryAdapter);
     }
 
     private void initLinkageLevel2() {
 
-        if (mItems.get(mFirstPosition).isHeader) {
-            mTvLevel2Header.setText(mItems.get(mFirstPosition).header);
+        // Note: headerLayout is shared by both SecondaryAdapter's header and HeaderView
+
+        if (mTvHeader == null && mSecondaryAdapter.getConfig() != null) {
+            ILinkageSecondaryAdapterConfig config = mSecondaryAdapter.getConfig();
+            int layout = config.getHeaderLayoutId();
+            View view = LayoutInflater.from(mContext).inflate(layout, null);
+            mHeaderContainer.addView(view);
+            mTvHeader = view.findViewById(config.getHeaderTextViewId());
         }
 
-        mRvLevel2.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        if (mItems.get(mFirstVisiblePosition).isHeader) {
+            mTvHeader.setText(mItems.get(mFirstVisiblePosition).header);
+        }
+
+        mRvSecondary.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                mTitleHeight = mTvLevel2Header.getMeasuredHeight();
+                mTitleHeight = mTvHeader.getMeasuredHeight();
             }
 
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-                int firstPosition = mLevel2LayoutManager.findFirstVisibleItemPosition();
+                int firstPosition = mSecondaryLayoutManager.findFirstVisibleItemPosition();
 
                 // Here is the logic of the sticky:
 
                 if (mItems.get(firstPosition + 1).isHeader) {
-                    View view = mLevel2LayoutManager.findViewByPosition(firstPosition + 1);
+                    View view = mSecondaryLayoutManager.findViewByPosition(firstPosition + 1);
                     if (view != null && view.getTop() <= mTitleHeight) {
-                        mTvLevel2Header.setY(view.getTop() - mTitleHeight);
+                        mTvHeader.setY(view.getTop() - mTitleHeight);
                     }
                 }
 
@@ -182,31 +194,31 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
 
                 boolean groupNameChanged = false;
 
-                if (mFirstPosition != firstPosition && firstPosition >= 0) {
-                    mFirstPosition = firstPosition;
-                    mTvLevel2Header.setY(0);
+                if (mFirstVisiblePosition != firstPosition && firstPosition >= 0) {
+                    mFirstVisiblePosition = firstPosition;
+                    mTvHeader.setY(0);
 
-                    String currentGroupName = mItems.get(mFirstPosition).isHeader
-                            ? mItems.get(mFirstPosition).header
-                            : mItems.get(mFirstPosition).info.getGroup();
+                    String currentGroupName = mItems.get(mFirstVisiblePosition).isHeader
+                            ? mItems.get(mFirstVisiblePosition).header
+                            : mItems.get(mFirstVisiblePosition).info.getGroup();
 
                     if (TextUtils.isEmpty(mLastGroupName) || !mLastGroupName.equals(currentGroupName)) {
                         mLastGroupName = currentGroupName;
                         groupNameChanged = true;
-                        mTvLevel2Header.setText(mLastGroupName);
+                        mTvHeader.setText(mLastGroupName);
                     }
                 }
 
                 if (groupNameChanged) {
                     for (int i = 0; i < mGroupNames.size(); i++) {
-                        if (mGroupNames.get(i).equals(mTvLevel2Header.getText().toString())) {
-                            mLevel1Adapter.selectItem(i);
+                        if (mGroupNames.get(i).equals(mTvHeader.getText().toString())) {
+                            mPrimaryAdapter.selectItem(i);
                         }
                     }
                 }
 
-                if (mLevel2LayoutManager.findLastCompletelyVisibleItemPosition() == mItems.size() - 1) {
-                    mLevel1Adapter.selectItem(mGroupNames.size() - 1);
+                if (mSecondaryLayoutManager.findLastCompletelyVisibleItemPosition() == mItems.size() - 1) {
+                    mPrimaryAdapter.selectItem(mGroupNames.size() - 1);
                 }
             }
         });
@@ -218,13 +230,13 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
     }
 
     public boolean isGridMode() {
-        return mLevel2Adapter.isGridMode();
+        return mSecondaryAdapter.isGridMode();
     }
 
     public void setGridMode(boolean isGridMode) {
-        mLevel2Adapter.setGridMode(isGridMode);
+        mSecondaryAdapter.setGridMode(isGridMode);
         setLevel2LayoutManager();
-        mRvLevel2.requestLayout();
+        mRvSecondary.requestLayout();
     }
 
     public void init(List<BaseGroupedItem<T>> linkageItems) {
@@ -256,8 +268,8 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
         }
 
         this.mGroupNames = groupNames;
-        mLevel1Adapter.refreshList(mGroupNames);
-        mLevel2Adapter.refreshList(mItems);
+        mPrimaryAdapter.refreshList(mGroupNames);
+        mSecondaryAdapter.refreshList(mItems);
         initLinkageLevel2();
     }
 
@@ -269,12 +281,12 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
 
         mPrimaryItemClickListener = onPrimaryItemClickListener;
 
-        if (mLevel1Adapter.getConfig() != null) {
-            ((DefaultLinkagePrimaryAdapterConfig) mLevel1Adapter.getConfig())
+        if (mPrimaryAdapter.getConfig() != null) {
+            ((DefaultLinkagePrimaryAdapterConfig) mPrimaryAdapter.getConfig())
                     .setListener(primaryItemBindListener);
         }
-        if (mLevel2Adapter.getConfig() != null) {
-            ((DefaultLinkageSecondaryAdapterConfig) mLevel2Adapter.getConfig())
+        if (mSecondaryAdapter.getConfig() != null) {
+            ((DefaultLinkageSecondaryAdapterConfig) mSecondaryAdapter.getConfig())
                     .setItemBindListener(secondaryItemBindListener, headerBindListener);
         }
     }

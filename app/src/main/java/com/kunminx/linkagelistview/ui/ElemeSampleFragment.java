@@ -142,6 +142,11 @@ public class ElemeSampleFragment extends Fragment {
             }
 
             @Override
+            public int getHeaderTextViewId() {
+                return R.id.secondary_header;
+            }
+
+            @Override
             public int getSpanCountOfGridMode() {
                 return SPAN_COUNT_FOR_GRID_MODE;
             }
@@ -165,7 +170,7 @@ public class ElemeSampleFragment extends Fragment {
             public void onBindHeaderViewHolder(LinkageSecondaryHeaderViewHolder holder,
                                                BaseGroupedItem<ElemeGroupedItem.ItemInfo> item, int position) {
 
-                ((TextView) holder.getView(R.id.level_2_header)).setText(item.header);
+                ((TextView) holder.getView(R.id.secondary_header)).setText(item.header);
             }
         });
     }
