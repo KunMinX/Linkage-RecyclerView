@@ -48,17 +48,17 @@ public class DefaultLinkageSecondaryAdapterConfig implements ILinkageSecondaryAd
 
     @Override
     public int getGridLayoutId() {
-        return R.layout.default_adapter_linkage_level_secondary_grid;
+        return R.layout.default_adapter_linkage_secondary_grid;
     }
 
     @Override
     public int getLinearLayoutId() {
-        return R.layout.default_adapter_linkage_level_secondary_linear;
+        return R.layout.default_adapter_linkage_secondary_linear;
     }
 
     @Override
     public int getHeaderLayoutId() {
-        return R.layout.default_adapter_linkage_level_secondary_header;
+        return R.layout.default_adapter_linkage_secondary_header;
     }
 
     @Override

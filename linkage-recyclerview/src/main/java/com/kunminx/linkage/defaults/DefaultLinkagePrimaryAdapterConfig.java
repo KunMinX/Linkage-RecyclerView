@@ -46,7 +46,7 @@ public class DefaultLinkagePrimaryAdapterConfig implements ILinkagePrimaryAdapte
 
     @Override
     public int getLayoutId() {
-        return R.layout.default_adapter_linkage_level_primary;
+        return R.layout.default_adapter_linkage_primary;
     }
 
     @Override

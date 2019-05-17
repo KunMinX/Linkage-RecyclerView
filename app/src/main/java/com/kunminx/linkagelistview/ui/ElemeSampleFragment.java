@@ -87,7 +87,7 @@ public class ElemeSampleFragment extends Fragment {
 
             @Override
             public int getLayoutId() {
-                return com.kunminx.linkage.R.layout.default_adapter_linkage_level_primary;
+                return com.kunminx.linkage.R.layout.default_adapter_linkage_primary;
             }
 
             @Override
@@ -138,7 +138,7 @@ public class ElemeSampleFragment extends Fragment {
 
             @Override
             public int getHeaderLayoutId() {
-                return com.kunminx.linkage.R.layout.default_adapter_linkage_level_secondary_header;
+                return com.kunminx.linkage.R.layout.default_adapter_linkage_secondary_header;
             }
 
             @Override

@@ -45,7 +45,7 @@ Linkage-RecyclerView 的目标是：**一行代码即可接入二级联动列表
 1.在 build.gradle 中添加对该库的依赖。
 
 ```groovy
-implementation 'com.kunminx.linkage:linkage-recyclerview:1.5.5'
+implementation 'com.kunminx.linkage:linkage-recyclerview:1.5.7'
 ```
 
 2.依据默认的分组实体类 `DefaultGroupedItem` 的结构准备一串数据（以下以  JSON 为例）。

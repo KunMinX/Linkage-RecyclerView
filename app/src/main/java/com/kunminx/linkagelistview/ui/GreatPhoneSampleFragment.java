@@ -42,25 +42,25 @@ import com.kunminx.linkage.contract.ILinkagePrimaryAdapterConfig;
 import com.kunminx.linkage.contract.ILinkageSecondaryAdapterConfig;
 import com.kunminx.linkagelistview.R;
 import com.kunminx.linkagelistview.bean.ElemeGroupedItem;
-import com.kunminx.linkagelistview.databinding.FragmentDangDangBinding;
+import com.kunminx.linkagelistview.databinding.FragmentGreatPhoneBinding;
 
 import java.util.List;
 
 /**
  * Create by KunMinX at 19/5/8
  */
-public class DangdangSampleFragment extends Fragment {
+public class GreatPhoneSampleFragment extends Fragment {
 
     private static final int SPAN_COUNT_FOR_GRID_MODE = 2;
     private static final int MARQUEE_REPEAT_LOOP_MODE = -1;
     private static final int MARQUEE_REPEAT_NONE_MODE = 0;
-    private FragmentDangDangBinding mBinding;
+    private FragmentGreatPhoneBinding mBinding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_dang_dang, container, false);
-        mBinding = FragmentDangDangBinding.bind(view);
+        View view = inflater.inflate(R.layout.fragment_great_phone, container, false);
+        mBinding = FragmentGreatPhoneBinding.bind(view);
         setHasOptionsMenu(true);
         return view;
     }
@@ -90,7 +90,7 @@ public class DangdangSampleFragment extends Fragment {
 
             @Override
             public int getLayoutId() {
-                return com.kunminx.linkage.R.layout.default_adapter_linkage_level_primary;
+                return com.kunminx.linkage.R.layout.default_adapter_linkage_primary;
             }
 
             @Override
@@ -141,7 +141,7 @@ public class DangdangSampleFragment extends Fragment {
 
             @Override
             public int getHeaderLayoutId() {
-                return com.kunminx.linkage.R.layout.default_adapter_linkage_level_secondary_header;
+                return com.kunminx.linkage.R.layout.default_adapter_linkage_secondary_header;
             }
 
             @Override
