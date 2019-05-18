@@ -324,9 +324,9 @@ private void initLinkageDatas(LinkageRecyclerView linkage) {
 
 Email：[kunminx@gmail.com](mailto:kunminx@gmail.com)
 
-Blog：[KunMinX 的个人博客](https://kunminx.github.io/)
+Blog：[KunMinX's Personal Blog](https://kunminx.github.io/)
 
-Juejin：[KunMinX 在掘金](https://juejin.im/user/58ab0de9ac502e006975d757/posts)
+Medium：[KunMinX @ Medium](https://medium.com/@kunminx)
 
 <span id="wechatQrcode">KunMinX's WeChat Public Account（微信公众号）：</span>
 
