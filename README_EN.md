@@ -1,4 +1,4 @@
-## Even if you don't order by PrubHub, be sure to collect this library, please!
+## Even if you don't order food by PrubHub, be sure to collect this library, please!
 
 ### Origin
 
