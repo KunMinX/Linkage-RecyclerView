@@ -229,20 +229,6 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
         return (int) ((dp * displayMetrics.density) + 0.5f);
     }
 
-    public boolean isGridMode() {
-        return mSecondaryAdapter.isGridMode();
-    }
-
-    public void setGridMode(boolean isGridMode) {
-        mSecondaryAdapter.setGridMode(isGridMode);
-        setLevel2LayoutManager();
-        mRvSecondary.requestLayout();
-    }
-
-    public void init(List<BaseGroupedItem<T>> linkageItems) {
-        init(linkageItems, new DefaultLinkagePrimaryAdapterConfig(), new DefaultLinkageSecondaryAdapterConfig());
-    }
-
     public void init(List<BaseGroupedItem<T>> linkageItems,
                      ILinkagePrimaryAdapterConfig primaryAdapterConfig,
                      ILinkageSecondaryAdapterConfig secondaryAdapterConfig) {
@@ -273,6 +259,10 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
         initLinkageLevel2();
     }
 
+    public void init(List<BaseGroupedItem<T>> linkageItems) {
+        init(linkageItems, new DefaultLinkagePrimaryAdapterConfig(), new DefaultLinkageSecondaryAdapterConfig());
+    }
+
     public void setDefaultOnItemBindListener(
             OnPrimaryItemClickListener onPrimaryItemClickListener,
             DefaultLinkagePrimaryAdapterConfig.OnPrimaryItemBindListener primaryItemBindListener,
@@ -295,6 +285,16 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
         ViewGroup.LayoutParams lp = mLinkageLayout.getLayoutParams();
         lp.height = dpToPx(getContext(), dp);
         mLinkageLayout.setLayoutParams(lp);
+    }
+
+    public boolean isGridMode() {
+        return mSecondaryAdapter.isGridMode();
+    }
+
+    public void setGridMode(boolean isGridMode) {
+        mSecondaryAdapter.setGridMode(isGridMode);
+        setLevel2LayoutManager();
+        mRvSecondary.requestLayout();
     }
 
     public boolean isScrollSmoothly() {

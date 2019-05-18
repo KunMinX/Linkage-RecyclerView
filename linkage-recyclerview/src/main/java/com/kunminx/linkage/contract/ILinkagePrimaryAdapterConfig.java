@@ -56,6 +56,10 @@ public interface ILinkagePrimaryAdapterConfig {
 
     /**
      * achieve the onBindViewHolder logic on outside
+     * <p>
+     * Note: Do not setOnClickListener in onBindViewHolder,
+     * instead, you can deal with item click in method 'ILinkagePrimaryAdapterConfig.onItemSelected()'
+     * or 'LinkageRecyclerView.OnPrimaryItemClickListener.onItemClick()'
      *
      * @param holder   LinkagePrimaryViewHolder
      * @param title    title of this position
