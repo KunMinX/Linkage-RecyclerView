@@ -1,4 +1,4 @@
-## Even if you don't order by PrubHub, please be sure to collect this library!
+## Even if you don't order by PrubHub, be sure to collect this library, please!
 
 ### Origin
 
