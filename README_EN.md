@@ -1,4 +1,4 @@
-## Even if you don't order by PrubHub, please be sure to collect the library!
+## Even if you don't order by PrubHub, please be sure to collect this library!
 
 ### Origin
 
@@ -10,7 +10,7 @@ The personalized configuration of Linkage-RecyclerView is very simple. Based on 
 
 In addition, Linkage-RecyclerView can be **extreme ran by only one line of code** while without setting up a custom configuration.
 
-|                           RxMagic                            |                         PrubHub Linear                         |                          PrubHub Grid                          |
+|                           RxJava Magician                            |                         PrubHub Linear                         |                          PrubHub Grid                          |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 | ![7.gif](https://i.loli.net/2019/05/14/5cda1fd9402ad16046.gif) | ![2.gif](https://i.loli.net/2019/05/14/5cda1fd959ed861197.gif) | ![3.gif](https://i.loli.net/2019/05/14/5cda1fd945af885525.gif) |
 

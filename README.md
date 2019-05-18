@@ -12,7 +12,7 @@ Linkage-RecyclerView 的个性化配置十分简单，依托于 MVP 的 “配�
 
 此外，在不设置自定义配置的情况下，Linkage-RecyclerView 最少只需 **一行代码即可运行起来**。
 
-|                           RxMagic                            |                         Eleme Linear                         |                          Eleme Grid                          |
+|                           RxJava Magician                            |                         Eleme Linear                         |                          Eleme Grid                          |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 | ![7.gif](https://upload-images.jianshu.io/upload_images/57036-b4d61e70b43a07bb.gif) | ![2.gif](https://upload-images.jianshu.io/upload_images/57036-04b42bddcdd6cf39.gif) | ![3.gif](https://upload-images.jianshu.io/upload_images/57036-ada31ea077f0144d.gif) |
 
