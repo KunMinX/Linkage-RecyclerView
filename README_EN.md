@@ -144,16 +144,39 @@ public class ElemeGroupedItem extends BaseGroupedItem<ElemeGroupedItem.ItemInfo>
         super(isHeader, header);
     }
 
-    public ElemeGroupedItem(ItemInfo item) {
-        super(item);
-    }
+    public ElemeGroupedItem(ItemInfo item) { super(item); }
 
     public static class ItemInfo extends BaseGroupedItem.ItemInfo {
         private String content;
         private String imgUrl;
         private String cost;
 
-        // For a better reading experience, Here is omitted the constructor and getter setter.
+        public ItemInfo(String title, String group, String content) {
+            super(title, group);
+            this.content = content;
+        }
+
+        public ItemInfo(String title, String group, String content, String imgUrl) {
+            this(title, group, content);
+            this.imgUrl = imgUrl;
+        }
+
+        public ItemInfo(String title, String group, String content, String imgUrl, String cost) {
+            this(title, group, content, imgUrl);
+            this.cost = cost;
+        }
+
+        public String getContent() { return content; }
+        
+        public void setContent(String content) { this.content = content; }
+        
+        public String getImgUrl() { return imgUrl; }
+        
+        public void setImgUrl(String imgUrl) { this.imgUrl = imgUrl; }
+        
+        public String getCost() { return cost; }
+        
+        public void setCost(String cost) { this.cost = cost; }
     }
 }
 ```
@@ -168,7 +191,6 @@ When loading data and implementing a custom configuration, the generic box must 
 
 ```java
 private void initLinkageDatas(LinkageRecyclerView linkage) {
-    Gson gson = new Gson();
     List<ElemeGroupedItem> items = gson.fromJson(...);
 
     linkage.init(items, new ElemePrimaryAdapterConfig(), new ElemeSecondaryAdapterConfig());
@@ -178,24 +200,16 @@ private class ElemePrimaryAdapterConfig implements ILinkagePrimaryAdapterConfig 
 
     private Context mContext;
 
-    public void setContext(Context context) {
-        mContext = context;
-    }
+    public void setContext(Context context) { mContext = context; }
 
     @Override
-    public int getLayoutId() {
-        return R.layout.default_adapter_linkage_primary;
-    }
+    public int getLayoutId() { return R.layout.adapter_linkage_primary; }
 
     @Override
-    public int getGroupTitleViewId() {
-        return R.id.tv_group;
-    }
+    public int getGroupTitleViewId() { return R.id.tv_group; }
 
     @Override
-    public int getRootViewId() {
-        return R.id.layout_group;
-    }
+    public int getRootViewId() { return R.id.layout_group; }
 
     @Override
     public void onBindViewHolder(LinkagePrimaryViewHolder holder, String title, int position) {
@@ -217,34 +231,22 @@ private class ElemeSecondaryAdapterConfig implements
 
     private Context mContext;
 
-    public void setContext(Context context) {
-        mContext = context;
-    }
+    public void setContext(Context context) { mContext = context; }
 
     @Override
-    public int getGridLayoutId() {
-        return 0;
-    }
+    public int getGridLayoutId() { return 0; }
 
     @Override
-    public int getLinearLayoutId() {
-        return R.layout.adapter_eleme_secondary_linear;
-    }
+    public int getLinearLayoutId() { return R.layout.adapter_eleme_secondary_linear; }
 
     @Override
-    public int getHeaderLayoutId() {
-        return R.layout.default_adapter_linkage_secondary_header;
-    }
+    public int getHeaderLayoutId() { return R.layout.adapter_linkage_secondary_header; }
 
     @Override
-    public int getHeaderTextViewId() {
-        return R.id.secondary_header;
-    }
+    public int getHeaderTextViewId() { return R.id.secondary_header; }
 
     @Override
-    public int getSpanCountOfGridMode() {
-        return SPAN_COUNT_FOR_GRID_MODE;
-    }
+    public int getSpanCountOfGridMode() { return SPAN_COUNT_FOR_GRID_MODE; }
 
     @Override
     public void onBindViewHolder(LinkageSecondaryViewHolder holder,
