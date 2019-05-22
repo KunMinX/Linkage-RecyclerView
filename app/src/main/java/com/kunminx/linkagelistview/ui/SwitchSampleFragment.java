@@ -81,117 +81,123 @@ public class SwitchSampleFragment extends Fragment {
                 new TypeToken<List<ElemeGroupedItem>>() {
                 }.getType());
 
-        linkage.init(items, new ILinkagePrimaryAdapterConfig() {
 
-            private Context mContext;
+        linkage.init(items, new ElemeLinkagePrimaryAdapterConfig(), new ElemeLinkageSecondaryAdapterConfig());
+    }
 
-            public void setContext(Context context) {
-                mContext = context;
-            }
+    private class ElemeLinkagePrimaryAdapterConfig implements ILinkagePrimaryAdapterConfig {
 
-            @Override
-            public int getLayoutId() {
-                return com.kunminx.linkage.R.layout.default_adapter_linkage_primary;
-            }
+        private Context mContext;
 
-            @Override
-            public int getGroupTitleViewId() {
-                return com.kunminx.linkage.R.id.tv_group;
-            }
+        public void setContext(Context context) {
+            mContext = context;
+        }
 
-            @Override
-            public int getRootViewId() {
-                return com.kunminx.linkage.R.id.layout_group;
-            }
+        @Override
+        public int getLayoutId() {
+            return com.kunminx.linkage.R.layout.default_adapter_linkage_primary;
+        }
 
-            @Override
-            public void onBindViewHolder(LinkagePrimaryViewHolder holder, String title, int position) {
-                ((TextView) holder.mGroupTitle).setText(title);
-            }
+        @Override
+        public int getGroupTitleViewId() {
+            return com.kunminx.linkage.R.id.tv_group;
+        }
 
-            @Override
-            public void onItemSelected(boolean selected, View itemView) {
-                TextView textView = (TextView) itemView;
-                textView.setBackgroundColor(mContext.getResources().getColor(
-                        selected ? com.kunminx.linkage.R.color.colorPurple : com.kunminx.linkage.R.color.colorWhite));
-                textView.setTextColor(ContextCompat.getColor(mContext,
-                        selected ? com.kunminx.linkage.R.color.colorWhite : com.kunminx.linkage.R.color.colorGray));
-                textView.setEllipsize(selected ? TextUtils.TruncateAt.MARQUEE : TextUtils.TruncateAt.END);
-                textView.setFocusable(selected);
-                textView.setFocusableInTouchMode(selected);
-                textView.setMarqueeRepeatLimit(selected ? MARQUEE_REPEAT_LOOP_MODE : MARQUEE_REPEAT_NONE_MODE);
-            }
+        @Override
+        public int getRootViewId() {
+            return com.kunminx.linkage.R.id.layout_group;
+        }
 
-            @Override
-            public void onItemClick(View view, String title, int position) {
+        @Override
+        public void onBindViewHolder(LinkagePrimaryViewHolder holder, String title, int position) {
+            ((TextView) holder.mGroupTitle).setText(title);
+        }
+
+        @Override
+        public void onItemSelected(boolean selected, View itemView) {
+            TextView textView = (TextView) itemView;
+            textView.setBackgroundColor(mContext.getResources().getColor(
+                    selected ? com.kunminx.linkage.R.color.colorPurple : com.kunminx.linkage.R.color.colorWhite));
+            textView.setTextColor(ContextCompat.getColor(mContext,
+                    selected ? com.kunminx.linkage.R.color.colorWhite : com.kunminx.linkage.R.color.colorGray));
+            textView.setEllipsize(selected ? TextUtils.TruncateAt.MARQUEE : TextUtils.TruncateAt.END);
+            textView.setFocusable(selected);
+            textView.setFocusableInTouchMode(selected);
+            textView.setMarqueeRepeatLimit(selected ? MARQUEE_REPEAT_LOOP_MODE : MARQUEE_REPEAT_NONE_MODE);
+        }
+
+        @Override
+        public void onItemClick(View view, String title, int position) {
+            //TODO
+        }
+
+    }
+
+    private class ElemeLinkageSecondaryAdapterConfig implements
+            ILinkageSecondaryAdapterConfig<ElemeGroupedItem.ItemInfo> {
+
+        private Context mContext;
+
+        public void setContext(Context context) {
+            mContext = context;
+        }
+
+        @Override
+        public int getGridLayoutId() {
+            return R.layout.adapter_eleme_secondary_grid;
+        }
+
+        @Override
+        public int getLinearLayoutId() {
+            return R.layout.adapter_eleme_secondary_linear;
+        }
+
+        @Override
+        public int getHeaderLayoutId() {
+            return com.kunminx.linkage.R.layout.default_adapter_linkage_secondary_header;
+        }
+
+        @Override
+        public int getFooterLayoutId() {
+            return 0;
+        }
+
+        @Override
+        public int getHeaderTextViewId() {
+            return R.id.secondary_header;
+        }
+
+        @Override
+        public int getSpanCountOfGridMode() {
+            return SPAN_COUNT_FOR_GRID_MODE;
+        }
+
+        @Override
+        public void onBindViewHolder(LinkageSecondaryViewHolder holder,
+                                     BaseGroupedItem<ElemeGroupedItem.ItemInfo> item, int position) {
+
+            ((TextView) holder.getView(R.id.iv_goods_name)).setText(item.info.getTitle());
+            Glide.with(mContext).load(item.info.getImgUrl()).into((ImageView) holder.getView(R.id.iv_goods_img));
+            holder.getView(R.id.iv_goods_item).setOnClickListener(v -> {
                 //TODO
-            }
+            });
 
-        }, new ILinkageSecondaryAdapterConfig<ElemeGroupedItem.ItemInfo>() {
+            holder.getView(R.id.iv_goods_add).setOnClickListener(v -> {
+                //TODO
+            });
+        }
 
-            private Context mContext;
+        @Override
+        public void onBindHeaderViewHolder(LinkageSecondaryHeaderViewHolder holder,
+                                           BaseGroupedItem<ElemeGroupedItem.ItemInfo> item, int position) {
 
-            public void setContext(Context context) {
-                mContext = context;
-            }
+            ((TextView) holder.getView(R.id.secondary_header)).setText(item.header);
+        }
 
-            @Override
-            public int getGridLayoutId() {
-                return R.layout.adapter_eleme_secondary_grid;
-            }
+        @Override
+        public void onBindFooterViewHolder(LinkageSecondaryFooterViewHolder holder,
+                                           BaseGroupedItem<ElemeGroupedItem.ItemInfo> item, int position) {
 
-            @Override
-            public int getLinearLayoutId() {
-                return R.layout.adapter_eleme_secondary_linear;
-            }
-
-            @Override
-            public int getHeaderLayoutId() {
-                return com.kunminx.linkage.R.layout.default_adapter_linkage_secondary_header;
-            }
-
-            @Override
-            public int getFooterLayoutId() {
-                return 0;
-            }
-
-            @Override
-            public int getHeaderTextViewId() {
-                return R.id.secondary_header;
-            }
-
-            @Override
-            public int getSpanCountOfGridMode() {
-                return SPAN_COUNT_FOR_GRID_MODE;
-            }
-
-            @Override
-            public void onBindViewHolder(LinkageSecondaryViewHolder holder,
-                                         BaseGroupedItem<ElemeGroupedItem.ItemInfo> item, int position) {
-
-                ((TextView) holder.getView(R.id.iv_goods_name)).setText(item.info.getTitle());
-                Glide.with(mContext).load(item.info.getImgUrl()).into((ImageView) holder.getView(R.id.iv_goods_img));
-                holder.getView(R.id.iv_goods_item).setOnClickListener(v -> {
-                    //TODO
-                });
-
-                holder.getView(R.id.iv_goods_add).setOnClickListener(v -> {
-                    //TODO
-                });
-            }
-
-            @Override
-            public void onBindHeaderViewHolder(LinkageSecondaryHeaderViewHolder holder,
-                                               BaseGroupedItem<ElemeGroupedItem.ItemInfo> item, int position) {
-
-                ((TextView) holder.getView(R.id.secondary_header)).setText(item.header);
-            }
-
-            @Override
-            public void onBindFooterViewHolder(LinkageSecondaryFooterViewHolder holder,
-                                               BaseGroupedItem<ElemeGroupedItem.ItemInfo> item, int position) {
-
-            }
-        });
+        }
     }
 }
