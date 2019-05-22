@@ -22,13 +22,13 @@ import com.kunminx.linkage.bean.BaseGroupedItem;
 /**
  * Create by KunMinX at 19/4/27
  */
-public class DangdangGroupedItem extends BaseGroupedItem<DangdangGroupedItem.ItemInfo> {
+public class GreatPhoneGroupedItem extends BaseGroupedItem<GreatPhoneGroupedItem.ItemInfo> {
 
-    public DangdangGroupedItem(boolean isHeader, String header) {
+    public GreatPhoneGroupedItem(boolean isHeader, String header) {
         super(isHeader, header);
     }
 
-    public DangdangGroupedItem(ItemInfo item) {
+    public GreatPhoneGroupedItem(ItemInfo item) {
         super(item);
     }
 

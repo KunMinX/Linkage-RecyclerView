@@ -54,6 +54,7 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
 
     private static final int DEFAULT_SPAN_COUNT = 1;
     private static final int SCROLL_OFFSET = 0;
+    private static final int THRESHOLD_OF_DATA_SIZE = 10;
 
     private Context mContext;
 
@@ -75,7 +76,10 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
     private String mLastGroupName;
     private LinearLayoutManager mSecondaryLayoutManager;
 
-    private boolean scrollSmoothly = true;
+    private boolean mScrollSmoothly = true;
+
+    // for the situation that data too less and can not selected primary item.
+    private boolean mIsDataTooLessToSpreadOccupiedScreen = false;
 
     private OnPrimaryItemClickListener mPrimaryItemClickListener;
 
@@ -128,6 +132,9 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
                     public void onLinkageClick(LinkagePrimaryViewHolder holder, String title, int position) {
                         if (isScrollSmoothly()) {
                             RecyclerViewScrollHelper.scrollToPosition(mRvSecondary, mHeaderPositions.get(position));
+                            if (mIsDataTooLessToSpreadOccupiedScreen) {
+                                mPrimaryAdapter.selectItem(position);
+                            }
                         } else {
                             mPrimaryAdapter.selectItem(position);
                             mSecondaryLayoutManager.scrollToPositionWithOffset(mHeaderPositions.get(position), SCROLL_OFFSET);
@@ -217,7 +224,9 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
                     }
                 }
 
-                if (mSecondaryLayoutManager.findLastCompletelyVisibleItemPosition() == mItems.size() - 1) {
+                // for the situation that data too less to scroll secondary list to select primary item.
+                if (!(mSecondaryLayoutManager.findFirstVisibleItemPosition() == 0) &&
+                        (mSecondaryLayoutManager.findLastCompletelyVisibleItemPosition() == mItems.size() - 1)) {
                     mPrimaryAdapter.selectItem(mGroupNames.size() - 1);
                 }
             }
@@ -251,6 +260,11 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
                     mHeaderPositions.add(i);
                 }
             }
+        }
+
+        if (mItems != null) {
+            mIsDataTooLessToSpreadOccupiedScreen =
+                    (mItems.size() - mHeaderPositions.size()) < THRESHOLD_OF_DATA_SIZE;
         }
 
         this.mGroupNames = groupNames;
@@ -298,11 +312,11 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
     }
 
     public boolean isScrollSmoothly() {
-        return scrollSmoothly;
+        return mScrollSmoothly;
     }
 
     public void setScrollSmoothly(boolean scrollSmoothly) {
-        this.scrollSmoothly = scrollSmoothly;
+        this.mScrollSmoothly = scrollSmoothly;
     }
 
     public interface OnPrimaryItemClickListener {

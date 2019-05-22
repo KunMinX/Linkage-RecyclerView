@@ -76,7 +76,7 @@ public class YoumiStoreSampleFragment extends Fragment {
 
     private void initLinkageDatas(LinkageRecyclerView linkage) {
         Gson gson = new Gson();
-        List<ElemeGroupedItem> items = gson.fromJson(getString(R.string.eleme_json),
+        List<ElemeGroupedItem> items = gson.fromJson(getString(R.string.eleme_json_5_food),
                 new TypeToken<List<ElemeGroupedItem>>() {
                 }.getType());
 

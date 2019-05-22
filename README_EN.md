@@ -32,7 +32,7 @@ In addition to one-line access and eliminating 99% of unnecessary, complex, and 
 
 
 
-If you are thinking about **how to choose the right architecture for your project**, this project is worth your reference!
+If you are thinking about [**how to choose the right architecture for your project**](https://medium.com/@kunminx/the-secret-of-rising-github-stars-from-0-to-777-in-5-days-204cc4e1998e), this project is worth your reference!
 
 
 
