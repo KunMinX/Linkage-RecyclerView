@@ -18,4 +18,5 @@
 
 <resources>
     <string name="app_name">linked</string>
+    <string name="the_end">THE END</string>
 </resources>

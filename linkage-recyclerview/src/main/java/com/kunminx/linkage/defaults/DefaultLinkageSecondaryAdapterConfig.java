@@ -64,7 +64,7 @@ public class DefaultLinkageSecondaryAdapterConfig implements ILinkageSecondaryAd
 
     @Override
     public int getFooterLayoutId() {
-        return 0;
+        return R.layout.default_adapter_linkage_secondary_footer;
     }
 
     @Override
@@ -103,7 +103,7 @@ public class DefaultLinkageSecondaryAdapterConfig implements ILinkageSecondaryAd
     @Override
     public void onBindFooterViewHolder(LinkageSecondaryFooterViewHolder holder,
                                        BaseGroupedItem<DefaultGroupedItem.ItemInfo> item, int position) {
-
+        ((TextView) holder.getView(R.id.tv_secondary_footer)).setText(mContext.getString(R.string.the_end));
     }
 
     public interface OnSecondaryItemBindListener {

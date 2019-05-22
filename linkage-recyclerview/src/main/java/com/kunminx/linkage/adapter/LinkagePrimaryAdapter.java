@@ -38,6 +38,7 @@ public class LinkagePrimaryAdapter extends RecyclerView.Adapter<LinkagePrimaryVi
     private List<String> mStrings;
     private List<View> mGroupTitleViews = new ArrayList<>();
     private Context mContext;
+    private View mView;
 
     private ILinkagePrimaryAdapterConfig mConfig;
     private OnLinkageListener mLinkageListener;
@@ -75,8 +76,8 @@ public class LinkagePrimaryAdapter extends RecyclerView.Adapter<LinkagePrimaryVi
     public LinkagePrimaryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mContext = parent.getContext();
         mConfig.setContext(mContext);
-        View view = LayoutInflater.from(mContext).inflate(mConfig.getLayoutId(), parent, false);
-        return new LinkagePrimaryViewHolder(view, mConfig);
+        mView = LayoutInflater.from(mContext).inflate(mConfig.getLayoutId(), parent, false);
+        return new LinkagePrimaryViewHolder(mView, mConfig);
     }
 
     @Override
@@ -102,8 +103,6 @@ public class LinkagePrimaryAdapter extends RecyclerView.Adapter<LinkagePrimaryVi
         if (!mGroupTitleViews.contains(holder.mGroupTitle)) {
             mGroupTitleViews.add(holder.mGroupTitle);
         }
-
-        selectItem(0);
     }
 
     @Override

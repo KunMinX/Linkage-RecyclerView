@@ -243,6 +243,9 @@ private class ElemeSecondaryAdapterConfig implements
     public int getHeaderLayoutId() { return R.layout.adapter_linkage_secondary_header; }
 
     @Override
+    public int getFooterLayoutId() { return 0; }
+
+    @Override
     public int getHeaderTextViewId() { return R.id.secondary_header; }
 
     @Override
@@ -251,7 +254,6 @@ private class ElemeSecondaryAdapterConfig implements
     @Override
     public void onBindViewHolder(LinkageSecondaryViewHolder holder,
                                  BaseGroupedItem<ElemeGroupedItem.ItemInfo> item, int position) {
-
         ((TextView) holder.getView(R.id.iv_goods_name)).setText(item.info.getTitle());
         holder.getView(R.id.iv_goods_item).setOnClickListener(v -> {
             //TODO
@@ -261,8 +263,13 @@ private class ElemeSecondaryAdapterConfig implements
     @Override
     public void onBindHeaderViewHolder(LinkageSecondaryHeaderViewHolder holder,
                                        BaseGroupedItem<ElemeGroupedItem.ItemInfo> item, int position) {
-
         ((TextView) holder.getView(R.id.secondary_header)).setText(item.header);
+    }
+    
+    @Override
+    public void onBindFooterViewHolder(LinkageSecondaryFooterViewHolder holder,
+                                       BaseGroupedItem<DefaultGroupedItem.ItemInfo> item, int position) {
+        //TODO
     }
 }
 ```

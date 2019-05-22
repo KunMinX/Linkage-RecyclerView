@@ -55,6 +55,7 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
 
     private static final int DEFAULT_SPAN_COUNT = 1;
     private static final int SCROLL_OFFSET = 0;
+    private static final int DELAY_MILLS_TO_INIT_SELECT = 100;
 
     private Context mContext;
 
@@ -75,6 +76,7 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
     private int mFirstVisiblePosition;
     private String mLastGroupName;
     private LinearLayoutManager mSecondaryLayoutManager;
+    private LinearLayoutManager mPrimaryLayoutManager;
 
     private boolean mScrollSmoothly = true;
 
@@ -144,7 +146,8 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
                     }
                 });
 
-        mRvPrimary.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
+        mPrimaryLayoutManager = new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false);
+        mRvPrimary.setLayoutManager(mPrimaryLayoutManager);
         mRvPrimary.setAdapter(mPrimaryAdapter);
 
         mSecondaryAdapter = new LinkageSecondaryAdapter(mItems, secondaryAdapterConfig);
@@ -212,12 +215,12 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
 
                 // this logic can not be perfect, because tvHeader's title may not
                 // always equals to the title of selected primaryItem, while there
-                // are several groups which has little items.
+                // are several groups which has little items to stick group item to tvHeader.
                 // To avoid to this extreme situation, my idea is to add a foot on the bottom,
                 // to help wholly execute this logic.
                 if (groupNameChanged) {
                     for (int i = 0; i < mGroupNames.size(); i++) {
-                        if (mGroupNames.get(i).equals(mTvHeader.getText().toString())) {
+                        if (mGroupNames.get(i).equals(mLastGroupName)) {
                             mPrimaryAdapter.selectItem(i);
                             mRvPrimary.scrollToPosition(i);
                         }
@@ -267,6 +270,13 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
         mPrimaryAdapter.refreshList(mGroupNames);
         mSecondaryAdapter.refreshList(mItems);
         initLinkageLevel2();
+
+        mRvPrimary.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mPrimaryAdapter.selectItem(0);
+            }
+        }, DELAY_MILLS_TO_INIT_SELECT);
     }
 
     public void init(List<BaseGroupedItem<T>> linkageItems) {
