@@ -213,15 +213,21 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
                     }
                 }
 
-                // this logic can not be perfect, because tvHeader's title may not
+                // the following logic can not be perfect, because tvHeader's title may not
                 // always equals to the title of selected primaryItem, while there
                 // are several groups which has little items to stick group item to tvHeader.
-                // To avoid to this extreme situation, my idea is to add a foot on the bottom,
+                //
+                // To avoid to this extreme situation, my idea is to add a footer on the bottom,
                 // to help wholly execute this logic.
+                //
+                // Note: 2019.5.22 KunMinX
+
                 if (groupNameChanged) {
                     for (int i = 0; i < mGroupNames.size(); i++) {
                         if (mGroupNames.get(i).equals(mLastGroupName)) {
                             mPrimaryAdapter.selectItem(i);
+
+                            //TODO when scroll up, this scroll method is not helpful while approaching to bottom
                             mRvPrimary.scrollToPosition(i);
                         }
                     }
