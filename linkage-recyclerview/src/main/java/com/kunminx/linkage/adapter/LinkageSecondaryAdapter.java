@@ -17,6 +17,7 @@ package com.kunminx.linkage.adapter;
 
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.kunminx.linkage.R;
+import com.kunminx.linkage.adapter.viewholder.LinkageSecondaryFooterViewHolder;
 import com.kunminx.linkage.adapter.viewholder.LinkageSecondaryHeaderViewHolder;
 import com.kunminx.linkage.adapter.viewholder.LinkageSecondaryViewHolder;
 import com.kunminx.linkage.bean.BaseGroupedItem;
@@ -42,6 +45,7 @@ public class LinkageSecondaryAdapter<T extends BaseGroupedItem.ItemInfo> extends
     private static final int IS_HEADER = 0;
     private static final int IS_LINEAR = 1;
     private static final int IS_GRID = 2;
+    private static final int IS_FOOTER = 3;
     private boolean mIsGridMode;
 
     private ILinkageSecondaryAdapterConfig mConfig;
@@ -90,6 +94,9 @@ public class LinkageSecondaryAdapter<T extends BaseGroupedItem.ItemInfo> extends
     public int getItemViewType(int position) {
         if (mItems.get(position).isHeader) {
             return IS_HEADER;
+        } else if (TextUtils.isEmpty(mItems.get(position).info.getTitle()) &&
+                !TextUtils.isEmpty(mItems.get(position).info.getGroup())) {
+            return IS_FOOTER;
         } else if (isGridMode()) {
             return IS_GRID;
         } else {
@@ -105,6 +112,12 @@ public class LinkageSecondaryAdapter<T extends BaseGroupedItem.ItemInfo> extends
         if (viewType == IS_HEADER) {
             View view = LayoutInflater.from(mContext).inflate(mConfig.getHeaderLayoutId(), parent, false);
             return new LinkageSecondaryHeaderViewHolder(view);
+        } else if (viewType == IS_FOOTER) {
+            int footerLayout = mConfig.getFooterLayoutId() == 0
+                    ? R.layout.default_adapter_linkage_secondary_footer
+                    : mConfig.getFooterLayoutId();
+            View view = LayoutInflater.from(mContext).inflate(footerLayout, parent, false);
+            return new LinkageSecondaryFooterViewHolder(view);
         } else if (viewType == IS_GRID && mConfig.getGridLayoutId() != 0) {
             View view = LayoutInflater.from(mContext).inflate(mConfig.getGridLayoutId(), parent, false);
             return new LinkageSecondaryViewHolder(view);
@@ -117,11 +130,14 @@ public class LinkageSecondaryAdapter<T extends BaseGroupedItem.ItemInfo> extends
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         final BaseGroupedItem<T> linkageItem = mItems.get(holder.getAdapterPosition());
-        if (linkageItem.isHeader) {
+        if (getItemViewType(position) == IS_HEADER) {
             LinkageSecondaryHeaderViewHolder headerViewHolder = (LinkageSecondaryHeaderViewHolder) holder;
             mConfig.onBindHeaderViewHolder(headerViewHolder, linkageItem, headerViewHolder.getAdapterPosition());
+        } else if (getItemViewType(position) == IS_FOOTER) {
+            LinkageSecondaryFooterViewHolder footerViewHolder = (LinkageSecondaryFooterViewHolder) holder;
+            mConfig.onBindFooterViewHolder(footerViewHolder, linkageItem, footerViewHolder.getAdapterPosition());
         } else {
-            final LinkageSecondaryViewHolder secondaryViewHolder = (LinkageSecondaryViewHolder) holder;
+            LinkageSecondaryViewHolder secondaryViewHolder = (LinkageSecondaryViewHolder) holder;
             mConfig.onBindViewHolder(secondaryViewHolder, linkageItem, secondaryViewHolder.getAdapterPosition());
         }
     }

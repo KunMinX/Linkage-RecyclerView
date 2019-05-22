@@ -35,6 +35,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.kunminx.linkage.LinkageRecyclerView;
 import com.kunminx.linkage.adapter.viewholder.LinkagePrimaryViewHolder;
+import com.kunminx.linkage.adapter.viewholder.LinkageSecondaryFooterViewHolder;
 import com.kunminx.linkage.adapter.viewholder.LinkageSecondaryHeaderViewHolder;
 import com.kunminx.linkage.adapter.viewholder.LinkageSecondaryViewHolder;
 import com.kunminx.linkage.bean.BaseGroupedItem;
@@ -147,6 +148,11 @@ public class ElemeSampleFragment extends Fragment {
         }
 
         @Override
+        public int getFooterLayoutId() {
+            return 0;
+        }
+
+        @Override
         public int getHeaderTextViewId() {
             return R.id.secondary_header;
         }
@@ -176,6 +182,12 @@ public class ElemeSampleFragment extends Fragment {
                                            BaseGroupedItem<ElemeGroupedItem.ItemInfo> item, int position) {
 
             ((TextView) holder.getView(R.id.secondary_header)).setText(item.header);
+        }
+
+        @Override
+        public void onBindFooterViewHolder(LinkageSecondaryFooterViewHolder holder,
+                                           BaseGroupedItem<ElemeGroupedItem.ItemInfo> item, int position) {
+
         }
     }
 

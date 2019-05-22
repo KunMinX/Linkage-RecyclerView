@@ -38,6 +38,7 @@ import com.kunminx.linkage.adapter.LinkagePrimaryAdapter;
 import com.kunminx.linkage.adapter.LinkageSecondaryAdapter;
 import com.kunminx.linkage.adapter.viewholder.LinkagePrimaryViewHolder;
 import com.kunminx.linkage.bean.BaseGroupedItem;
+import com.kunminx.linkage.bean.DefaultGroupedItem;
 import com.kunminx.linkage.contract.ILinkagePrimaryAdapterConfig;
 import com.kunminx.linkage.contract.ILinkageSecondaryAdapterConfig;
 import com.kunminx.linkage.defaults.DefaultLinkagePrimaryAdapterConfig;
@@ -54,7 +55,6 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
 
     private static final int DEFAULT_SPAN_COUNT = 1;
     private static final int SCROLL_OFFSET = 0;
-    private static final int THRESHOLD_OF_DATA_SIZE = 10;
 
     private Context mContext;
 
@@ -72,14 +72,11 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
 
     private List<Integer> mHeaderPositions = new ArrayList<>();
     private int mTitleHeight;
-    private int mFirstVisiblePosition = 0;
+    private int mFirstVisiblePosition;
     private String mLastGroupName;
     private LinearLayoutManager mSecondaryLayoutManager;
 
     private boolean mScrollSmoothly = true;
-
-    // for the situation that data too less and can not selected primary item.
-    private boolean mIsDataTooLessToSpreadOccupiedScreen = false;
 
     private OnPrimaryItemClickListener mPrimaryItemClickListener;
 
@@ -132,9 +129,6 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
                     public void onLinkageClick(LinkagePrimaryViewHolder holder, String title, int position) {
                         if (isScrollSmoothly()) {
                             RecyclerViewScrollHelper.scrollToPosition(mRvSecondary, mHeaderPositions.get(position));
-                            if (mIsDataTooLessToSpreadOccupiedScreen) {
-                                mPrimaryAdapter.selectItem(position);
-                            }
                         } else {
                             mPrimaryAdapter.selectItem(position);
                             mSecondaryLayoutManager.scrollToPositionWithOffset(mHeaderPositions.get(position), SCROLL_OFFSET);
@@ -190,7 +184,7 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
 
                 // Here is the logic of the sticky:
 
-                if (mItems.get(firstPosition + 1).isHeader) {
+                if ((firstPosition + 1) < mItems.size() && mItems.get(firstPosition + 1).isHeader) {
                     View view = mSecondaryLayoutManager.findViewByPosition(firstPosition + 1);
                     if (view != null && view.getTop() <= mTitleHeight) {
                         mTvHeader.setY(view.getTop() - mTitleHeight);
@@ -216,18 +210,18 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
                     }
                 }
 
+                // this logic can not be perfect, because tvHeader's title may not
+                // always equals to the title of selected primaryItem, while there
+                // are several groups which has little items.
+                // To avoid to this extreme situation, my idea is to add a foot on the bottom,
+                // to help wholly execute this logic.
                 if (groupNameChanged) {
                     for (int i = 0; i < mGroupNames.size(); i++) {
                         if (mGroupNames.get(i).equals(mTvHeader.getText().toString())) {
                             mPrimaryAdapter.selectItem(i);
+                            mRvPrimary.scrollToPosition(i);
                         }
                     }
-                }
-
-                // for the situation that data too less to scroll secondary list to select primary item.
-                if (!(mSecondaryLayoutManager.findFirstVisibleItemPosition() == 0) &&
-                        (mSecondaryLayoutManager.findLastCompletelyVisibleItemPosition() == mItems.size() - 1)) {
-                    mPrimaryAdapter.selectItem(mGroupNames.size() - 1);
                 }
             }
         });
@@ -246,14 +240,17 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
 
         this.mItems = linkageItems;
 
+        String lastGroupName = null;
         List<String> groupNames = new ArrayList<>();
         if (mItems != null && mItems.size() > 0) {
             for (BaseGroupedItem<T> item1 : mItems) {
                 if (item1.isHeader) {
                     groupNames.add(item1.header);
+                    lastGroupName = item1.header;
                 }
             }
         }
+
         if (mItems != null) {
             for (int i = 0; i < mItems.size(); i++) {
                 if (mItems.get(i).isHeader) {
@@ -262,10 +259,9 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
             }
         }
 
-        if (mItems != null) {
-            mIsDataTooLessToSpreadOccupiedScreen =
-                    (mItems.size() - mHeaderPositions.size()) < THRESHOLD_OF_DATA_SIZE;
-        }
+        DefaultGroupedItem.ItemInfo info = new DefaultGroupedItem.ItemInfo(null, lastGroupName);
+        BaseGroupedItem<T> footerItem = (BaseGroupedItem<T>) new DefaultGroupedItem(info);
+        mItems.add(footerItem);
 
         this.mGroupNames = groupNames;
         mPrimaryAdapter.refreshList(mGroupNames);

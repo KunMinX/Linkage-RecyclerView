@@ -18,6 +18,7 @@ package com.kunminx.linkage.contract;
 
 import android.content.Context;
 
+import com.kunminx.linkage.adapter.viewholder.LinkageSecondaryFooterViewHolder;
 import com.kunminx.linkage.adapter.viewholder.LinkageSecondaryHeaderViewHolder;
 import com.kunminx.linkage.adapter.viewholder.LinkageSecondaryViewHolder;
 import com.kunminx.linkage.bean.BaseGroupedItem;
@@ -58,6 +59,16 @@ public interface ILinkageSecondaryAdapterConfig<T extends BaseGroupedItem.ItemIn
     int getHeaderLayoutId();
 
     /**
+     * get footer layout res id
+     * <p>
+     * Note: Footer is to avoid the extreme situation that
+     * 'last group has too little items to sticky to avoid another issue'.
+     *
+     * @return footer layout res id
+     */
+    int getFooterLayoutId();
+
+    /**
      * get the id of textView for bind title of HeaderView
      * <p>
      * Note: Secondary adapter's Header and HeaderView must share the same set of views
@@ -83,10 +94,18 @@ public interface ILinkageSecondaryAdapterConfig<T extends BaseGroupedItem.ItemIn
     /**
      * achieve the onBindHeaderViewHolder logic on outside
      *
-     * @param holder   LinkageSecondaryViewHolder
-     * @param item
-     * @param position
+     * @param holder   LinkageSecondaryHeaderViewHolder
+     * @param item     header of this position
+     * @param position holder.getAdapterPosition()
      */
     void onBindHeaderViewHolder(LinkageSecondaryHeaderViewHolder holder, BaseGroupedItem<T> item, int position);
 
+    /**
+     * achieve the onBindFooterViewHolder logic on outside
+     *
+     * @param holder   LinkageSecondaryFooterViewHolder
+     * @param item     footer of this position
+     * @param position holder.getAdapterPosition()
+     */
+    void onBindFooterViewHolder(LinkageSecondaryFooterViewHolder holder, BaseGroupedItem<T> item, int position);
 }

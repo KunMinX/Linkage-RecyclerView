@@ -38,6 +38,10 @@ public class DefaultGroupedItem extends BaseGroupedItem<DefaultGroupedItem.ItemI
             this.content = content;
         }
 
+        public ItemInfo(String title, String group) {
+            super(title, group);
+        }
+
         public String getContent() {
             return content;
         }

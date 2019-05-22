@@ -102,9 +102,8 @@ public class LinkagePrimaryAdapter extends RecyclerView.Adapter<LinkagePrimaryVi
         if (!mGroupTitleViews.contains(holder.mGroupTitle)) {
             mGroupTitleViews.add(holder.mGroupTitle);
         }
-        if (mGroupTitleViews != null && mGroupTitleViews.size() == mStrings.size()) {
-            selectItem(0);
-        }
+
+        selectItem(0);
     }
 
     @Override
@@ -114,7 +113,11 @@ public class LinkagePrimaryAdapter extends RecyclerView.Adapter<LinkagePrimaryVi
 
     public void selectItem(int position) {
         for (int i = 0; i < mStrings.size(); i++) {
-            mConfig.onItemSelected(position == i, mGroupTitleViews.get(i));
+            // mGroupTitleViews's views are not loaded all by one time if too much,
+            // so we need to judge every time to avoid out of index.
+            if (i < mGroupTitleViews.size()) {
+                mConfig.onItemSelected(position == i, mGroupTitleViews.get(i));
+            }
         }
     }
 

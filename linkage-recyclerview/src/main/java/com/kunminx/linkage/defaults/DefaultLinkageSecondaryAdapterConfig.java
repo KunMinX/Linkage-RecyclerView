@@ -20,6 +20,7 @@ import android.content.Context;
 import android.widget.TextView;
 
 import com.kunminx.linkage.R;
+import com.kunminx.linkage.adapter.viewholder.LinkageSecondaryFooterViewHolder;
 import com.kunminx.linkage.adapter.viewholder.LinkageSecondaryHeaderViewHolder;
 import com.kunminx.linkage.adapter.viewholder.LinkageSecondaryViewHolder;
 import com.kunminx.linkage.bean.BaseGroupedItem;
@@ -62,6 +63,11 @@ public class DefaultLinkageSecondaryAdapterConfig implements ILinkageSecondaryAd
     }
 
     @Override
+    public int getFooterLayoutId() {
+        return 0;
+    }
+
+    @Override
     public int getHeaderTextViewId() {
         return R.id.secondary_header;
     }
@@ -92,6 +98,12 @@ public class DefaultLinkageSecondaryAdapterConfig implements ILinkageSecondaryAd
         if (mHeaderBindListener != null) {
             mHeaderBindListener.onBindHeaderViewHolder(holder, item, position);
         }
+    }
+
+    @Override
+    public void onBindFooterViewHolder(LinkageSecondaryFooterViewHolder holder,
+                                       BaseGroupedItem<DefaultGroupedItem.ItemInfo> item, int position) {
+
     }
 
     public interface OnSecondaryItemBindListener {
