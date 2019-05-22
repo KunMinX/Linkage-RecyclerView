@@ -75,4 +75,12 @@ public interface ILinkagePrimaryAdapterConfig {
      */
     void onItemSelected(boolean selected, View itemView);
 
+    /**
+     * on primary item clicked
+     *
+     * @param view     itemView
+     * @param title    title of primary item
+     * @param position position
+     */
+    void onItemClick(View view, String title, int position);
 }

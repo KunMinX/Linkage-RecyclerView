@@ -121,6 +121,11 @@ public class ElemeSampleFragment extends Fragment {
             textView.setFocusableInTouchMode(selected);
             textView.setMarqueeRepeatLimit(selected ? MARQUEE_REPEAT_LOOP_MODE : MARQUEE_REPEAT_NONE_MODE);
         }
+
+        @Override
+        public void onItemClick(View view, String title, int position) {
+            //TODO
+        }
     }
 
     private class ElemeSecondaryAdapterConfig implements

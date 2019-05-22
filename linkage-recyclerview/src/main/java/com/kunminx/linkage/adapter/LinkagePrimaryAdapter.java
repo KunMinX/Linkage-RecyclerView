@@ -42,7 +42,6 @@ public class LinkagePrimaryAdapter extends RecyclerView.Adapter<LinkagePrimaryVi
 
     private ILinkagePrimaryAdapterConfig mConfig;
     private OnLinkageListener mLinkageListener;
-    private OnItemClickListener mItemClickListener;
 
     public List<String> getStrings() {
         return mStrings;
@@ -53,14 +52,13 @@ public class LinkagePrimaryAdapter extends RecyclerView.Adapter<LinkagePrimaryVi
     }
 
     public LinkagePrimaryAdapter(List<String> strings, ILinkagePrimaryAdapterConfig config,
-                                 OnLinkageListener linkageListener, OnItemClickListener onItemClickListener) {
+                                 OnLinkageListener linkageListener) {
         mStrings = strings;
         if (mStrings == null) {
             mStrings = new ArrayList<>();
         }
         mConfig = config;
         mLinkageListener = linkageListener;
-        mItemClickListener = onItemClickListener;
     }
 
     public void refreshList(List<String> list) {
@@ -94,9 +92,7 @@ public class LinkagePrimaryAdapter extends RecyclerView.Adapter<LinkagePrimaryVi
                 if (mLinkageListener != null) {
                     mLinkageListener.onLinkageClick(holder, mStrings.get(holder.getAdapterPosition()), holder.getAdapterPosition());
                 }
-                if (mItemClickListener != null) {
-                    mItemClickListener.onItemClick(v, mStrings.get(holder.getAdapterPosition()), holder.getAdapterPosition());
-                }
+                mConfig.onItemClick(v, mStrings.get(holder.getAdapterPosition()), holder.getAdapterPosition());
             }
         });
 
@@ -126,9 +122,5 @@ public class LinkagePrimaryAdapter extends RecyclerView.Adapter<LinkagePrimaryVi
      */
     public interface OnLinkageListener {
         void onLinkageClick(LinkagePrimaryViewHolder holder, String title, int position);
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(View view, String title, int position);
     }
 }

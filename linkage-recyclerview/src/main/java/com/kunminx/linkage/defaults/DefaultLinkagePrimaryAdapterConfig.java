@@ -19,6 +19,7 @@ package com.kunminx.linkage.defaults;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
@@ -34,9 +35,12 @@ public class DefaultLinkagePrimaryAdapterConfig implements ILinkagePrimaryAdapte
 
     private Context mContext;
     private OnPrimaryItemBindListener mListener;
+    private OnPrimaryItemClickListner mClickListner;
 
-    public void setListener(OnPrimaryItemBindListener listener) {
+    public void setListener(OnPrimaryItemBindListener listener,
+                            OnPrimaryItemClickListner clickListner) {
         mListener = listener;
+        mClickListner = clickListner;
     }
 
     @Override
@@ -78,6 +82,17 @@ public class DefaultLinkagePrimaryAdapterConfig implements ILinkagePrimaryAdapte
         textView.setFocusable(selected);
         textView.setFocusableInTouchMode(selected);
         textView.setMarqueeRepeatLimit(selected ? -1 : 0);
+    }
+
+    @Override
+    public void onItemClick(View view, String title, int position) {
+        if (mClickListner != null) {
+            mClickListner.onItemClick(view, title, position);
+        }
+    }
+
+    public interface OnPrimaryItemClickListner {
+        void onItemClick(View view, String title, int position);
     }
 
     public interface OnPrimaryItemBindListener {

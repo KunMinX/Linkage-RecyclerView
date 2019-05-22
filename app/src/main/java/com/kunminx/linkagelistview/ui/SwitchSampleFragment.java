@@ -122,6 +122,11 @@ public class SwitchSampleFragment extends Fragment {
                 textView.setMarqueeRepeatLimit(selected ? MARQUEE_REPEAT_LOOP_MODE : MARQUEE_REPEAT_NONE_MODE);
             }
 
+            @Override
+            public void onItemClick(View view, String title, int position) {
+                //TODO
+            }
+
         }, new ILinkageSecondaryAdapterConfig<ElemeGroupedItem.ItemInfo>() {
 
             private Context mContext;

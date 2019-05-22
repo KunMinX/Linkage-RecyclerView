@@ -80,7 +80,7 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
 
     private boolean mScrollSmoothly = true;
 
-    private OnPrimaryItemClickListener mPrimaryItemClickListener;
+//    private OnPrimaryItemClickListener mPrimaryItemClickListener;
 
     public LinkageRecyclerView(Context context) {
         super(context);
@@ -132,16 +132,7 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
                         if (isScrollSmoothly()) {
                             RecyclerViewScrollHelper.scrollToPosition(mRvSecondary, mHeaderPositions.get(position));
                         } else {
-                            mPrimaryAdapter.selectItem(position);
                             mSecondaryLayoutManager.scrollToPositionWithOffset(mHeaderPositions.get(position), SCROLL_OFFSET);
-                        }
-                    }
-                },
-                new LinkagePrimaryAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View v, String title, int position) {
-                        if (mPrimaryItemClickListener != null) {
-                            mPrimaryItemClickListener.onItemClick(v, title, position);
                         }
                     }
                 });
@@ -228,7 +219,9 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
                             mPrimaryAdapter.selectItem(i);
 
                             //TODO when scroll up, this scroll method is not helpful while approaching to bottom
-                            mRvPrimary.scrollToPosition(i);
+//                            int position = i == mGroupNames.size() - 1 ? mPrimaryAdapter.getItemCount() - 1 : i;
+//                            mRvPrimary.scrollToPosition(position);
+                            mPrimaryLayoutManager.scrollToPositionWithOffset(i, 0);
                         }
                     }
                 }
@@ -290,17 +283,15 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
     }
 
     public void setDefaultOnItemBindListener(
-            OnPrimaryItemClickListener onPrimaryItemClickListener,
+            DefaultLinkagePrimaryAdapterConfig.OnPrimaryItemClickListner primaryItemClickListner,
             DefaultLinkagePrimaryAdapterConfig.OnPrimaryItemBindListener primaryItemBindListener,
             DefaultLinkageSecondaryAdapterConfig.OnSecondaryItemBindListener secondaryItemBindListener,
             DefaultLinkageSecondaryAdapterConfig.OnSecondaryHeaderBindListener headerBindListener,
             DefaultLinkageSecondaryAdapterConfig.OnSecondaryFooterBindListener footerBindListener) {
 
-        mPrimaryItemClickListener = onPrimaryItemClickListener;
-
         if (mPrimaryAdapter.getConfig() != null) {
             ((DefaultLinkagePrimaryAdapterConfig) mPrimaryAdapter.getConfig())
-                    .setListener(primaryItemBindListener);
+                    .setListener(primaryItemBindListener, primaryItemClickListner);
         }
         if (mSecondaryAdapter.getConfig() != null) {
             ((DefaultLinkageSecondaryAdapterConfig) mSecondaryAdapter.getConfig())
@@ -332,7 +323,4 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
         this.mScrollSmoothly = scrollSmoothly;
     }
 
-    public interface OnPrimaryItemClickListener {
-        void onItemClick(View primaryClickView, String title, int position);
-    }
 }
