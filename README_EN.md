@@ -41,7 +41,7 @@ If you are thinking about [**how to choose the right architecture for your proje
 1. Add a dependency on the library in build.gradle.
 
 ```groovy
-implementation 'com.kunminx.linkage:linkage-recyclerview:1.6.8'
+implementation 'com.kunminx.linkage:linkage-recyclerview:1.6.9'
 ```
 
 2. Prepare a string of data according to the structure of the default grouping entity class `DefaultGroupedItem`. (The following is JSON as an example).
@@ -288,7 +288,7 @@ private class ElemeSecondaryAdapterConfig implements
 
 Email：[kunminx@gmail.com](mailto:kunminx@gmail.com)
 
-Blog：[KunMinX's Personal Blog](https://kunminx.github.io/)
+Blog：[KunMinX's Personal Blog](https://www.kunminx.com/)
 
 Medium：[KunMinX @ Medium](https://medium.com/@kunminx)
 

@@ -78,6 +78,9 @@ public class RxMagicSampleFragment extends Fragment {
                 },
                 (headerHolder, item, position) -> {
                     //TODO
+                },
+                (footerHolder, item, position) -> {
+                    //TODO
                 }
         );
     }

@@ -35,11 +35,15 @@ public class DefaultLinkageSecondaryAdapterConfig implements ILinkageSecondaryAd
     private Context mContext;
     private OnSecondaryItemBindListener mItemBindListener;
     private OnSecondaryHeaderBindListener mHeaderBindListener;
+    private OnSecondaryFooterBindListener mFooterBindListener;
     private static final int SPAN_COUNT = 3;
 
-    public void setItemBindListener(OnSecondaryItemBindListener itemBindListener, OnSecondaryHeaderBindListener headerBindListener) {
+    public void setItemBindListener(OnSecondaryItemBindListener itemBindListener,
+                                    OnSecondaryHeaderBindListener headerBindListener,
+                                    OnSecondaryFooterBindListener footerBindListener) {
         mItemBindListener = itemBindListener;
         mHeaderBindListener = headerBindListener;
+        mFooterBindListener = footerBindListener;
     }
 
     @Override
@@ -104,6 +108,10 @@ public class DefaultLinkageSecondaryAdapterConfig implements ILinkageSecondaryAd
     public void onBindFooterViewHolder(LinkageSecondaryFooterViewHolder holder,
                                        BaseGroupedItem<DefaultGroupedItem.ItemInfo> item, int position) {
         ((TextView) holder.getView(R.id.tv_secondary_footer)).setText(mContext.getString(R.string.the_end));
+
+        if (mFooterBindListener != null) {
+            mFooterBindListener.onBindFooterViewHolder(holder, item, position);
+        }
     }
 
     public interface OnSecondaryItemBindListener {
@@ -113,6 +121,11 @@ public class DefaultLinkageSecondaryAdapterConfig implements ILinkageSecondaryAd
 
     public interface OnSecondaryHeaderBindListener {
         void onBindHeaderViewHolder(LinkageSecondaryHeaderViewHolder headerHolder,
+                                    BaseGroupedItem<DefaultGroupedItem.ItemInfo> item, int position);
+    }
+
+    public interface OnSecondaryFooterBindListener {
+        void onBindFooterViewHolder(LinkageSecondaryFooterViewHolder footerHolder,
                                     BaseGroupedItem<DefaultGroupedItem.ItemInfo> item, int position);
     }
 }

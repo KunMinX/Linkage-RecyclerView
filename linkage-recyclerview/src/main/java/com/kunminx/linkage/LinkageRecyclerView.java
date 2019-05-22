@@ -293,7 +293,8 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
             OnPrimaryItemClickListener onPrimaryItemClickListener,
             DefaultLinkagePrimaryAdapterConfig.OnPrimaryItemBindListener primaryItemBindListener,
             DefaultLinkageSecondaryAdapterConfig.OnSecondaryItemBindListener secondaryItemBindListener,
-            DefaultLinkageSecondaryAdapterConfig.OnSecondaryHeaderBindListener headerBindListener) {
+            DefaultLinkageSecondaryAdapterConfig.OnSecondaryHeaderBindListener headerBindListener,
+            DefaultLinkageSecondaryAdapterConfig.OnSecondaryFooterBindListener footerBindListener) {
 
         mPrimaryItemClickListener = onPrimaryItemClickListener;
 
@@ -303,7 +304,7 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
         }
         if (mSecondaryAdapter.getConfig() != null) {
             ((DefaultLinkageSecondaryAdapterConfig) mSecondaryAdapter.getConfig())
-                    .setItemBindListener(secondaryItemBindListener, headerBindListener);
+                    .setItemBindListener(secondaryItemBindListener, headerBindListener, footerBindListener);
         }
     }
 

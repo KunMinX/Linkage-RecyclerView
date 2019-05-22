@@ -92,6 +92,9 @@ public class DialogSampleFragment extends Fragment {
                 },
                 (headerHolder, item, position) -> {
                     //TODO
+                },
+                (footerHolder, item, position) -> {
+                    //TODO
                 }
         );
     }

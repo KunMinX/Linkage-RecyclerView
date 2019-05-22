@@ -45,7 +45,7 @@ Linkage-RecyclerView 的目标是：**一行代码即可接入二级联动列表
 1.在 build.gradle 中添加对该库的依赖。
 
 ```groovy
-implementation 'com.kunminx.linkage:linkage-recyclerview:1.6.8'
+implementation 'com.kunminx.linkage:linkage-recyclerview:1.6.9'
 ```
 
 2.依据默认的分组实体类 `DefaultGroupedItem` 的结构准备一串数据（以下以  JSON 为例）。
@@ -283,7 +283,7 @@ private class ElemeSecondaryAdapterConfig implements
 
 Email：[kunminx@gmail.com](mailto:kunminx@gmail.com)
 
-Home：[KunMinX 的个人博客](https://kunminx.github.io/)
+Home：[KunMinX 的个人博客](https://www.kunminx.com/)
 
 Juejin：[KunMinX 在掘金](https://juejin.im/user/58ab0de9ac502e006975d757/posts)
 

@@ -89,6 +89,9 @@ public class BottomSheetSampleFragment extends Fragment {
                 },
                 (headerHolder, item, position) -> {
                     //TODO
+                },
+                (footerHolder, item, position) -> {
+                    //TODO
                 }
         );
     }
