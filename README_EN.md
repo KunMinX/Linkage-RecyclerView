@@ -212,16 +212,12 @@ private class ElemePrimaryAdapterConfig implements ILinkagePrimaryAdapterConfig 
     public int getRootViewId() { return R.id.layout_group; }
 
     @Override
-    public void onBindViewHolder(LinkagePrimaryViewHolder holder, String title, int position) {
-        ((TextView) holder.mGroupTitle).setText(title);
-    }
-
-    @Override
-    public void onItemSelected(boolean selected, View itemView) {
-        TextView textView = (TextView) itemView;
-        textView.setBackgroundColor(mContext.getResources().getColor(
+    public void onBindViewHolder(LinkagePrimaryViewHolder holder, boolean selected, String title, int position) {
+        TextView tvTitle = (TextView) holder.mGroupTitle;
+        tvTitle.setText(title);
+        tvTitle.setBackgroundColor(mContext.getResources().getColor(
                 selected ? R.color.colorPurple : R.color.colorWhite));
-        textView.setTextColor(ContextCompat.getColor(mContext,
+        tvTitle.setTextColor(ContextCompat.getColor(mContext, 
                 selected ? R.color.colorWhite : R.color.colorGray));
     }
 }

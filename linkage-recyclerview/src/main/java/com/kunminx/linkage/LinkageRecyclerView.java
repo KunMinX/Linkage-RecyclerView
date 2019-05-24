@@ -17,7 +17,6 @@ package com.kunminx.linkage;
 
 
 import android.content.Context;
-import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -33,6 +32,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kunminx.linkage.adapter.LinkagePrimaryAdapter;
@@ -129,8 +129,8 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
                     @Override
                     public void onLinkageClick(LinkagePrimaryViewHolder holder, String title, int position) {
                         if (isScrollSmoothly()) {
-                            RecyclerViewScrollHelper.scrollToPosition(
-                                    mRvSecondary, mHeaderPositions.get(position));
+                            RecyclerViewScrollHelper.smoothScrollToPosition(mRvSecondary,
+                                    LinearSmoothScroller.SNAP_TO_START, mHeaderPositions.get(position));
                         } else {
                             mSecondaryLayoutManager.scrollToPositionWithOffset(
                                     mHeaderPositions.get(position), SCROLL_OFFSET);
@@ -147,7 +147,7 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
         mRvSecondary.setAdapter(mSecondaryAdapter);
     }
 
-    private void initLinkageLevel2() {
+    private void initLinkageSecondary() {
 
         // Note: headerLayout is shared by both SecondaryAdapter's header and HeaderView
 
@@ -218,11 +218,8 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
                     for (int i = 0; i < mGroupNames.size(); i++) {
                         if (mGroupNames.get(i).equals(mLastGroupName)) {
                             mPrimaryAdapter.setSelectedPosition(i);
-
-                            //TODO when scroll up, this scroll method is not helpful while approaching to bottom
-//                            int position = i == mGroupNames.size() - 1 ? mPrimaryAdapter.getItemCount() - 1 : i;
-//                            mRvPrimary.scrollToPosition(position);
-                            mPrimaryLayoutManager.scrollToPositionWithOffset(i, SCROLL_OFFSET);
+                            RecyclerViewScrollHelper.smoothScrollToPosition(mRvPrimary,
+                                    LinearSmoothScroller.SNAP_TO_END, i);
                         }
                     }
                 }
@@ -269,7 +266,7 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
         this.mGroupNames = groupNames;
         mPrimaryAdapter.refreshList(mGroupNames);
         mSecondaryAdapter.refreshList(mItems);
-        initLinkageLevel2();
+        initLinkageSecondary();
     }
 
     public void init(List<BaseGroupedItem<T>> linkageItems) {
@@ -317,9 +314,15 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
         this.mScrollSmoothly = scrollSmoothly;
     }
 
-    public void notifyDataSetChanged() {
-        mPrimaryAdapter.notifyDataSetChanged();
-        mSecondaryAdapter.notifyDataSetChanged();
+    public List<BaseGroupedItem<T>> getLinkageItems() {
+        return mItems;
     }
 
+    public LinkagePrimaryAdapter getPrimaryAdapter() {
+        return mPrimaryAdapter;
+    }
+
+    public LinkageSecondaryAdapter getSecondaryAdapter() {
+        return mSecondaryAdapter;
+    }
 }

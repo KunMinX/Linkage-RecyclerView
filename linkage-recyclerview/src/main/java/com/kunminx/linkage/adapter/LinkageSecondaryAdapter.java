@@ -82,14 +82,6 @@ public class LinkageSecondaryAdapter<T extends BaseGroupedItem.ItemInfo> extends
         notifyDataSetChanged();
     }
 
-    //TODO load more data...
-    public void refreshListLoadMore(List<BaseGroupedItem<T>> list) {
-        if (list != null) {
-            mItems.addAll(list);
-        }
-        notifyDataSetChanged();
-    }
-
     @Override
     public int getItemViewType(int position) {
         if (mItems.get(position).isHeader) {
