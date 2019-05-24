@@ -17,6 +17,7 @@ package com.kunminx.linkage;
 
 
 import android.content.Context;
+import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -55,7 +56,6 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
 
     private static final int DEFAULT_SPAN_COUNT = 1;
     private static final int SCROLL_OFFSET = 0;
-    private static final int DELAY_MILLS_TO_INIT_SELECT = 100;
 
     private Context mContext;
 
@@ -79,8 +79,6 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
     private LinearLayoutManager mPrimaryLayoutManager;
 
     private boolean mScrollSmoothly = true;
-
-//    private OnPrimaryItemClickListener mPrimaryItemClickListener;
 
     public LinkageRecyclerView(Context context) {
         super(context);
@@ -106,7 +104,8 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
 
     private void setLevel2LayoutManager() {
         if (mSecondaryAdapter.isGridMode()) {
-            mSecondaryLayoutManager = new GridLayoutManager(mContext, mSecondaryAdapter.getConfig().getSpanCountOfGridMode());
+            mSecondaryLayoutManager = new GridLayoutManager(mContext,
+                    mSecondaryAdapter.getConfig().getSpanCountOfGridMode());
             ((GridLayoutManager) mSecondaryLayoutManager).setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                 @Override
                 public int getSpanSize(int position) {
@@ -130,9 +129,11 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
                     @Override
                     public void onLinkageClick(LinkagePrimaryViewHolder holder, String title, int position) {
                         if (isScrollSmoothly()) {
-                            RecyclerViewScrollHelper.scrollToPosition(mRvSecondary, mHeaderPositions.get(position));
+                            RecyclerViewScrollHelper.scrollToPosition(
+                                    mRvSecondary, mHeaderPositions.get(position));
                         } else {
-                            mSecondaryLayoutManager.scrollToPositionWithOffset(mHeaderPositions.get(position), SCROLL_OFFSET);
+                            mSecondaryLayoutManager.scrollToPositionWithOffset(
+                                    mHeaderPositions.get(position), SCROLL_OFFSET);
                         }
                     }
                 });
@@ -216,12 +217,12 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
                 if (groupNameChanged) {
                     for (int i = 0; i < mGroupNames.size(); i++) {
                         if (mGroupNames.get(i).equals(mLastGroupName)) {
-                            mPrimaryAdapter.selectItem(i);
+                            mPrimaryAdapter.setSelectedPosition(i);
 
                             //TODO when scroll up, this scroll method is not helpful while approaching to bottom
 //                            int position = i == mGroupNames.size() - 1 ? mPrimaryAdapter.getItemCount() - 1 : i;
 //                            mRvPrimary.scrollToPosition(position);
-                            mPrimaryLayoutManager.scrollToPositionWithOffset(i, 0);
+                            mPrimaryLayoutManager.scrollToPositionWithOffset(i, SCROLL_OFFSET);
                         }
                     }
                 }
@@ -269,13 +270,6 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
         mPrimaryAdapter.refreshList(mGroupNames);
         mSecondaryAdapter.refreshList(mItems);
         initLinkageLevel2();
-
-        mRvPrimary.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mPrimaryAdapter.selectItem(0);
-            }
-        }, DELAY_MILLS_TO_INIT_SELECT);
     }
 
     public void init(List<BaseGroupedItem<T>> linkageItems) {
@@ -321,6 +315,11 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
 
     public void setScrollSmoothly(boolean scrollSmoothly) {
         this.mScrollSmoothly = scrollSmoothly;
+    }
+
+    public void notifyDataSetChanged() {
+        mPrimaryAdapter.notifyDataSetChanged();
+        mSecondaryAdapter.notifyDataSetChanged();
     }
 
 }

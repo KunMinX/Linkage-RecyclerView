@@ -85,7 +85,7 @@ public class YoumiStoreSampleFragment extends Fragment {
                 new YoumiStoreLinkageSecondaryAdapterConfig());
     }
 
-    private class YoumiStoreLinkagePrimaryAdapterConfig implements ILinkagePrimaryAdapterConfig {
+    private static class YoumiStoreLinkagePrimaryAdapterConfig implements ILinkagePrimaryAdapterConfig {
 
         private Context mContext;
 
@@ -109,21 +109,18 @@ public class YoumiStoreSampleFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(LinkagePrimaryViewHolder holder, String title, int position) {
-            ((TextView) holder.mGroupTitle).setText(title);
-        }
+        public void onBindViewHolder(LinkagePrimaryViewHolder holder, boolean selected, String title, int position) {
+            TextView tvTitle = ((TextView) holder.mGroupTitle);
+            tvTitle.setText(title);
 
-        @Override
-        public void onItemSelected(boolean selected, View itemView) {
-            TextView textView = (TextView) itemView;
-            textView.setBackgroundColor(mContext.getResources().getColor(
+            tvTitle.setBackgroundColor(mContext.getResources().getColor(
                     selected ? com.kunminx.linkage.R.color.colorPurple : com.kunminx.linkage.R.color.colorWhite));
-            textView.setTextColor(ContextCompat.getColor(mContext,
+            tvTitle.setTextColor(ContextCompat.getColor(mContext,
                     selected ? com.kunminx.linkage.R.color.colorWhite : com.kunminx.linkage.R.color.colorGray));
-            textView.setEllipsize(selected ? TextUtils.TruncateAt.MARQUEE : TextUtils.TruncateAt.END);
-            textView.setFocusable(selected);
-            textView.setFocusableInTouchMode(selected);
-            textView.setMarqueeRepeatLimit(selected ? MARQUEE_REPEAT_LOOP_MODE : MARQUEE_REPEAT_NONE_MODE);
+            tvTitle.setEllipsize(selected ? TextUtils.TruncateAt.MARQUEE : TextUtils.TruncateAt.END);
+            tvTitle.setFocusable(selected);
+            tvTitle.setFocusableInTouchMode(selected);
+            tvTitle.setMarqueeRepeatLimit(selected ? MARQUEE_REPEAT_LOOP_MODE : MARQUEE_REPEAT_NONE_MODE);
         }
 
         @Override
@@ -132,7 +129,7 @@ public class YoumiStoreSampleFragment extends Fragment {
         }
     }
 
-    private class YoumiStoreLinkageSecondaryAdapterConfig implements
+    private static class YoumiStoreLinkageSecondaryAdapterConfig implements
             ILinkageSecondaryAdapterConfig<ElemeGroupedItem.ItemInfo> {
 
         private Context mContext;

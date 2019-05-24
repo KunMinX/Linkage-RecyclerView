@@ -36,9 +36,9 @@ import java.util.List;
 public class LinkagePrimaryAdapter extends RecyclerView.Adapter<LinkagePrimaryViewHolder> {
 
     private List<String> mStrings;
-    private List<View> mGroupTitleViews = new ArrayList<>();
     private Context mContext;
     private View mView;
+    private int mSelectedPosition;
 
     private ILinkagePrimaryAdapterConfig mConfig;
     private OnLinkageListener mLinkageListener;
@@ -49,6 +49,15 @@ public class LinkagePrimaryAdapter extends RecyclerView.Adapter<LinkagePrimaryVi
 
     public ILinkagePrimaryAdapterConfig getConfig() {
         return mConfig;
+    }
+
+    public int getSelectedPosition() {
+        return mSelectedPosition;
+    }
+
+    public void setSelectedPosition(int selectedPosition) {
+        mSelectedPosition = selectedPosition;
+        notifyDataSetChanged();
     }
 
     public LinkagePrimaryAdapter(List<String> strings, ILinkagePrimaryAdapterConfig config,
@@ -84,36 +93,25 @@ public class LinkagePrimaryAdapter extends RecyclerView.Adapter<LinkagePrimaryVi
         // for textView MARQUEE available.
         holder.mLayout.setSelected(true);
 
-        mConfig.onBindViewHolder(holder, mStrings.get(holder.getAdapterPosition()), holder.getAdapterPosition());
+        final int adapterPosition = holder.getAdapterPosition();
+        final String title = mStrings.get(adapterPosition);
+
+        mConfig.onBindViewHolder(holder, position == mSelectedPosition, title, adapterPosition);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mLinkageListener != null) {
-                    mLinkageListener.onLinkageClick(holder, mStrings.get(holder.getAdapterPosition()), holder.getAdapterPosition());
+                    mLinkageListener.onLinkageClick(holder, title, adapterPosition);
                 }
-                mConfig.onItemClick(v, mStrings.get(holder.getAdapterPosition()), holder.getAdapterPosition());
+                mConfig.onItemClick(v, title, adapterPosition);
             }
         });
-
-        if (!mGroupTitleViews.contains(holder.mGroupTitle)) {
-            mGroupTitleViews.add(holder.mGroupTitle);
-        }
     }
 
     @Override
     public int getItemCount() {
         return mStrings.size();
-    }
-
-    public void selectItem(int position) {
-        for (int i = 0; i < mStrings.size(); i++) {
-            // mGroupTitleViews's views are not loaded all by one time if too much,
-            // so we need to judge every time to avoid out of index.
-            if (i < mGroupTitleViews.size()) {
-                mConfig.onItemSelected(position == i, mGroupTitleViews.get(i));
-            }
-        }
     }
 
     /**

@@ -19,7 +19,6 @@ package com.kunminx.linkage.defaults;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
@@ -33,6 +32,8 @@ import com.kunminx.linkage.contract.ILinkagePrimaryAdapterConfig;
  */
 public class DefaultLinkagePrimaryAdapterConfig implements ILinkagePrimaryAdapterConfig {
 
+    private static final int MARQUEE_REPEAT_LOOP_MODE = -1;
+    private static final int MARQUEE_REPEAT_NONE_MODE = 0;
     private Context mContext;
     private OnPrimaryItemBindListener mListener;
     private OnPrimaryItemClickListner mClickListner;
@@ -64,24 +65,20 @@ public class DefaultLinkagePrimaryAdapterConfig implements ILinkagePrimaryAdapte
     }
 
     @Override
-    public void onBindViewHolder(LinkagePrimaryViewHolder holder, String title, int position) {
+    public void onBindViewHolder(LinkagePrimaryViewHolder holder, boolean selected, String title, int position) {
+        TextView tvTitle = ((TextView) holder.mGroupTitle);
+        tvTitle.setText(title);
 
-        ((TextView) holder.mGroupTitle).setText(title);
+        tvTitle.setBackgroundColor(mContext.getResources().getColor(selected ? R.color.colorPurple : R.color.colorWhite));
+        tvTitle.setTextColor(ContextCompat.getColor(mContext, selected ? R.color.colorWhite : R.color.colorGray));
+        tvTitle.setEllipsize(selected ? TextUtils.TruncateAt.MARQUEE : TextUtils.TruncateAt.END);
+        tvTitle.setFocusable(selected);
+        tvTitle.setFocusableInTouchMode(selected);
+        tvTitle.setMarqueeRepeatLimit(selected ? MARQUEE_REPEAT_LOOP_MODE : MARQUEE_REPEAT_NONE_MODE);
 
         if (mListener != null) {
             mListener.onBindViewHolder(holder, title, position);
         }
-    }
-
-    @Override
-    public void onItemSelected(boolean selected, View itemView) {
-        TextView textView = (TextView) itemView;
-        textView.setBackgroundColor(mContext.getResources().getColor(selected ? R.color.colorPurple : R.color.colorWhite));
-        textView.setTextColor(ContextCompat.getColor(mContext, selected ? R.color.colorWhite : R.color.colorGray));
-        textView.setEllipsize(selected ? TextUtils.TruncateAt.MARQUEE : TextUtils.TruncateAt.END);
-        textView.setFocusable(selected);
-        textView.setFocusableInTouchMode(selected);
-        textView.setMarqueeRepeatLimit(selected ? -1 : 0);
     }
 
     @Override

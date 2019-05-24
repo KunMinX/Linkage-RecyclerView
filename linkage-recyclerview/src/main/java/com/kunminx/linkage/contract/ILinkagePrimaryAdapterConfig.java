@@ -63,17 +63,10 @@ public interface ILinkagePrimaryAdapterConfig {
      *
      * @param holder   LinkagePrimaryViewHolder
      * @param title    title of this position
+     * @param selected selected of this position
      * @param position holder.getAdapterPosition()
      */
-    void onBindViewHolder(LinkagePrimaryViewHolder holder, String title, int position);
-
-    /**
-     * configurations of textView when selected or not
-     *
-     * @param selected if selected
-     * @param itemView textView which you choose to config the expression.
-     */
-    void onItemSelected(boolean selected, View itemView);
+    void onBindViewHolder(LinkagePrimaryViewHolder holder, boolean selected, String title, int position);
 
     /**
      * on primary item clicked
