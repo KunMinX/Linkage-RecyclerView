@@ -316,67 +316,15 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
         this.mScrollSmoothly = scrollSmoothly;
     }
 
-    //TODO need to test
-    public void addItem(int position, BaseGroupedItem<T> item) {
-        if (item == null) {
-            return;
-        }
-        List<BaseGroupedItem<T>> items = mSecondaryAdapter.getItems();
-        List<String> strings = mPrimaryAdapter.getStrings();
-        if (item.isHeader) {
-            items.add(position, item);
-            strings.add(position, item.header);
-            String clickedGroup = items.get(position).header;
-            int index = strings.indexOf(clickedGroup);
-            mHeaderPositions.add(index, position);
-            mSecondaryAdapter.notifyItemInserted(position);
-            mPrimaryAdapter.notifyItemInserted(index);
-        } else {
-            items.add(position, item);
-            mSecondaryAdapter.notifyItemInserted(position);
-        }
+    public LinkagePrimaryAdapter getPrimaryAdapter() {
+        return mPrimaryAdapter;
     }
 
-    //TODO need to test
-    public void removeItem(int position, BaseGroupedItem<T> item) {
-        if (item == null) {
-            return;
-        }
-        List<BaseGroupedItem<T>> items = mSecondaryAdapter.getItems();
-        List<String> strings = mPrimaryAdapter.getStrings();
-        if (item.isHeader) {
-            items.remove(position);
-            for (BaseGroupedItem<T> item1 : items) {
-                if (item1.info.getGroup().equals(item.header)) {
-                    items.remove(item1);
-                }
-            }
-            mSecondaryAdapter.notifyDataSetChanged();
-            int index = strings.indexOf(item.header);
-            strings.remove(item.header);
-            mHeaderPositions.remove(index);
-            mPrimaryAdapter.notifyItemRemoved(index);
-        } else {
-            items.remove(position);
-            mSecondaryAdapter.notifyItemRemoved(position);
-        }
+    public LinkageSecondaryAdapter getSecondaryAdapter() {
+        return mSecondaryAdapter;
     }
 
-    //TODO need to test
-    public void updateItem(int position, BaseGroupedItem<T> item) {
-        if (item == null) {
-            return;
-        }
-        List<BaseGroupedItem<T>> items = mSecondaryAdapter.getItems();
-        List<String> strings = mPrimaryAdapter.getStrings();
-        if (item.isHeader) {
-            items.set(position, item);
-            mSecondaryAdapter.notifyItemChanged(position);
-            mPrimaryAdapter.notifyDataSetChanged();
-        } else {
-            items.set(position, item);
-            mSecondaryAdapter.notifyItemChanged(position);
-        }
+    public List<Integer> getHeaderPositions() {
+        return mHeaderPositions;
     }
-
 }

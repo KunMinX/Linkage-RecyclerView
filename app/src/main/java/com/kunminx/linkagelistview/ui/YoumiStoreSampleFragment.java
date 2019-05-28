@@ -193,7 +193,7 @@ public class YoumiStoreSampleFragment extends Fragment {
                         mContext.getString(R.string.test_content)
                 );
                 ElemeGroupedItem item1 = new ElemeGroupedItem(info);
-                mBinding.linkage.addItem(position, item1);
+                addItem(position, item1);
             });
         }
 
@@ -208,6 +208,69 @@ public class YoumiStoreSampleFragment extends Fragment {
         public void onBindFooterViewHolder(LinkageSecondaryFooterViewHolder holder,
                                            BaseGroupedItem<ElemeGroupedItem.ItemInfo> item, int position) {
 
+        }
+
+        //TODO need to test!
+        public void addItem(int position, ElemeGroupedItem item) {
+            if (item == null) {
+                return;
+            }
+            List<ElemeGroupedItem> items = mBinding.linkage.getSecondaryAdapter().getItems();
+            List<String> strings = mBinding.linkage.getPrimaryAdapter().getStrings();
+            if (item.isHeader) {
+                items.add(position, item);
+                strings.add(position, item.header);
+                String clickedGroup = items.get(position).header;
+                int index = strings.indexOf(clickedGroup);
+                mBinding.linkage.getHeaderPositions().add(index, position);
+                mBinding.linkage.getSecondaryAdapter().notifyItemInserted(position);
+                mBinding.linkage.getPrimaryAdapter().notifyItemInserted(index);
+            } else {
+                items.add(position, item);
+                mBinding.linkage.getSecondaryAdapter().notifyItemInserted(position);
+            }
+        }
+
+        //TODO need to test!
+        public void removeItem(int position, ElemeGroupedItem item) {
+            if (item == null) {
+                return;
+            }
+            List<ElemeGroupedItem> items = mBinding.linkage.getSecondaryAdapter().getItems();
+            List<String> strings = mBinding.linkage.getPrimaryAdapter().getStrings();
+            if (item.isHeader) {
+                items.remove(position);
+                for (ElemeGroupedItem item1 : items) {
+                    if (item1.info.getGroup().equals(item.header)) {
+                        items.remove(item1);
+                    }
+                }
+                mBinding.linkage.getSecondaryAdapter().notifyDataSetChanged();
+                int index = strings.indexOf(item.header);
+                strings.remove(item.header);
+                mBinding.linkage.getHeaderPositions().remove(index);
+                mBinding.linkage.getPrimaryAdapter().notifyItemRemoved(index);
+            } else {
+                items.remove(position);
+                mBinding.linkage.getSecondaryAdapter().notifyItemRemoved(position);
+            }
+        }
+
+        //TODO need to test!
+        public void updateItem(int position, ElemeGroupedItem item) {
+            if (item == null) {
+                return;
+            }
+            List<ElemeGroupedItem> items = mBinding.linkage.getSecondaryAdapter().getItems();
+            List<String> strings = mBinding.linkage.getPrimaryAdapter().getStrings();
+            if (item.isHeader) {
+                items.set(position, item);
+                mBinding.linkage.getSecondaryAdapter().notifyItemChanged(position);
+                mBinding.linkage.getPrimaryAdapter().notifyDataSetChanged();
+            } else {
+                items.set(position, item);
+                mBinding.linkage.getSecondaryAdapter().notifyItemChanged(position);
+            }
         }
     }
 
