@@ -188,12 +188,13 @@ public class YoumiStoreSampleFragment extends Fragment {
             });
 
             holder.getView(R.id.iv_goods_add).setOnClickListener(v -> {
-                ElemeGroupedItem.ItemInfo info = new ElemeGroupedItem.ItemInfo(
+                /*ElemeGroupedItem.ItemInfo info = new ElemeGroupedItem.ItemInfo(
                         mContext.getString(R.string.test_title), item.info.getGroup(),
                         mContext.getString(R.string.test_content)
                 );
                 ElemeGroupedItem item1 = new ElemeGroupedItem(info);
-                addItem(position, item1);
+                addItem(position, item1);*/
+                removeItem(position);
             });
         }
 
@@ -232,7 +233,8 @@ public class YoumiStoreSampleFragment extends Fragment {
         }
 
         //TODO need to test!
-        public void removeItem(int position, ElemeGroupedItem item) {
+        public void removeItem(int position) {
+            ElemeGroupedItem item = (ElemeGroupedItem) mBinding.linkage.getSecondaryAdapter().getItems().get(position);
             if (item == null) {
                 return;
             }
@@ -240,10 +242,12 @@ public class YoumiStoreSampleFragment extends Fragment {
             List<String> strings = mBinding.linkage.getPrimaryAdapter().getStrings();
             if (item.isHeader) {
                 items.remove(position);
-                for (ElemeGroupedItem item1 : items) {
-                    if (item1.info.getGroup().equals(item.header)) {
+                for (int i = 0; i < items.size(); i++) {
+                    ElemeGroupedItem item1 = items.get(i);
+                    if (!item1.isHeader && item1.info.getGroup().equals(item.header)) {
                         items.remove(item1);
                     }
+                    i--;
                 }
                 mBinding.linkage.getSecondaryAdapter().notifyDataSetChanged();
                 int index = strings.indexOf(item.header);
