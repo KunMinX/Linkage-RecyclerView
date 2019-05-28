@@ -50,4 +50,6 @@
     <string name="hint_good_detail">好吃的食物，增肥神器，有求必应</string>
     <string name="hint_good_detail_gird">爆款</string>
     <string name="hint_good_comment">月售10008 好评率100%</string>
+    <string name="test_title">我是新来的</string>
+    <string name="test_content">You are so good</string>
 </resources>

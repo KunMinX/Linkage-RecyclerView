@@ -45,6 +45,7 @@ import com.kunminx.linkagelistview.R;
 import com.kunminx.linkagelistview.bean.ElemeGroupedItem;
 import com.kunminx.linkagelistview.databinding.FragmentYoumiBinding;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 /**
@@ -81,8 +82,9 @@ public class YoumiStoreSampleFragment extends Fragment {
                 new TypeToken<List<ElemeGroupedItem>>() {
                 }.getType());
 
-        linkage.init(items, new YoumiStoreLinkagePrimaryAdapterConfig(),
-                new YoumiStoreLinkageSecondaryAdapterConfig());
+        YoumiStoreLinkageSecondaryAdapterConfig secondaryAdapterConfig = new YoumiStoreLinkageSecondaryAdapterConfig();
+        secondaryAdapterConfig.setBinding(mBinding);
+        linkage.init(items, new YoumiStoreLinkagePrimaryAdapterConfig(), secondaryAdapterConfig);
     }
 
     private static class YoumiStoreLinkagePrimaryAdapterConfig implements ILinkagePrimaryAdapterConfig {
@@ -133,9 +135,14 @@ public class YoumiStoreSampleFragment extends Fragment {
             ILinkageSecondaryAdapterConfig<ElemeGroupedItem.ItemInfo> {
 
         private Context mContext;
+        private FragmentYoumiBinding mBinding;
 
         public void setContext(Context context) {
             mContext = context;
+        }
+
+        public void setBinding(FragmentYoumiBinding binding) {
+            mBinding = binding;
         }
 
         @Override
@@ -173,13 +180,20 @@ public class YoumiStoreSampleFragment extends Fragment {
                                      BaseGroupedItem<ElemeGroupedItem.ItemInfo> item, int position) {
 
             ((TextView) holder.getView(R.id.iv_goods_name)).setText(item.info.getTitle());
-            Glide.with(mContext).load(item.info.getImgUrl()).into((ImageView) holder.getView(R.id.iv_goods_img));
+            if (!TextUtils.isEmpty(item.info.getImgUrl())) {
+                Glide.with(mContext).load(item.info.getImgUrl()).into((ImageView) holder.getView(R.id.iv_goods_img));
+            }
             holder.getView(R.id.iv_goods_item).setOnClickListener(v -> {
                 //TODO
             });
 
             holder.getView(R.id.iv_goods_add).setOnClickListener(v -> {
-                //TODO
+                ElemeGroupedItem.ItemInfo info = new ElemeGroupedItem.ItemInfo(
+                        mContext.getString(R.string.test_title), item.info.getGroup(),
+                        mContext.getString(R.string.test_content)
+                );
+                ElemeGroupedItem item1 = new ElemeGroupedItem(info);
+                mBinding.linkage.addItem(position, item1);
             });
         }
 

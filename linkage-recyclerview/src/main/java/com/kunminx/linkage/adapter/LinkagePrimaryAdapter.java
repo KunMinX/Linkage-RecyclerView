@@ -70,7 +70,7 @@ public class LinkagePrimaryAdapter extends RecyclerView.Adapter<LinkagePrimaryVi
         mLinkageListener = linkageListener;
     }
 
-    public void refreshList(List<String> list) {
+    public void initData(List<String> list) {
         mStrings.clear();
         if (list != null) {
             mStrings.addAll(list);

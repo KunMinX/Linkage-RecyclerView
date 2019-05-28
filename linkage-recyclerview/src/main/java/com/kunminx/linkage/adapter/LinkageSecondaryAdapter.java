@@ -74,7 +74,7 @@ public class LinkageSecondaryAdapter<T extends BaseGroupedItem.ItemInfo> extends
         mConfig = config;
     }
 
-    public void refreshList(List<BaseGroupedItem<T>> list) {
+    public void initData(List<BaseGroupedItem<T>> list) {
         mItems.clear();
         if (list != null) {
             mItems.addAll(list);

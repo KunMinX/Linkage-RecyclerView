@@ -68,8 +68,8 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
     private TextView mTvHeader;
     private FrameLayout mHeaderContainer;
 
-    private List<String> mGroupNames;
-    private List<BaseGroupedItem<T>> mItems;
+    private List<String> mInitGroupNames;
+    private List<BaseGroupedItem<T>> mInitItems;
 
     private List<Integer> mHeaderPositions = new ArrayList<>();
     private int mTitleHeight;
@@ -124,7 +124,7 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
     private void initRecyclerView(ILinkagePrimaryAdapterConfig primaryAdapterConfig,
                                   ILinkageSecondaryAdapterConfig secondaryAdapterConfig) {
 
-        mPrimaryAdapter = new LinkagePrimaryAdapter(mGroupNames, primaryAdapterConfig,
+        mPrimaryAdapter = new LinkagePrimaryAdapter(mInitGroupNames, primaryAdapterConfig,
                 new LinkagePrimaryAdapter.OnLinkageListener() {
                     @Override
                     public void onLinkageClick(LinkagePrimaryViewHolder holder, String title, int position) {
@@ -142,7 +142,7 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
         mRvPrimary.setLayoutManager(mPrimaryLayoutManager);
         mRvPrimary.setAdapter(mPrimaryAdapter);
 
-        mSecondaryAdapter = new LinkageSecondaryAdapter(mItems, secondaryAdapterConfig);
+        mSecondaryAdapter = new LinkageSecondaryAdapter(mInitItems, secondaryAdapterConfig);
         setLevel2LayoutManager();
         mRvSecondary.setAdapter(mSecondaryAdapter);
     }
@@ -159,8 +159,8 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
             mTvHeader = view.findViewById(config.getHeaderTextViewId());
         }
 
-        if (mItems.get(mFirstVisiblePosition).isHeader) {
-            mTvHeader.setText(mItems.get(mFirstVisiblePosition).header);
+        if (mInitItems.get(mFirstVisiblePosition).isHeader) {
+            mTvHeader.setText(mInitItems.get(mFirstVisiblePosition).header);
         }
 
         mRvSecondary.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -176,10 +176,11 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
                 super.onScrolled(recyclerView, dx, dy);
 
                 int firstPosition = mSecondaryLayoutManager.findFirstVisibleItemPosition();
+                List<BaseGroupedItem<T>> items = mSecondaryAdapter.getItems();
 
                 // Here is the logic of the sticky:
 
-                if ((firstPosition + 1) < mItems.size() && mItems.get(firstPosition + 1).isHeader) {
+                if ((firstPosition + 1) < items.size() && items.get(firstPosition + 1).isHeader) {
                     View view = mSecondaryLayoutManager.findViewByPosition(firstPosition + 1);
                     if (view != null && view.getTop() <= mTitleHeight) {
                         mTvHeader.setY(view.getTop() - mTitleHeight);
@@ -194,9 +195,9 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
                     mFirstVisiblePosition = firstPosition;
                     mTvHeader.setY(0);
 
-                    String currentGroupName = mItems.get(mFirstVisiblePosition).isHeader
-                            ? mItems.get(mFirstVisiblePosition).header
-                            : mItems.get(mFirstVisiblePosition).info.getGroup();
+                    String currentGroupName = items.get(mFirstVisiblePosition).isHeader
+                            ? items.get(mFirstVisiblePosition).header
+                            : items.get(mFirstVisiblePosition).info.getGroup();
 
                     if (TextUtils.isEmpty(mLastGroupName) || !mLastGroupName.equals(currentGroupName)) {
                         mLastGroupName = currentGroupName;
@@ -215,8 +216,9 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
                 // Note: 2019.5.22 KunMinX
 
                 if (groupNameChanged) {
-                    for (int i = 0; i < mGroupNames.size(); i++) {
-                        if (mGroupNames.get(i).equals(mLastGroupName)) {
+                    List<String> groupNames = mPrimaryAdapter.getStrings();
+                    for (int i = 0; i < groupNames.size(); i++) {
+                        if (groupNames.get(i).equals(mLastGroupName)) {
                             mPrimaryAdapter.setSelectedPosition(i);
                             RecyclerViewScrollHelper.smoothScrollToPosition(mRvPrimary,
                                     LinearSmoothScroller.SNAP_TO_END, i);
@@ -238,12 +240,12 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
 
         initRecyclerView(primaryAdapterConfig, secondaryAdapterConfig);
 
-        this.mItems = linkageItems;
+        this.mInitItems = linkageItems;
 
         String lastGroupName = null;
         List<String> groupNames = new ArrayList<>();
-        if (mItems != null && mItems.size() > 0) {
-            for (BaseGroupedItem<T> item1 : mItems) {
+        if (mInitItems != null && mInitItems.size() > 0) {
+            for (BaseGroupedItem<T> item1 : mInitItems) {
                 if (item1.isHeader) {
                     groupNames.add(item1.header);
                     lastGroupName = item1.header;
@@ -251,9 +253,9 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
             }
         }
 
-        if (mItems != null) {
-            for (int i = 0; i < mItems.size(); i++) {
-                if (mItems.get(i).isHeader) {
+        if (mInitItems != null) {
+            for (int i = 0; i < mInitItems.size(); i++) {
+                if (mInitItems.get(i).isHeader) {
                     mHeaderPositions.add(i);
                 }
             }
@@ -261,11 +263,11 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
 
         DefaultGroupedItem.ItemInfo info = new DefaultGroupedItem.ItemInfo(null, lastGroupName);
         BaseGroupedItem<T> footerItem = (BaseGroupedItem<T>) new DefaultGroupedItem(info);
-        mItems.add(footerItem);
+        mInitItems.add(footerItem);
 
-        this.mGroupNames = groupNames;
-        mPrimaryAdapter.refreshList(mGroupNames);
-        mSecondaryAdapter.refreshList(mItems);
+        this.mInitGroupNames = groupNames;
+        mPrimaryAdapter.initData(mInitGroupNames);
+        mSecondaryAdapter.initData(mInitItems);
         initLinkageSecondary();
     }
 
@@ -314,15 +316,67 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
         this.mScrollSmoothly = scrollSmoothly;
     }
 
-    public List<BaseGroupedItem<T>> getLinkageItems() {
-        return mItems;
+    //TODO need to test
+    public void addItem(int position, BaseGroupedItem<T> item) {
+        if (item == null) {
+            return;
+        }
+        List<BaseGroupedItem<T>> items = mSecondaryAdapter.getItems();
+        List<String> strings = mPrimaryAdapter.getStrings();
+        if (item.isHeader) {
+            items.add(position, item);
+            strings.add(position, item.header);
+            String clickedGroup = items.get(position).header;
+            int index = strings.indexOf(clickedGroup);
+            mHeaderPositions.add(index, position);
+            mSecondaryAdapter.notifyItemInserted(position);
+            mPrimaryAdapter.notifyItemInserted(index);
+        } else {
+            items.add(position, item);
+            mSecondaryAdapter.notifyItemInserted(position);
+        }
     }
 
-    public LinkagePrimaryAdapter getPrimaryAdapter() {
-        return mPrimaryAdapter;
+    //TODO need to test
+    public void removeItem(int position, BaseGroupedItem<T> item) {
+        if (item == null) {
+            return;
+        }
+        List<BaseGroupedItem<T>> items = mSecondaryAdapter.getItems();
+        List<String> strings = mPrimaryAdapter.getStrings();
+        if (item.isHeader) {
+            items.remove(position);
+            for (BaseGroupedItem<T> item1 : items) {
+                if (item1.info.getGroup().equals(item.header)) {
+                    items.remove(item1);
+                }
+            }
+            mSecondaryAdapter.notifyDataSetChanged();
+            int index = strings.indexOf(item.header);
+            strings.remove(item.header);
+            mHeaderPositions.remove(index);
+            mPrimaryAdapter.notifyItemRemoved(index);
+        } else {
+            items.remove(position);
+            mSecondaryAdapter.notifyItemRemoved(position);
+        }
     }
 
-    public LinkageSecondaryAdapter getSecondaryAdapter() {
-        return mSecondaryAdapter;
+    //TODO need to test
+    public void updateItem(int position, BaseGroupedItem<T> item) {
+        if (item == null) {
+            return;
+        }
+        List<BaseGroupedItem<T>> items = mSecondaryAdapter.getItems();
+        List<String> strings = mPrimaryAdapter.getStrings();
+        if (item.isHeader) {
+            items.set(position, item);
+            mSecondaryAdapter.notifyItemChanged(position);
+            mPrimaryAdapter.notifyDataSetChanged();
+        } else {
+            items.set(position, item);
+            mSecondaryAdapter.notifyItemChanged(position);
+        }
     }
+
 }
