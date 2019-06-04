@@ -283,9 +283,7 @@ Home：[KunMinX 的个人博客](https://www.kunminx.com/)
 
 Juejin：[KunMinX 在掘金](https://juejin.im/user/58ab0de9ac502e006975d757/posts)
 
-<span id="wechatQrcode">KunMinX's WeChat Public Account（微信公众号）：</span>
-
-![公众号](https://upload-images.jianshu.io/upload_images/57036-dc3af94a5daf478c.jpg)
+![xzl](https://upload-images.jianshu.io/upload_images/57036-39b1220659cdbbda.png)
 
 # License
 
