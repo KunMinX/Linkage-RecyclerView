@@ -285,7 +285,7 @@ Juejin：[KunMinX 在掘金](https://juejin.im/user/58ab0de9ac502e006975d757/pos
 
 [《重学安卓》 专栏](https://xiaozhuanlan.com/kunminx?rel=kunminx)
 
-![重学安卓小专栏](https://i.loli.net/2019/06/17/5d067596c2dbf49609.png)
+[![重学安卓小专栏](https://i.loli.net/2019/06/17/5d067596c2dbf49609.png)](https://xiaozhuanlan.com/kunminx?rel=kunminx)
 
 # License
 
