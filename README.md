@@ -283,7 +283,9 @@ Home：[KunMinX 的个人博客](https://www.kunminx.com/)
 
 Juejin：[KunMinX 在掘金](https://juejin.im/user/58ab0de9ac502e006975d757/posts)
 
-![xzl](https://upload-images.jianshu.io/upload_images/57036-1483345344941837.jpg)
+[《重学安卓》 专栏](https://xiaozhuanlan.com/kunminx?rel=kunminx)
+
+![重学安卓小专栏](https://i.loli.net/2019/06/17/5d067596c2dbf49609.png)
 
 # License
 
