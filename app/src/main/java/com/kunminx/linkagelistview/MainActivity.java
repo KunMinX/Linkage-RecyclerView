@@ -25,8 +25,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.kunminx.linkagelistview.databinding.ActivityMainBinding;
-import com.kunminx.linkagelistview.ui.manager.TabLayoutMediator;
 
 /**
  * Create by KunMinX at 19/4/27
