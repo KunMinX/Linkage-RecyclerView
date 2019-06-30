@@ -283,9 +283,9 @@ Home：[KunMinX 的个人博客](https://www.kunminx.com/)
 
 Juejin：[KunMinX 在掘金](https://juejin.im/user/58ab0de9ac502e006975d757/posts)
 
-<span id="wechatQrcode">KunMinX's WeChat Public Account（微信公众号）：</span>
+[《重学安卓》 专栏](https://xiaozhuanlan.com/kunminx?rel=kunminx)
 
-![公众号](https://upload-images.jianshu.io/upload_images/57036-dc3af94a5daf478c.jpg)
+[![重学安卓小专栏](https://i.loli.net/2019/06/17/5d067596c2dbf49609.png)](https://xiaozhuanlan.com/kunminx?rel=kunminx)
 
 # License
 
