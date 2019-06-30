@@ -65,7 +65,7 @@ public class DefaultLinkagePrimaryAdapterConfig implements ILinkagePrimaryAdapte
     }
 
     @Override
-    public void onBindViewHolder(LinkagePrimaryViewHolder holder, boolean selected, String title, int position) {
+    public void onBindViewHolder(LinkagePrimaryViewHolder holder, boolean selected, String title) {
         TextView tvTitle = ((TextView) holder.mGroupTitle);
         tvTitle.setText(title);
 
@@ -77,29 +77,36 @@ public class DefaultLinkagePrimaryAdapterConfig implements ILinkagePrimaryAdapte
         tvTitle.setMarqueeRepeatLimit(selected ? MARQUEE_REPEAT_LOOP_MODE : MARQUEE_REPEAT_NONE_MODE);
 
         if (mListener != null) {
-            mListener.onBindViewHolder(holder, title, position);
+            mListener.onBindViewHolder(holder, title);
         }
     }
 
     @Override
-    public void onItemClick(View view, String title, int position) {
+    public void onItemClick(LinkagePrimaryViewHolder holder, View view, String title) {
         if (mClickListner != null) {
-            mClickListner.onItemClick(view, title, position);
+            mClickListner.onItemClick(holder, view, title);
         }
     }
 
     public interface OnPrimaryItemClickListner {
-        void onItemClick(View view, String title, int position);
+        /**
+         * we suggest you get position by holder.getAdapterPosition
+         *
+         * @param holder primaryHolder
+         * @param view   view
+         * @param title  groupTitle
+         */
+        void onItemClick(LinkagePrimaryViewHolder holder, View view, String title);
     }
 
     public interface OnPrimaryItemBindListener {
         /**
          * Note: Please do not override rootView click listener in here, because of linkage selection rely on it.
+         * and we suggest you get position by holder.getAdapterPosition
          *
          * @param primaryHolder primaryHolder
          * @param title         groupTitle
-         * @param position      position
          */
-        void onBindViewHolder(LinkagePrimaryViewHolder primaryHolder, String title, int position);
+        void onBindViewHolder(LinkagePrimaryViewHolder primaryHolder, String title);
     }
 }

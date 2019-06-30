@@ -77,23 +77,23 @@ public class BottomSheetSampleFragment extends Fragment {
         linkage.init(items);
         linkage.setScrollSmoothly(false);
         linkage.setDefaultOnItemBindListener(
-                (primaryClickView, title, position) -> {
+                (primaryHolder, primaryClickView, title) -> {
                     Snackbar.make(primaryClickView, title, Snackbar.LENGTH_SHORT).show();
                 },
-                (primaryHolder, title, position) -> {
+                (primaryHolder, title) -> {
                     //TODO
                 },
-                (secondaryHolder, item, position) -> {
+                (secondaryHolder, item) -> {
                     secondaryHolder.getView(R.id.level_2_item).setOnClickListener(v -> {
                         if (mSheetDialog != null && mSheetDialog.isShowing()) {
                             mSheetDialog.dismiss();
                         }
                     });
                 },
-                (headerHolder, item, position) -> {
+                (headerHolder, item) -> {
                     //TODO
                 },
-                (footerHolder, item, position) -> {
+                (footerHolder, item) -> {
                     //TODO
                 }
         );

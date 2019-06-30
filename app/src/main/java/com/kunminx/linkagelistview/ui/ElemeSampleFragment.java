@@ -105,7 +105,7 @@ public class ElemeSampleFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(LinkagePrimaryViewHolder holder, boolean selected, String title, int position) {
+        public void onBindViewHolder(LinkagePrimaryViewHolder holder, boolean selected, String title) {
             TextView tvTitle = ((TextView) holder.mGroupTitle);
             tvTitle.setText(title);
 
@@ -120,7 +120,7 @@ public class ElemeSampleFragment extends Fragment {
         }
 
         @Override
-        public void onItemClick(View view, String title, int position) {
+        public void onItemClick(LinkagePrimaryViewHolder holder, View view, String title) {
             //TODO
         }
     }
@@ -166,7 +166,7 @@ public class ElemeSampleFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(LinkageSecondaryViewHolder holder,
-                                     BaseGroupedItem<ElemeGroupedItem.ItemInfo> item, int position) {
+                                     BaseGroupedItem<ElemeGroupedItem.ItemInfo> item) {
 
             ((TextView) holder.getView(R.id.iv_goods_name)).setText(item.info.getTitle());
             Glide.with(mContext).load(item.info.getImgUrl()).into((ImageView) holder.getView(R.id.iv_goods_img));
@@ -181,14 +181,14 @@ public class ElemeSampleFragment extends Fragment {
 
         @Override
         public void onBindHeaderViewHolder(LinkageSecondaryHeaderViewHolder holder,
-                                           BaseGroupedItem<ElemeGroupedItem.ItemInfo> item, int position) {
+                                           BaseGroupedItem<ElemeGroupedItem.ItemInfo> item) {
 
             ((TextView) holder.getView(R.id.secondary_header)).setText(item.header);
         }
 
         @Override
         public void onBindFooterViewHolder(LinkageSecondaryFooterViewHolder holder,
-                                           BaseGroupedItem<ElemeGroupedItem.ItemInfo> item, int position) {
+                                           BaseGroupedItem<ElemeGroupedItem.ItemInfo> item) {
 
         }
     }

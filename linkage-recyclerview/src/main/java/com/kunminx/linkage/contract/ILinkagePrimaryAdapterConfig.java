@@ -60,20 +60,22 @@ public interface ILinkagePrimaryAdapterConfig {
      * Note: Do not setOnClickListener in onBindViewHolder,
      * instead, you can deal with item click in method 'ILinkagePrimaryAdapterConfig.onItemSelected()'
      * or 'LinkageRecyclerView.OnPrimaryItemClickListener.onItemClick()'
+     * <p>
+     * and we suggest you get position by holder.getAdapterPosition
      *
      * @param holder   LinkagePrimaryViewHolder
      * @param title    title of this position
      * @param selected selected of this position
-     * @param position holder.getAdapterPosition()
      */
-    void onBindViewHolder(LinkagePrimaryViewHolder holder, boolean selected, String title, int position);
+    void onBindViewHolder(LinkagePrimaryViewHolder holder, boolean selected, String title);
 
     /**
      * on primary item clicked
+     * and we suggest you get position by holder.getAdapterPosition
      *
-     * @param view     itemView
-     * @param title    title of primary item
-     * @param position position
+     * @param holder LinkagePrimaryViewHolder
+     * @param view   itemView
+     * @param title  title of primary item
      */
-    void onItemClick(View view, String title, int position);
+    void onItemClick(LinkagePrimaryViewHolder holder, View view, String title);
 }

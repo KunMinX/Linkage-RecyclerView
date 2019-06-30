@@ -21,14 +21,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.kunminx.linkage.adapter.viewholder.LinkagePrimaryViewHolder;
 import com.kunminx.linkage.contract.ILinkagePrimaryAdapterConfig;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Create by KunMinX at 19/4/29
@@ -96,15 +96,15 @@ public class LinkagePrimaryAdapter extends RecyclerView.Adapter<LinkagePrimaryVi
         final int adapterPosition = holder.getAdapterPosition();
         final String title = mStrings.get(adapterPosition);
 
-        mConfig.onBindViewHolder(holder, position == mSelectedPosition, title, adapterPosition);
+        mConfig.onBindViewHolder(holder, adapterPosition == mSelectedPosition, title);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mLinkageListener != null) {
-                    mLinkageListener.onLinkageClick(holder, title, adapterPosition);
+                    mLinkageListener.onLinkageClick(holder, title);
                 }
-                mConfig.onItemClick(v, title, adapterPosition);
+                mConfig.onItemClick(holder, v, title);
             }
         });
     }
@@ -119,6 +119,6 @@ public class LinkagePrimaryAdapter extends RecyclerView.Adapter<LinkagePrimaryVi
      * users can archive onLinkageClick in configs instead.
      */
     public interface OnLinkageListener {
-        void onLinkageClick(LinkagePrimaryViewHolder holder, String title, int position);
+        void onLinkageClick(LinkagePrimaryViewHolder holder, String title);
     }
 }

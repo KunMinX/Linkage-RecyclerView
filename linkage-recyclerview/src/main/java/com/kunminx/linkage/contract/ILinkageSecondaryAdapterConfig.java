@@ -84,28 +84,28 @@ public interface ILinkageSecondaryAdapterConfig<T extends BaseGroupedItem.ItemIn
 
     /**
      * achieve the onBindViewHolder logic on outside
+     * and we suggest you get position by holder.getAdapterPosition
      *
      * @param holder   LinkageSecondaryViewHolder
      * @param item     linkageItem of this position
-     * @param position holder.getAdapterPosition()
      */
-    void onBindViewHolder(LinkageSecondaryViewHolder holder, BaseGroupedItem<T> item, int position);
+    void onBindViewHolder(LinkageSecondaryViewHolder holder, BaseGroupedItem<T> item);
 
     /**
      * achieve the onBindHeaderViewHolder logic on outside
+     * and we suggest you get position by holder.getAdapterPosition
      *
      * @param holder   LinkageSecondaryHeaderViewHolder
      * @param item     header of this position
-     * @param position holder.getAdapterPosition()
      */
-    void onBindHeaderViewHolder(LinkageSecondaryHeaderViewHolder holder, BaseGroupedItem<T> item, int position);
+    void onBindHeaderViewHolder(LinkageSecondaryHeaderViewHolder holder, BaseGroupedItem<T> item);
 
     /**
      * achieve the onBindFooterViewHolder logic on outside
+     * and we suggest you get position by holder.getAdapterPosition
      *
      * @param holder   LinkageSecondaryFooterViewHolder
      * @param item     footer of this position
-     * @param position holder.getAdapterPosition()
      */
-    void onBindFooterViewHolder(LinkageSecondaryFooterViewHolder holder, BaseGroupedItem<T> item, int position);
+    void onBindFooterViewHolder(LinkageSecondaryFooterViewHolder holder, BaseGroupedItem<T> item);
 }

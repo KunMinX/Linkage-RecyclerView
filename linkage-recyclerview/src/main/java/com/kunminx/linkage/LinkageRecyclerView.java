@@ -127,13 +127,14 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
         mPrimaryAdapter = new LinkagePrimaryAdapter(mInitGroupNames, primaryAdapterConfig,
                 new LinkagePrimaryAdapter.OnLinkageListener() {
                     @Override
-                    public void onLinkageClick(LinkagePrimaryViewHolder holder, String title, int position) {
+                    public void onLinkageClick(LinkagePrimaryViewHolder holder, String title) {
                         if (isScrollSmoothly()) {
                             RecyclerViewScrollHelper.smoothScrollToPosition(mRvSecondary,
-                                    LinearSmoothScroller.SNAP_TO_START, mHeaderPositions.get(position));
+                                    LinearSmoothScroller.SNAP_TO_START,
+                                    mHeaderPositions.get(holder.getAdapterPosition()));
                         } else {
                             mSecondaryLayoutManager.scrollToPositionWithOffset(
-                                    mHeaderPositions.get(position), SCROLL_OFFSET);
+                                    mHeaderPositions.get(holder.getAdapterPosition()), SCROLL_OFFSET);
                         }
                     }
                 });

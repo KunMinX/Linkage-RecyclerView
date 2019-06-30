@@ -45,7 +45,7 @@ Linkage-RecyclerView 的目标是：**一行代码即可接入二级联动列表
 1.在 build.gradle 中添加对该库的依赖。
 
 ```groovy
-implementation 'com.kunminx.linkage:linkage-recyclerview:1.7.3'
+implementation 'com.kunminx.linkage:linkage-recyclerview:1.8.4'
 ```
 
 2.依据默认的分组实体类 `DefaultGroupedItem` 的结构准备一串数据（以下以  JSON 为例）。
@@ -209,7 +209,7 @@ private class ElemePrimaryAdapterConfig implements ILinkagePrimaryAdapterConfig 
     public int getRootViewId() { return R.id.layout_group; }
 
     @Override
-    public void onBindViewHolder(LinkagePrimaryViewHolder holder, boolean selected, String title, int position) {
+    public void onBindViewHolder(LinkagePrimaryViewHolder holder, boolean selected, String title) {
         TextView tvTitle = (TextView) holder.mGroupTitle;
         tvTitle.setText(title);
         tvTitle.setBackgroundColor(mContext.getResources().getColor(
@@ -246,7 +246,7 @@ private class ElemeSecondaryAdapterConfig implements
 
     @Override
     public void onBindViewHolder(LinkageSecondaryViewHolder holder,
-                                 BaseGroupedItem<ElemeGroupedItem.ItemInfo> item, int position) {
+                                 BaseGroupedItem<ElemeGroupedItem.ItemInfo> item) {
         ((TextView) holder.getView(R.id.iv_goods_name)).setText(item.info.getTitle());
         holder.getView(R.id.iv_goods_item).setOnClickListener(v -> {
             //TODO
@@ -255,13 +255,13 @@ private class ElemeSecondaryAdapterConfig implements
 
     @Override
     public void onBindHeaderViewHolder(LinkageSecondaryHeaderViewHolder holder,
-                                       BaseGroupedItem<ElemeGroupedItem.ItemInfo> item, int position) {
+                                       BaseGroupedItem<ElemeGroupedItem.ItemInfo> item) {
         ((TextView) holder.getView(R.id.secondary_header)).setText(item.header);
     }
     
     @Override
     public void onBindFooterViewHolder(LinkageSecondaryFooterViewHolder holder,
-                                       BaseGroupedItem<DefaultGroupedItem.ItemInfo> item, int position) {
+                                       BaseGroupedItem<DefaultGroupedItem.ItemInfo> item) {
         //TODO
     }
 }

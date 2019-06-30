@@ -83,49 +83,67 @@ public class DefaultLinkageSecondaryAdapterConfig implements ILinkageSecondaryAd
 
     @Override
     public void onBindViewHolder(LinkageSecondaryViewHolder holder,
-                                 BaseGroupedItem<DefaultGroupedItem.ItemInfo> item, int position) {
+                                 BaseGroupedItem<DefaultGroupedItem.ItemInfo> item) {
 
         ((TextView) holder.getView(R.id.level_2_title)).setText(item.info.getTitle());
         ((TextView) holder.getView(R.id.level_2_content)).setText(item.info.getContent());
 
         if (mItemBindListener != null) {
-            mItemBindListener.onBindViewHolder(holder, item, position);
+            mItemBindListener.onBindViewHolder(holder, item);
         }
     }
 
     @Override
     public void onBindHeaderViewHolder(LinkageSecondaryHeaderViewHolder holder,
-                                       BaseGroupedItem<DefaultGroupedItem.ItemInfo> item, int position) {
+                                       BaseGroupedItem<DefaultGroupedItem.ItemInfo> item) {
 
         ((TextView) holder.getView(R.id.secondary_header)).setText(item.header);
 
         if (mHeaderBindListener != null) {
-            mHeaderBindListener.onBindHeaderViewHolder(holder, item, position);
+            mHeaderBindListener.onBindHeaderViewHolder(holder, item);
         }
     }
 
     @Override
     public void onBindFooterViewHolder(LinkageSecondaryFooterViewHolder holder,
-                                       BaseGroupedItem<DefaultGroupedItem.ItemInfo> item, int position) {
+                                       BaseGroupedItem<DefaultGroupedItem.ItemInfo> item) {
         ((TextView) holder.getView(R.id.tv_secondary_footer)).setText(mContext.getString(R.string.the_end));
 
         if (mFooterBindListener != null) {
-            mFooterBindListener.onBindFooterViewHolder(holder, item, position);
+            mFooterBindListener.onBindFooterViewHolder(holder, item);
         }
     }
 
     public interface OnSecondaryItemBindListener {
+        /**
+         * we suggest you get position by holder.getAdapterPosition
+         *
+         * @param secondaryHolder
+         * @param item
+         */
         void onBindViewHolder(LinkageSecondaryViewHolder secondaryHolder,
-                              BaseGroupedItem<DefaultGroupedItem.ItemInfo> item, int position);
+                              BaseGroupedItem<DefaultGroupedItem.ItemInfo> item);
     }
 
     public interface OnSecondaryHeaderBindListener {
+        /**
+         * we suggest you get position by holder.getAdapterPosition
+         *
+         * @param headerHolder
+         * @param item
+         */
         void onBindHeaderViewHolder(LinkageSecondaryHeaderViewHolder headerHolder,
-                                    BaseGroupedItem<DefaultGroupedItem.ItemInfo> item, int position);
+                                    BaseGroupedItem<DefaultGroupedItem.ItemInfo> item);
     }
 
     public interface OnSecondaryFooterBindListener {
+        /**
+         * we suggest you get position by holder.getAdapterPosition
+         *
+         * @param footerHolder
+         * @param item
+         */
         void onBindFooterViewHolder(LinkageSecondaryFooterViewHolder footerHolder,
-                                    BaseGroupedItem<DefaultGroupedItem.ItemInfo> item, int position);
+                                    BaseGroupedItem<DefaultGroupedItem.ItemInfo> item);
     }
 }

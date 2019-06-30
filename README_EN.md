@@ -41,7 +41,7 @@ If you are thinking about [**how to choose the right architecture for your proje
 1. Add a dependency on the library in build.gradle.
 
 ```groovy
-implementation 'com.kunminx.linkage:linkage-recyclerview:1.7.0'
+implementation 'com.kunminx.linkage:linkage-recyclerview:1.8.4'
 ```
 
 2. Prepare a string of data according to the structure of the default grouping entity class `DefaultGroupedItem`. (The following is JSON as an example).
@@ -212,7 +212,7 @@ private class ElemePrimaryAdapterConfig implements ILinkagePrimaryAdapterConfig 
     public int getRootViewId() { return R.id.layout_group; }
 
     @Override
-    public void onBindViewHolder(LinkagePrimaryViewHolder holder, boolean selected, String title, int position) {
+    public void onBindViewHolder(LinkagePrimaryViewHolder holder, boolean selected, String title) {
         TextView tvTitle = (TextView) holder.mGroupTitle;
         tvTitle.setText(title);
         tvTitle.setBackgroundColor(mContext.getResources().getColor(
@@ -249,7 +249,7 @@ private class ElemeSecondaryAdapterConfig implements
 
     @Override
     public void onBindViewHolder(LinkageSecondaryViewHolder holder,
-                                 BaseGroupedItem<ElemeGroupedItem.ItemInfo> item, int position) {
+                                 BaseGroupedItem<ElemeGroupedItem.ItemInfo> item) {
         ((TextView) holder.getView(R.id.iv_goods_name)).setText(item.info.getTitle());
         holder.getView(R.id.iv_goods_item).setOnClickListener(v -> {
             //TODO
@@ -258,13 +258,13 @@ private class ElemeSecondaryAdapterConfig implements
 
     @Override
     public void onBindHeaderViewHolder(LinkageSecondaryHeaderViewHolder holder,
-                                       BaseGroupedItem<ElemeGroupedItem.ItemInfo> item, int position) {
+                                       BaseGroupedItem<ElemeGroupedItem.ItemInfo> item) {
         ((TextView) holder.getView(R.id.secondary_header)).setText(item.header);
     }
     
     @Override
     public void onBindFooterViewHolder(LinkageSecondaryFooterViewHolder holder,
-                                       BaseGroupedItem<DefaultGroupedItem.ItemInfo> item, int position) {
+                                       BaseGroupedItem<DefaultGroupedItem.ItemInfo> item) {
         //TODO
     }
 }

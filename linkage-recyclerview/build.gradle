@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 
 //
-def theVersionName = "1.7.3"
+def theVersionName = "1.8.4"
 
 android {
     compileSdkVersion 28
@@ -11,7 +11,7 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 28
-        versionCode 10703
+        versionCode 10804
         versionName theVersionName
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
