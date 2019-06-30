@@ -34,6 +34,7 @@ import com.kunminx.linkagelistview.ui.manager.TabLayoutMediator;
 public class MainActivity extends AppCompatActivity {
 
     private String[] mFragmentTitles;
+    private String[] mFragmentPaths;
     private Fragment[] mFragments;
 
     private ActivityMainBinding mBinding;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(mBinding.toolbar);
 
         mFragmentTitles = getResources().getStringArray(R.array.fragments);
+        mFragmentPaths = getResources().getStringArray(R.array.fragments_full_path);
         mFragments = new Fragment[mFragmentTitles.length];
 
         mBinding.viewPager.setAdapter(new FragmentStateAdapter(this) {
@@ -67,11 +69,11 @@ public class MainActivity extends AppCompatActivity {
         }).attach();
     }
 
-    private Fragment createFragment(Integer tag) {
-        if (mFragments[tag] != null) {
-            return mFragments[tag];
+    private Fragment createFragment(Integer index) {
+        if (mFragments[index] != null) {
+            return mFragments[index];
         }
-        String name = "com.kunminx.linkagelistview.ui." + mFragmentTitles[tag];
+        String name = mFragmentPaths[index];
         Fragment fragment = null;
         try {
             fragment = (Fragment) Class.forName(name).newInstance();
@@ -82,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        mFragments[tag] = fragment;
-        return mFragments[tag];
+        mFragments[index] = fragment;
+        return mFragments[index];
     }
 }
