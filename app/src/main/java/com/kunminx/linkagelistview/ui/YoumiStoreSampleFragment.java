@@ -193,8 +193,8 @@ public class YoumiStoreSampleFragment extends Fragment {
                         mContext.getString(R.string.test_content)
                 );
                 ElemeGroupedItem item1 = new ElemeGroupedItem(info);
-                addItem(position, item1);*/
-                removeItem(position);
+                addItem(holder.getAdapterPosition(), item1);*/
+                removeItem(holder.getAdapterPosition());
             });
         }
 
@@ -242,12 +242,11 @@ public class YoumiStoreSampleFragment extends Fragment {
             List<String> strings = mBinding.linkage.getPrimaryAdapter().getStrings();
             if (item.isHeader) {
                 items.remove(position);
-                for (int i = 0; i < items.size(); i++) {
+                for (int i = items.size(); i > 0; i--) {
                     ElemeGroupedItem item1 = items.get(i);
                     if (!item1.isHeader && item1.info.getGroup().equals(item.header)) {
                         items.remove(item1);
                     }
-                    i--;
                 }
                 mBinding.linkage.getSecondaryAdapter().notifyDataSetChanged();
                 int index = strings.indexOf(item.header);

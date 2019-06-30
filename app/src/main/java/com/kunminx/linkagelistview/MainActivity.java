@@ -52,8 +52,8 @@ public class MainActivity extends AppCompatActivity {
         mBinding.viewPager.setAdapter(new FragmentStateAdapter(this) {
             @NonNull
             @Override
-            public Fragment getItem(int position) {
-                return createFragment(position);
+            public Fragment createFragment(int position) {
+                return MainActivity.this.createFragment(position);
             }
 
             @Override

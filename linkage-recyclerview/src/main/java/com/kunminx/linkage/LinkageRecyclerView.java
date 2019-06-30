@@ -327,4 +327,5 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
     public List<Integer> getHeaderPositions() {
         return mHeaderPositions;
     }
+
 }
