@@ -139,7 +139,7 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
                     }
                 });
 
-        mPrimaryLayoutManager = new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false);
+        mPrimaryLayoutManager = new LinearLayoutManager(mContext);
         mRvPrimary.setLayoutManager(mPrimaryLayoutManager);
         mRvPrimary.setAdapter(mPrimaryAdapter);
 

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -10,16 +11,21 @@
             android:id="@+id/iv_bg"
             android:layout_width="360dp"
             android:layout_height="360dp"
-            android:layout_centerInParent="true"
+            android:layout_gravity="center"
             android:src="@drawable/bg_sample" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_preview"
             style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
+            android:layout_gravity="center|bottom"
             android:layout_marginTop="@dimen/margin8"
             android:layout_marginBottom="@dimen/margin8"
             android:layout_weight="0"
@@ -27,6 +33,6 @@
             android:text="@string/btn_name_dialog"
             android:textColor="@color/colorWhite" />
 
-    </RelativeLayout>
+    </FrameLayout>
 
 </layout>
