@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
 
 
 //
@@ -36,3 +37,16 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0-beta01'
     implementation 'com.google.android.material:material:1.1.0-alpha09'
 }
+
+
+publish {
+    userOrg = 'recyclerview-family'
+    repoName = 'maven'
+    groupId = 'com.kunminx.linkage'
+    artifactId = 'linkage-recyclerview'
+    publishVersion = theVersionName
+    desc = 'An double level linkage RecyclerView'
+    licences = ['Apache-2.0']
+    website = 'https://github.com/KunMinX/LinkageRecyclerView'
+}
+
