@@ -181,8 +181,25 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
 
                 // Here is the logic of the sticky:
 
-                if ((firstPosition + 1) < items.size() && items.get(firstPosition + 1).isHeader) {
-                    View view = mSecondaryLayoutManager.findViewByPosition(firstPosition + 1);
+                boolean isNextHeader = false;
+                int offset;
+                if (mSecondaryAdapter.isGridMode()) {
+                    int spanCount = mSecondaryAdapter.getConfig().getSpanCountOfGridMode();
+                    for (offset = 1; offset <= spanCount; offset++) {
+                        if ((firstPosition + offset) < items.size()) {
+                            if (items.get(firstPosition + offset).isHeader) {
+                                isNextHeader = true;
+                                break;
+                            }
+                        }
+                    }
+                } else {
+                    offset = 1;
+                    isNextHeader = (firstPosition + offset) < items.size() && items.get(firstPosition + offset).isHeader;
+                }
+
+                if (isNextHeader) {
+                    View view = mSecondaryLayoutManager.findViewByPosition(firstPosition + offset);
                     if (view != null && view.getTop() <= mTitleHeight) {
                         mTvHeader.setY(view.getTop() - mTitleHeight);
                     }
