@@ -50,7 +50,7 @@ implementation 'com.kunminx.linkage:linkage-recyclerview:1.9.2'
 
 2.依据默认的分组实体类 `DefaultGroupedItem` 的结构准备一串数据（**[以下以  JSON 为例](#)**）。
 
-> 注意这里讲的是 "为例" 哈，看到有个别访客被这个 JSON 迷惑，**误以为后端必须适配这个 JSON 格式的数据**。
+> 注意这里讲的是 "为例" 哈，看到有些访客被这个 JSON 迷惑，**误以为后端必须适配这个 JSON 格式的数据**。
 
 > 绝不是的。
 
