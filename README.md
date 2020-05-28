@@ -51,7 +51,10 @@ implementation 'com.kunminx.linkage:linkage-recyclerview:1.9.2'
 2.依据默认的分组实体类 `DefaultGroupedItem` 的结构准备一串数据（**[以下以  JSON 为例](#)**）。
 
 > 注意这里讲的是 "为例" 哈，看到有些访客被这个 JSON 迷惑，误以为后端必须适配这个 JSON 格式的数据。绝不是的。
-> 事实上，LinkageRV 装载数据的入参只有 List<自定义Group类 extends BaseGroupedItem>，投入到生产项目中使用时，客户端开发只需遵照下文 <a href="#custom">"个性化配置"</a> 中交代的步骤，根据后端数据格式来继承 BaseGroupedItem 并新建一个 group 类，然后在 数据层拿到后端请求来的数据后，遍历后端数据，将后端数据字段逐个注入到 group 对象中 —— 如此在数据层完成适配再推送结果给 UI 层即可。
+
+> 事实上，Linkage-RecyclerView 实体类的设计十分灵活，并且装载数据的入参只有 `List<自定义Group类 extends BaseGroupedItem>`，
+
+> 投入到生产项目中使用时，客户端开发只需遵照下文 <a href="#custom">"个性化配置"</a> 中交代的步骤，根据实际项目所需数据格式来继承 BaseGroupedItem 并新建一个 group 类，然后在 数据层拿到后端请求来的数据后，遍历后端数据、将后端数据字段逐个注入到 group 对象中 —— 如此在数据层完成适配，再推送结果给 UI 层即可。
 
 👆👆👆 划重点
 
