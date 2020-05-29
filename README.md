@@ -54,9 +54,9 @@ implementation 'com.kunminx.linkage:linkage-recyclerview:1.9.2'
 
 > 绝不是的。
 
-> 事实上，**Linkage-RecyclerView 实体类的设计十分灵活**，并且装载数据的入参只有 `List<自定义Group类 extends BaseGroupedItem>`，在实际生产项目中，客户端可以自己在数据层对拿到的后端数据进行适配：
+> 事实上，**Linkage-RecyclerView 实体类的设计十分灵活**，并且装载数据的入参只有 `List<自定义item类 extends BaseGroupedItem>`，在实际生产项目中，客户端可以自己在数据层对拿到的后端数据进行适配：
 
-> 只需遵照下文 <a href="#custom">"个性化配置"</a> 中交代的步骤，根据实际项目所需数据格式来继承 BaseGroupedItem 并新建一个 group 类，然后在 数据层拿到后端请求来的数据后，遍历后端数据、将后端数据字段逐个注入到 group 对象中 —— 如此在数据层完成适配，再推送结果给 UI 层即可。
+> 只需遵照下文 <a href="#custom">"个性化配置"</a> 中交代的步骤，根据实际项目所需数据格式来继承 BaseGroupedItem 并新建一个 item 类，然后在 数据层拿到后端请求来的数据后，遍历后端数据、将后端数据字段逐个注入到 item 对象中 —— 如此在数据层完成适配，再推送结果给 UI 层即可。
 
 👆👆👆 划重点
 
