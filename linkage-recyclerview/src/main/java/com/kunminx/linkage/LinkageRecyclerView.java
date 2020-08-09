@@ -238,6 +238,13 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
         return (int) ((dp * displayMetrics.density) + 0.5f);
     }
 
+    /**
+     * init LinkageRV by items and configs
+     *
+     * @param linkageItems
+     * @param primaryAdapterConfig
+     * @param secondaryAdapterConfig
+     */
     public void init(List<BaseGroupedItem<T>> linkageItems,
                      ILinkagePrimaryAdapterConfig primaryAdapterConfig,
                      ILinkageSecondaryAdapterConfig secondaryAdapterConfig) {
@@ -275,10 +282,24 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
         initLinkageSecondary();
     }
 
+    /**
+     * simplify init by only items and default configs
+     *
+     * @param linkageItems
+     */
     public void init(List<BaseGroupedItem<T>> linkageItems) {
         init(linkageItems, new DefaultLinkagePrimaryAdapterConfig(), new DefaultLinkageSecondaryAdapterConfig());
     }
 
+    /**
+     * bind listeners for primary or secondary adapter
+     *
+     * @param primaryItemClickListner
+     * @param primaryItemBindListener
+     * @param secondaryItemBindListener
+     * @param headerBindListener
+     * @param footerBindListener
+     */
     public void setDefaultOnItemBindListener(
             DefaultLinkagePrimaryAdapterConfig.OnPrimaryItemClickListner primaryItemClickListner,
             DefaultLinkagePrimaryAdapterConfig.OnPrimaryItemBindListener primaryItemBindListener,
@@ -296,16 +317,44 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
         }
     }
 
+    /**
+     * custom linkageRV width in some scene like dialog
+     *
+     * @param dp
+     */
     public void setLayoutHeight(float dp) {
         ViewGroup.LayoutParams lp = mLinkageLayout.getLayoutParams();
         lp.height = dpToPx(getContext(), dp);
         mLinkageLayout.setLayoutParams(lp);
     }
 
+    /**
+     * custom primary list width.
+     * <p>
+     * The reason for this design is that：The width of the first-level list must be an accurate value,
+     * otherwise the onBindViewHolder may be called multiple times due to the RecyclerView's own bug.
+     *
+     * @param dp
+     */
+    public void setPrimaryWidget(float dp) {
+        ViewGroup.LayoutParams lpLeft = mRvPrimary.getLayoutParams();
+        lpLeft.width = dpToPx(getContext(), dp);
+        mRvPrimary.setLayoutParams(lpLeft);
+
+        ViewGroup.LayoutParams lpRight = mRvSecondary.getLayoutParams();
+        lpRight.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        mRvSecondary.setLayoutParams(lpRight);
+    }
+
     public boolean isGridMode() {
         return mSecondaryAdapter.isGridMode();
     }
 
+    /**
+     * custom if secondary list is hope to be grid mode
+     *
+     * @return
+     */
     public void setGridMode(boolean isGridMode) {
         mSecondaryAdapter.setGridMode(isGridMode);
         setLevel2LayoutManager();
@@ -316,6 +365,11 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
         return mScrollSmoothly;
     }
 
+    /**
+     * custom if is hope to scroll smoothly while click primary item to linkage secondary list
+     *
+     * @return
+     */
     public void setScrollSmoothly(boolean scrollSmoothly) {
         this.mScrollSmoothly = scrollSmoothly;
     }
