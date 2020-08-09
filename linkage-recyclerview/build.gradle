@@ -3,7 +3,7 @@ apply plugin: 'com.novoda.bintray-release'
 
 
 //
-def theVersionName = "1.9.2"
+def theVersionName = "2.0.2"
 
 android {
     compileSdkVersion 30
@@ -12,7 +12,7 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 30
-        versionCode 10902
+        versionCode 20002
         versionName theVersionName
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -24,6 +24,13 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+
+    tasks.withType(Javadoc) {
+        options.addStringOption('Xdoclint:none', '-quiet')
+        options.addStringOption('encoding', 'UTF-8')
+        options.addStringOption('charSet', 'UTF-8')
+        options.encoding = 'UTF-8'
     }
 }
 
