@@ -48,17 +48,7 @@ Linkage-RecyclerView 的目标是：**一行代码即可接入二级联动列表
 implementation 'com.kunminx.linkage:linkage-recyclerview:1.9.2'
 ```
 
-2.依据默认的分组实体类 `DefaultGroupedItem` 的结构准备一串数据（**[以下以  JSON 为例](#)**）。
-
-> 注意这里讲的是 "为例" 哈，看到有些访客被这个 JSON 迷惑，**误以为后端必须适配这个 JSON 格式的数据**。
-
-> 绝不是的。
-
-> 事实上，**Linkage-RecyclerView 实体类的设计十分灵活**，并且装载数据的入参只有 `List<自定义item类 extends BaseGroupedItem>`，在实际生产项目中，客户端可以自己在数据层对拿到的后端数据进行适配：
-
-> 只需遵照下文 <a href="#custom">"个性化配置"</a> 中交代的步骤，根据实际项目所需数据格式来继承 BaseGroupedItem 并新建一个 item 类，然后在 数据层拿到后端请求来的数据后，遍历后端数据、将后端数据字段逐个注入到 item 对象中 —— 如此在数据层完成适配，再推送结果给 UI 层即可。
-
-👆👆👆 划重点
+2.依据默认的分组实体类 `DefaultGroupedItem` 的结构准备一串数据。
 
 ```java
 // DefaultGroupedItem.ItemInfo 包含三个字段：
@@ -67,34 +57,30 @@ String group //（必填）二级选项所在分组的名称，要和对应的�
 String content //（选填）二级选项的内容
 ```
 
-```json
-[
-  {
-    "header": "优惠",
-    "isHeader": true
-  },
-  {
-    "isHeader": false,
-    "info": {
-      "content": "好吃的食物，增肥神器，有求必应",
-      "group": "优惠",
-      "title": "全家桶"
-    }
-  },
-  {
-    "header": "热卖",
-    "isHeader": true
-  },
-  {
-    "isHeader": false,
-    "info": {
-      "content": "爆款热卖，月销超过 999 件",
-      "group": "热卖",
-      "title": "烤全翅"
-    }
-  }
-]
+```java
+List<XXXGroupedItem> list = new ArrayList<>();
 
+//添加第 0 条记录：header 0
+XXXGroupedItem header0 = new XXXGroupedItem("优惠", true);
+list.add(header0);
+
+//添加第 1 条记录：item 1
+XXXGroupedItem.ItemInfo info1 = new XXXGroupedItem.ItemInfo();
+info1.setContent("好吃的食物，增肥神器，有求必应");
+info1.setGroup("优惠");
+info1.setTitle("全家桶");
+XXXGroupedItem item1 = new XXXGroupedItem(info1, false);
+list.add(item1);
+
+//添加第 2 条记录：header 2
+XXXGroupedItem header2 = new XXXGroupedItem("优惠", true);
+list.add(header2);
+
+//添加第 3 条记录：item 3
+XXXGroupedItem.ItemInfo info3 = 
+  new XXXGroupedItem.ItemInfo("爆款热卖，月销超过 999 件", "热卖", "烤全翅");
+XXXGroupedItem item3 = new XXXGroupedItem(info3, false);
+list.add(item3);
 ```
 
 3.在布局中引入 LinkageRecyclerView 。
@@ -118,9 +104,6 @@ String content //（选填）二级选项的内容
 4.在得到数据后，最少只需一行代码即可完成初始化。
 
 ```java
-List<DefaultGroupedItem> items = gson.fromJson(...);
-
-//一行代码完成初始化
 linkage.init(items);
 ```
 
