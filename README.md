@@ -58,29 +58,25 @@ String content //（选填）二级选项的内容
 ```
 
 ```java
-List<XXXGroupedItem> list = new ArrayList<>();
+List<TestGroupedItem> list = new ArrayList<>();
 
 //添加第 0 条记录：header 0
-XXXGroupedItem header0 = new XXXGroupedItem("优惠", true);
-list.add(header0);
+list.add(new TestGroupedItem("优惠", true));
 
 //添加第 1 条记录：item 1
-XXXGroupedItem.ItemInfo info1 = new XXXGroupedItem.ItemInfo();
+TestGroupedItem.ItemInfo info1 = new TestGroupedItem.ItemInfo();
 info1.setContent("好吃的食物，增肥神器，有求必应");
 info1.setGroup("优惠");
 info1.setTitle("全家桶");
-XXXGroupedItem item1 = new XXXGroupedItem(info1, false);
-list.add(item1);
+list.add(new TestGroupedItem(info1, false));
 
 //添加第 2 条记录：header 2
-XXXGroupedItem header2 = new XXXGroupedItem("优惠", true);
-list.add(header2);
+list.add(new TestGroupedItem("优惠", true));
 
 //添加第 3 条记录：item 3
-XXXGroupedItem.ItemInfo info3 = 
-  new XXXGroupedItem.ItemInfo("爆款热卖，月销超过 999 件", "热卖", "烤全翅");
-XXXGroupedItem item3 = new XXXGroupedItem(info3, false);
-list.add(item3);
+TestGroupedItem.ItemInfo info3 =
+  new TestGroupedItem.ItemInfo("爆款热卖，月销超过 999 件", "热卖", "烤全翅");
+list.add(new TestGroupedItem(info3, false));
 ```
 
 3.在布局中引入 LinkageRecyclerView 。
