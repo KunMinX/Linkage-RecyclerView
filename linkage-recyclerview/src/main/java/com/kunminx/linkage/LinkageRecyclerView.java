@@ -79,6 +79,7 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
     private LinearLayoutManager mPrimaryLayoutManager;
 
     private boolean mScrollSmoothly = true;
+    private boolean mPrimaryClicked = false;
 
     public LinkageRecyclerView(Context context) {
         super(context);
@@ -136,6 +137,8 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
                             mSecondaryLayoutManager.scrollToPositionWithOffset(
                                     mHeaderPositions.get(holder.getBindingAdapterPosition()), SCROLL_OFFSET);
                         }
+                        mPrimaryAdapter.setSelectedPosition(holder.getBindingAdapterPosition());
+                        mPrimaryClicked = true;
                     }
                 });
 
@@ -223,9 +226,15 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
                     List<String> groupNames = mPrimaryAdapter.getStrings();
                     for (int i = 0; i < groupNames.size(); i++) {
                         if (groupNames.get(i).equals(mLastGroupName)) {
-                            mPrimaryAdapter.setSelectedPosition(i);
-                            RecyclerViewScrollHelper.smoothScrollToPosition(mRvPrimary,
-                                    LinearSmoothScroller.SNAP_TO_END, i);
+                            if (mPrimaryClicked) {
+                                if (mPrimaryAdapter.getSelectedPosition() == i) {
+                                    mPrimaryClicked = false;
+                                }
+                            } else {
+                                mPrimaryAdapter.setSelectedPosition(i);
+                                RecyclerViewScrollHelper.smoothScrollToPosition(mRvPrimary,
+                                        LinearSmoothScroller.SNAP_TO_END, i);
+                            }
                         }
                     }
                 }
