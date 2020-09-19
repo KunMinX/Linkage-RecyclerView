@@ -131,10 +131,10 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
                         if (isScrollSmoothly()) {
                             RecyclerViewScrollHelper.smoothScrollToPosition(mRvSecondary,
                                     LinearSmoothScroller.SNAP_TO_START,
-                                    mHeaderPositions.get(holder.getAdapterPosition()));
+                                    mHeaderPositions.get(holder.getBindingAdapterPosition()));
                         } else {
                             mSecondaryLayoutManager.scrollToPositionWithOffset(
-                                    mHeaderPositions.get(holder.getAdapterPosition()), SCROLL_OFFSET);
+                                    mHeaderPositions.get(holder.getBindingAdapterPosition()), SCROLL_OFFSET);
                         }
                     }
                 });
