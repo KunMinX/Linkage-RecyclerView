@@ -93,7 +93,7 @@ public class LinkagePrimaryAdapter extends RecyclerView.Adapter<LinkagePrimaryVi
         // for textView MARQUEE available.
         holder.mLayout.setSelected(true);
 
-        final int adapterPosition = holder.getAdapterPosition();
+        final int adapterPosition = holder.getBindingAdapterPosition();
         final String title = mStrings.get(adapterPosition);
 
         mConfig.onBindViewHolder(holder, adapterPosition == mSelectedPosition, title);

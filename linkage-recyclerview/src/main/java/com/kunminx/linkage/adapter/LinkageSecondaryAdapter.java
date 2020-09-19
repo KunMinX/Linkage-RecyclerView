@@ -121,11 +121,11 @@ public class LinkageSecondaryAdapter<T extends BaseGroupedItem.ItemInfo> extends
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        final BaseGroupedItem<T> linkageItem = mItems.get(holder.getAdapterPosition());
-        if (getItemViewType(holder.getAdapterPosition()) == IS_HEADER) {
+        final BaseGroupedItem<T> linkageItem = mItems.get(holder.getBindingAdapterPosition());
+        if (getItemViewType(holder.getBindingAdapterPosition()) == IS_HEADER) {
             LinkageSecondaryHeaderViewHolder headerViewHolder = (LinkageSecondaryHeaderViewHolder) holder;
             mConfig.onBindHeaderViewHolder(headerViewHolder, linkageItem);
-        } else if (getItemViewType(holder.getAdapterPosition()) == IS_FOOTER) {
+        } else if (getItemViewType(holder.getBindingAdapterPosition()) == IS_FOOTER) {
             LinkageSecondaryFooterViewHolder footerViewHolder = (LinkageSecondaryFooterViewHolder) holder;
             mConfig.onBindFooterViewHolder(footerViewHolder, linkageItem);
         } else {
