@@ -63,7 +63,7 @@ List<TestGroupedItem> list = new ArrayList<>();
 //添加第 0 条记录：header 0
 list.add(new TestGroupedItem("优惠", true));
 
-//添加第 1 条记录：item 1
+//添加第 1 条记录：info 1
 TestGroupedItem.ItemInfo info1 = new TestGroupedItem.ItemInfo();
 info1.setContent("好吃的食物，增肥神器，有求必应");
 info1.setGroup("优惠");
@@ -73,7 +73,7 @@ list.add(new TestGroupedItem(info1, false));
 //添加第 2 条记录：header 2
 list.add(new TestGroupedItem("优惠", true));
 
-//添加第 3 条记录：item 3
+//添加第 3 条记录：info 3
 TestGroupedItem.ItemInfo info3 =
   new TestGroupedItem.ItemInfo("爆款热卖，月销超过 999 件", "热卖", "烤全翅");
 list.add(new TestGroupedItem(info3, false));

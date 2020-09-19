@@ -53,33 +53,26 @@ String group //(Required) The name of the group in which the secondary option is
 String content //(optional) content of the secondary option
 ```
 
-```json
-[
-  {
-    "header": "Offer",
-    "isHeader": true
-  },
-  {
-    "isHeader": false,
-    "info": {
-      "content": "Good food, fattening artifact, responsive",
-      "group": "Offer",
-      "title": "Family bucket"
-    }
-  },
-  {
-    "header": "Selling",
-    "isHeader": true
-  },
-  {
-    "isHeader": false,
-    "info": {
-      "content": "Explosive models are hot",
-      "group": "Selling",
-      "title": "Roasted whole wings"
-    }
-  }
-]
+```java
+List<TestGroupedItem> list = new ArrayList<>();
+
+//add item 0：header 0
+list.add(new TestGroupedItem("Offer", true));
+
+//add item 1：info 1
+TestGroupedItem.ItemInfo info1 = new TestGroupedItem.ItemInfo();
+info1.setContent("Good food, fattening artifact, responsive");
+info1.setGroup("Offer");
+info1.setTitle("Family bucket");
+list.add(new TestGroupedItem(info1, false));
+
+//add item 2：header 2
+list.add(new TestGroupedItem("Offer", true));
+
+//add item 3：info 3
+TestGroupedItem.ItemInfo info3 =
+  new TestGroupedItem.ItemInfo("Explosive models are hot", "Selling", "Roasted whole wings");
+list.add(new TestGroupedItem(info3, false));
 ```
 
 3. Introduce LinkageRecyclerView in the layout.
@@ -103,9 +96,6 @@ String content //(optional) content of the secondary option
 4. After getting the data, you can complete the initialization with at least one line of code..
 
 ```java
-List<DefaultGroupedItem> items = gson.fromJson(...);
-
-//initialize it with just one line of code
 linkage.init(items);
 ```
 
