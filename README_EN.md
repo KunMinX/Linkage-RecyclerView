@@ -46,8 +46,6 @@ implementation 'com.kunminx.linkage:linkage-recyclerview:2.1.5'
 
 2. Prepare a string of data according to the structure of the default grouping entity class `DefaultGroupedItem`. (The following is JSON as an example).
 
-Tip: In actual project development, our approach is usually to get and parse JSON data from the backend, and traverse the data. During the traversal process, we instantiate and load the entity class objects of the library into the list, thereby Get the list data that can be used in this library. Here only demonstrate the simple use of the default entity class of the library.
-
 ```java
 // DefaultGroupedItem.ItemInfo Contains three fields：
 String title //(Required) Title of the secondary option
@@ -101,7 +99,11 @@ list.add(new TestGroupedItem(info3, false));
 linkage.init(items);
 ```
 
-Note: If using JSON, configure an obfuscated whitelist for this entity class in ProGuard Rules:
+**Tip:**
+
+1.In actual project development, our approach is usually to get and parse JSON data from the backend, and traverse the obtained data. In the traversal process, we instantiate and load the entity class objects of the library into the list, so as to obtain the list data that the library can use.
+
+2.If using JSON, configure an obfuscated whitelist for this entity class in ProGuard Rules:
 
 ```java
 -keep class com.kunminx.linkage.bean.** {*;}
