@@ -40,11 +40,11 @@
     </string>
 
 
-    <string name="btn_name_rxmagic">前往 RxJava 魔法师</string>
-    <string name="btn_name_eleme">你饿了么</string>
-    <string name="btn_name_dialog">弹出对话框</string>
-    <string name="btn_name_bottomsheet">弹出底栏</string>
-    <string name="btn_name_switch">切换横纵视图</string>
+    <string name="btn_name_rxmagic">Go to RxJava Magician</string>
+    <string name="btn_name_eleme">Eleme</string>
+    <string name="btn_name_dialog">Show dialog</string>
+    <string name="btn_name_bottomsheet">Show bottom sheet dialog</string>
+    <string name="btn_name_switch">switch layout between grid and linear</string>
     <string name="hint_cola">cola</string>
     <string name="hint_price">¥18.8</string>
     <string name="hint_good_detail">好吃的食物，增肥神器，有求必应</string>
