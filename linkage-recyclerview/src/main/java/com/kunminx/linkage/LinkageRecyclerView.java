@@ -30,6 +30,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.Guideline;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSmoothScroller;
@@ -61,7 +63,7 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
 
     private RecyclerView mRvPrimary;
     private RecyclerView mRvSecondary;
-    private LinearLayout mLinkageLayout;
+    private ConstraintLayout mLinkageLayout;
 
     private LinkagePrimaryAdapter mPrimaryAdapter;
     private LinkageSecondaryAdapter mSecondaryAdapter;
@@ -77,7 +79,7 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
     private String mLastGroupName;
     private LinearLayoutManager mSecondaryLayoutManager;
     private LinearLayoutManager mPrimaryLayoutManager;
-
+    private View view;
     private boolean mScrollSmoothly = true;
     private boolean mPrimaryClicked = false;
 
@@ -96,13 +98,18 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
 
     private void initView(Context context, @Nullable AttributeSet attrs) {
         this.mContext = context;
-        View view = LayoutInflater.from(context).inflate(R.layout.layout_linkage_view, this);
+        view = LayoutInflater.from(context).inflate(R.layout.layout_linkage_view, this);
         mRvPrimary = (RecyclerView) view.findViewById(R.id.rv_primary);
         mRvSecondary = (RecyclerView) view.findViewById(R.id.rv_secondary);
         mHeaderContainer = (FrameLayout) view.findViewById(R.id.header_container);
-        mLinkageLayout = (LinearLayout) view.findViewById(R.id.linkage_layout);
-    }
+        mLinkageLayout = (ConstraintLayout) view.findViewById(R.id.linkage_layout);
 
+
+    }
+    public void setPercent(float percent){
+        Guideline guideline = (Guideline) view.findViewById(R.id.guideline);
+        guideline.setGuidelinePercent(percent);
+    }
     private void setLevel2LayoutManager() {
         if (mSecondaryAdapter.isGridMode()) {
             mSecondaryLayoutManager = new GridLayoutManager(mContext,
