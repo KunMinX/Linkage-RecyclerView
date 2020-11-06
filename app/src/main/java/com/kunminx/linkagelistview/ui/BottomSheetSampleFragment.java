@@ -63,12 +63,12 @@ public class BottomSheetSampleFragment extends Fragment {
             mSheetDialog = new BottomSheetDialog(getContext());
             mSheetDialog.setContentView(R.layout.layout_linkage);
             LinkageRecyclerView linkage = mSheetDialog.findViewById(R.id.linkage);
-            initLinkageDatas(linkage);
+            initLinkageData(linkage);
             mSheetDialog.show();
         });
     }
 
-    private void initLinkageDatas(LinkageRecyclerView linkage) {
+    private void initLinkageData(LinkageRecyclerView linkage) {
         Gson gson = new Gson();
         List<DefaultGroupedItem> items = gson.fromJson(getString(R.string.operators_json),
                 new TypeToken<List<DefaultGroupedItem>>() {

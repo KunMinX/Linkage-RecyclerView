@@ -69,13 +69,16 @@ public class SwitchSampleFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initLinkageDatas(mBinding.linkage);
+        initLinkageData(mBinding.linkage);
+
+        mBinding.linkage.setGridMode(true);
+
         mBinding.btnPreview.setOnClickListener(v -> {
             mBinding.linkage.setGridMode(!mBinding.linkage.isGridMode());
         });
     }
 
-    private void initLinkageDatas(LinkageRecyclerView linkage) {
+    private void initLinkageData(LinkageRecyclerView linkage) {
         Gson gson = new Gson();
         List<ElemeGroupedItem> items = gson.fromJson(getString(R.string.eleme_json),
                 new TypeToken<List<ElemeGroupedItem>>() {

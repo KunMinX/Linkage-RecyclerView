@@ -74,10 +74,10 @@ public class ElemeSampleFragment extends Fragment {
         // 一级列表的宽度务必是个精确值，否则可能因 RecyclerView 自有的 bug 而造成 onBindViewHolder 重复调用多次
         mBinding.linkage.setPrimaryWidget(100);
 
-        initLinkageDatas(mBinding.linkage);
+        initLinkageData(mBinding.linkage);
     }
 
-    private void initLinkageDatas(LinkageRecyclerView linkage) {
+    private void initLinkageData(LinkageRecyclerView linkage) {
         Gson gson = new Gson();
         List<ElemeGroupedItem> items = gson.fromJson(getString(R.string.eleme_json),
                 new TypeToken<List<ElemeGroupedItem>>() {

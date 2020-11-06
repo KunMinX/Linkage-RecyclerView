@@ -25,7 +25,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
@@ -38,7 +37,6 @@ import com.kunminx.linkagelistview.databinding.AdapterVipBinding;
 import com.kunminx.linkagelistview.databinding.FragmentDialogBinding;
 import com.kunminx.linkagelistview.ui.adapter.SimpleBaseBindingAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -67,29 +65,14 @@ public class DialogSampleFragment extends Fragment {
         mBinding.btnPreview.setOnClickListener(v -> {
             View view2 = View.inflate(getContext(), R.layout.layout_linkage, null);
             LinkageRecyclerView linkage = view2.findViewById(R.id.linkage);
-            initLinkageDatas(linkage);
+            initLinkageData(linkage);
             MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
             mDialog = builder.setView(linkage).show();
             linkage.setLayoutHeight(DIALOG_HEIGHT);
         });
-
-        mBinding.rv.setAdapter(mAdapter = new SimpleBaseBindingAdapter<String, AdapterVipBinding>(
-                getContext(), R.layout.adapter_vip) {
-            @Override
-            protected void onSimpleBindItem(AdapterVipBinding binding, String item, RecyclerView.ViewHolder holder) {
-                binding.tvTitle.setText(item);
-            }
-        });
-
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < 30; i++) {
-            list.add(String.valueOf(i));
-        }
-        mAdapter.setList(list);
-        mAdapter.notifyDataSetChanged();
     }
 
-    private void initLinkageDatas(LinkageRecyclerView linkage) {
+    private void initLinkageData(LinkageRecyclerView linkage) {
         Gson gson = new Gson();
         List<DefaultGroupedItem> items = gson.fromJson(getString(R.string.operators_json),
                 new TypeToken<List<DefaultGroupedItem>>() {

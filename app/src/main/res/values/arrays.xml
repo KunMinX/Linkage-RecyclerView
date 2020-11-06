@@ -7,8 +7,8 @@
         <item name="switch">SwitchSampleFragment</item>
         <item name="dialog">DialogSampleFragment</item>
         <item name="bottomsheet">BottomSheetSampleFragment</item>
-        <item name="greatphone">GreatPhoneSampleFragment</item>
-        <item name="youmi">YoumiStoreSampleFragment</item>
+        <item name="much_level1_item">MuchPrimaryItemSampleFragment</item>
+        <item name="less_level1_item">LessPrimaryItemSampleFragment</item>
     </string-array>
 
     <string-array name="fragments_full_path">
@@ -17,8 +17,8 @@
         <item name="switch">"com.kunminx.linkagelistview.ui.SwitchSampleFragment"</item>
         <item name="dialog">"com.kunminx.linkagelistview.ui.DialogSampleFragment"</item>
         <item name="bottomsheet">"com.kunminx.linkagelistview.ui.BottomSheetSampleFragment"</item>
-        <item name="greatphone">"com.kunminx.linkagelistview.ui.GreatPhoneSampleFragment"</item>
-        <item name="youmi">"com.kunminx.linkagelistview.ui.YoumiStoreSampleFragment"</item>
+        <item name="much_level1_item">"com.kunminx.linkagelistview.ui.MuchPrimaryItemSampleFragment"</item>
+        <item name="less_level1_item">"com.kunminx.linkagelistview.ui.LessPrimaryItemSampleFragment"</item>
     </string-array>
 
 </resources>

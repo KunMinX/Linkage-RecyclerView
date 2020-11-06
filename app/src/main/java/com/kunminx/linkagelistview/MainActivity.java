@@ -65,7 +65,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         new TabLayoutMediator(mBinding.tabs, mBinding.viewPager, (tab, position) -> {
-            tab.setText(mFragmentTitles[position].replace("SampleFragment", ""));
+            tab.setText(mFragmentTitles[position]
+                    .replace("SampleFragment", "")
+                    .replaceAll("[A-Z]", " $0"));
         }).attach();
     }
 

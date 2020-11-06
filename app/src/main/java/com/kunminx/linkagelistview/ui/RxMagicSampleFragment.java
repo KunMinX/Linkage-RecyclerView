@@ -54,10 +54,10 @@ public class RxMagicSampleFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initLinkageDatas(mBinding.linkage);
+        initLinkageData(mBinding.linkage);
     }
 
-    private void initLinkageDatas(LinkageRecyclerView linkage) {
+    private void initLinkageData(LinkageRecyclerView linkage) {
         Gson gson = new Gson();
         List<DefaultGroupedItem> items = gson.fromJson(getString(R.string.operators_json),
                 new TypeToken<List<DefaultGroupedItem>>() {

@@ -26,7 +26,8 @@
             android:layout_weight="0"
             android:backgroundTint="?attr/colorPrimary"
             android:text="@string/btn_name_rxmagic"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorWhite"
+            android:visibility="gone" />
 
     </LinearLayout>
 

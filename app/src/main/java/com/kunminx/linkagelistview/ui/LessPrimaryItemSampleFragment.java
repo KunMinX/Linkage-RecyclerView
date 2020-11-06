@@ -43,25 +43,25 @@ import com.kunminx.linkage.contract.ILinkagePrimaryAdapterConfig;
 import com.kunminx.linkage.contract.ILinkageSecondaryAdapterConfig;
 import com.kunminx.linkagelistview.R;
 import com.kunminx.linkagelistview.bean.ElemeGroupedItem;
-import com.kunminx.linkagelistview.databinding.FragmentGreatPhoneBinding;
+import com.kunminx.linkagelistview.databinding.FragmentLessPrimaryItemBinding;
 
 import java.util.List;
 
 /**
  * Create by KunMinX at 19/5/8
  */
-public class GreatPhoneSampleFragment extends Fragment {
+public class LessPrimaryItemSampleFragment extends Fragment {
 
     private static final int SPAN_COUNT_FOR_GRID_MODE = 2;
     private static final int MARQUEE_REPEAT_LOOP_MODE = -1;
     private static final int MARQUEE_REPEAT_NONE_MODE = 0;
-    private FragmentGreatPhoneBinding mBinding;
+    private FragmentLessPrimaryItemBinding mBinding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_great_phone, container, false);
-        mBinding = FragmentGreatPhoneBinding.bind(view);
+        View view = inflater.inflate(R.layout.fragment_less_primary_item, container, false);
+        mBinding = FragmentLessPrimaryItemBinding.bind(view);
         setHasOptionsMenu(true);
         return view;
     }
@@ -69,22 +69,24 @@ public class GreatPhoneSampleFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initLinkageDatas(mBinding.linkage);
+        initLinkageData(mBinding.linkage);
         mBinding.btnPreview.setOnClickListener(v -> {
             mBinding.linkage.setGridMode(!mBinding.linkage.isGridMode());
         });
     }
 
-    private void initLinkageDatas(LinkageRecyclerView linkage) {
+    private void initLinkageData(LinkageRecyclerView linkage) {
         Gson gson = new Gson();
-        List<ElemeGroupedItem> items = gson.fromJson(getString(R.string.eleme_json_6_food),
+        List<ElemeGroupedItem> items = gson.fromJson(getString(R.string.eleme_json_5_food),
                 new TypeToken<List<ElemeGroupedItem>>() {
                 }.getType());
 
-        linkage.init(items, new GreatPhoneLinkagePrimaryAdapterConfig(), new GreatPhoneLinkageSecondaryAdapterConfig());
+        LessLinkageSecondaryAdapterConfig secondaryAdapterConfig = new LessLinkageSecondaryAdapterConfig();
+        secondaryAdapterConfig.setBinding(mBinding);
+        linkage.init(items, new LessLinkagePrimaryAdapterConfig(), secondaryAdapterConfig);
     }
 
-    private static class GreatPhoneLinkagePrimaryAdapterConfig implements ILinkagePrimaryAdapterConfig {
+    private static class LessLinkagePrimaryAdapterConfig implements ILinkagePrimaryAdapterConfig {
 
         private Context mContext;
 
@@ -128,13 +130,18 @@ public class GreatPhoneSampleFragment extends Fragment {
         }
     }
 
-    private static class GreatPhoneLinkageSecondaryAdapterConfig implements
+    private static class LessLinkageSecondaryAdapterConfig implements
             ILinkageSecondaryAdapterConfig<ElemeGroupedItem.ItemInfo> {
 
         private Context mContext;
+        private FragmentLessPrimaryItemBinding mBinding;
 
         public void setContext(Context context) {
             mContext = context;
+        }
+
+        public void setBinding(FragmentLessPrimaryItemBinding binding) {
+            mBinding = binding;
         }
 
         @Override
@@ -172,13 +179,21 @@ public class GreatPhoneSampleFragment extends Fragment {
                                      BaseGroupedItem<ElemeGroupedItem.ItemInfo> item) {
 
             ((TextView) holder.getView(R.id.iv_goods_name)).setText(item.info.getTitle());
-            Glide.with(mContext).load(item.info.getImgUrl()).into((ImageView) holder.getView(R.id.iv_goods_img));
+            if (!TextUtils.isEmpty(item.info.getImgUrl())) {
+                Glide.with(mContext).load(item.info.getImgUrl()).into((ImageView) holder.getView(R.id.iv_goods_img));
+            }
             holder.getView(R.id.iv_goods_item).setOnClickListener(v -> {
                 //TODO
             });
 
             holder.getView(R.id.iv_goods_add).setOnClickListener(v -> {
-                //TODO
+                /*ElemeGroupedItem.ItemInfo info = new ElemeGroupedItem.ItemInfo(
+                        mContext.getString(R.string.test_title), item.info.getGroup(),
+                        mContext.getString(R.string.test_content)
+                );
+                ElemeGroupedItem item1 = new ElemeGroupedItem(info);
+                addItem(holder.getAdapterPosition(), item1);*/
+                removeItem(holder.getAbsoluteAdapterPosition());
             });
         }
 
@@ -194,5 +209,71 @@ public class GreatPhoneSampleFragment extends Fragment {
                                            BaseGroupedItem<ElemeGroupedItem.ItemInfo> item) {
 
         }
+
+        //TODO need to test!
+        public void addItem(int position, ElemeGroupedItem item) {
+            if (item == null) {
+                return;
+            }
+            List<ElemeGroupedItem> items = mBinding.linkage.getSecondaryAdapter().getItems();
+            List<String> strings = mBinding.linkage.getPrimaryAdapter().getStrings();
+            if (item.isHeader) {
+                items.add(position, item);
+                strings.add(position, item.header);
+                String clickedGroup = items.get(position).header;
+                int index = strings.indexOf(clickedGroup);
+                mBinding.linkage.getHeaderPositions().add(index, position);
+                mBinding.linkage.getSecondaryAdapter().notifyItemInserted(position);
+                mBinding.linkage.getPrimaryAdapter().notifyItemInserted(index);
+            } else {
+                items.add(position, item);
+                mBinding.linkage.getSecondaryAdapter().notifyItemInserted(position);
+            }
+        }
+
+        //TODO need to test!
+        public void removeItem(int position) {
+            ElemeGroupedItem item = (ElemeGroupedItem) mBinding.linkage.getSecondaryAdapter().getItems().get(position);
+            if (item == null) {
+                return;
+            }
+            List<ElemeGroupedItem> items = mBinding.linkage.getSecondaryAdapter().getItems();
+            List<String> strings = mBinding.linkage.getPrimaryAdapter().getStrings();
+            if (item.isHeader) {
+                items.remove(position);
+                for (int i = items.size(); i > 0; i--) {
+                    ElemeGroupedItem item1 = items.get(i);
+                    if (!item1.isHeader && item1.info.getGroup().equals(item.header)) {
+                        items.remove(item1);
+                    }
+                }
+                mBinding.linkage.getSecondaryAdapter().notifyDataSetChanged();
+                int index = strings.indexOf(item.header);
+                strings.remove(item.header);
+                mBinding.linkage.getHeaderPositions().remove(index);
+                mBinding.linkage.getPrimaryAdapter().notifyItemRemoved(index);
+            } else {
+                items.remove(position);
+                mBinding.linkage.getSecondaryAdapter().notifyItemRemoved(position);
+            }
+        }
+
+        //TODO need to test!
+        public void updateItem(int position, ElemeGroupedItem item) {
+            if (item == null) {
+                return;
+            }
+            List<ElemeGroupedItem> items = mBinding.linkage.getSecondaryAdapter().getItems();
+            List<String> strings = mBinding.linkage.getPrimaryAdapter().getStrings();
+            if (item.isHeader) {
+                items.set(position, item);
+                mBinding.linkage.getSecondaryAdapter().notifyItemChanged(position);
+                mBinding.linkage.getPrimaryAdapter().notifyDataSetChanged();
+            } else {
+                items.set(position, item);
+                mBinding.linkage.getSecondaryAdapter().notifyItemChanged(position);
+            }
+        }
     }
+
 }
