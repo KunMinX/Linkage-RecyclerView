@@ -50,6 +50,8 @@ implementation 'com.kunminx.linkage:linkage-recyclerview:2.1.5'
 
 2.依据默认的分组实体类 `DefaultGroupedItem` 的结构准备一串数据。
 
+> 提示：在实际项目的开发中，我们的做法通常是，从后端拿到和解析 JSON 数据，并对数据进行遍历，在遍历过程中实例化和装载本库的实体类对象到列表中，从而获得本库所能使用的列表数据。此处仅演示本库默认实体类的简单使用。
+
 ```java
 // DefaultGroupedItem.ItemInfo 包含三个字段：
 String title //（必填）二级选项的标题
