@@ -103,13 +103,8 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
         mRvSecondary = (RecyclerView) view.findViewById(R.id.rv_secondary);
         mHeaderContainer = (FrameLayout) view.findViewById(R.id.header_container);
         mLinkageLayout = (ConstraintLayout) view.findViewById(R.id.linkage_layout);
-
-
     }
-    public void setPercent(float percent){
-        Guideline guideline = (Guideline) view.findViewById(R.id.guideline);
-        guideline.setGuidelinePercent(percent);
-    }
+
     private void setLevel2LayoutManager() {
         if (mSecondaryAdapter.isGridMode()) {
             mSecondaryLayoutManager = new GridLayoutManager(mContext,
@@ -402,4 +397,13 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
         return mHeaderPositions;
     }
 
+    /**
+     * set percent of primary list and secondary list width
+     *
+     * @param percent
+     */
+    public void setPercent(float percent) {
+        Guideline guideline = (Guideline) view.findViewById(R.id.guideline);
+        guideline.setGuidelinePercent(percent);
+    }
 }
