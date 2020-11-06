@@ -19,8 +19,9 @@
 
 <com.kunminx.linkage.LinkageRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/linkage"
+    android:background="@color/colorWhite"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="300dp">
 
 </com.kunminx.linkage.LinkageRecyclerView>
 

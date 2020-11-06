@@ -23,15 +23,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.kunminx.linkage.LinkageRecyclerView;
-import com.kunminx.linkage.bean.DefaultGroupedItem;
 import com.kunminx.linkagelistview.R;
 import com.kunminx.linkagelistview.databinding.FragmentBottomsheetBinding;
-
-import java.util.List;
+import com.kunminx.linkagelistview.ui.dialog.BottomSheetPopup;
+import com.lxj.xpopup.XPopup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -60,42 +55,12 @@ public class BottomSheetSampleFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mBinding.btnPreview.setOnClickListener(v -> {
-            mSheetDialog = new BottomSheetDialog(getContext());
-            mSheetDialog.setContentView(R.layout.layout_linkage);
-            LinkageRecyclerView linkage = mSheetDialog.findViewById(R.id.linkage);
-            initLinkageData(linkage);
-            mSheetDialog.show();
+            new XPopup.Builder(getContext())
+                    .moveUpToKeyboard(false) //如果不加这个，评论弹窗会移动到软键盘上面
+                    .asCustom(new BottomSheetPopup(getContext()))
+                    .show();
+
         });
     }
 
-    private void initLinkageData(LinkageRecyclerView linkage) {
-        Gson gson = new Gson();
-        List<DefaultGroupedItem> items = gson.fromJson(getString(R.string.operators_json),
-                new TypeToken<List<DefaultGroupedItem>>() {
-                }.getType());
-
-        linkage.init(items);
-        linkage.setScrollSmoothly(false);
-        linkage.setDefaultOnItemBindListener(
-                (primaryHolder, primaryClickView, title) -> {
-                    Snackbar.make(primaryClickView, title, Snackbar.LENGTH_SHORT).show();
-                },
-                (primaryHolder, title) -> {
-                    //TODO
-                },
-                (secondaryHolder, item) -> {
-                    secondaryHolder.getView(R.id.level_2_item).setOnClickListener(v -> {
-                        if (mSheetDialog != null && mSheetDialog.isShowing()) {
-                            mSheetDialog.dismiss();
-                        }
-                    });
-                },
-                (headerHolder, item) -> {
-                    //TODO
-                },
-                (footerHolder, item) -> {
-                    //TODO
-                }
-        );
-    }
 }
