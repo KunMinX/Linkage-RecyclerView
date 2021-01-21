@@ -194,6 +194,8 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
                     if (view != null && view.getTop() <= mTitleHeight) {
                         mTvHeader.setY(view.getTop() - mTitleHeight);
                     }
+                } else {
+                    mTvHeader.setY(0);
                 }
 
                 // Here is the logic of group title changes and linkage:
@@ -201,8 +203,12 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
                 boolean groupNameChanged = false;
 
                 if (mFirstVisiblePosition != firstPosition && firstPosition >= 0) {
+
+                    if (mFirstVisiblePosition < firstPosition) {
+                        mTvHeader.setY(0);
+                    }
+
                     mFirstVisiblePosition = firstPosition;
-                    mTvHeader.setY(0);
 
                     String currentGroupName = items.get(mFirstVisiblePosition).isHeader
                             ? items.get(mFirstVisiblePosition).header
