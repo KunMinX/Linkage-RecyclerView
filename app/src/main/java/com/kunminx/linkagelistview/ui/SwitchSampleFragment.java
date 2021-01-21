@@ -84,7 +84,6 @@ public class SwitchSampleFragment extends Fragment {
                 new TypeToken<List<ElemeGroupedItem>>() {
                 }.getType());
 
-
         linkage.init(items, new ElemeLinkagePrimaryAdapterConfig(), new ElemeLinkageSecondaryAdapterConfig());
     }
 

@@ -111,7 +111,8 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
             ((GridLayoutManager) mSecondaryLayoutManager).setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                 @Override
                 public int getSpanSize(int position) {
-                    if (((BaseGroupedItem<T>) mSecondaryAdapter.getItems().get(position)).isHeader) {
+                    //for header and footer
+                    if (((BaseGroupedItem<T>) mSecondaryAdapter.getItems().get(position)).isHeader || position == mInitItems.size() - 1) {
                         return mSecondaryAdapter.getConfig().getSpanCountOfGridMode();
                     }
                     return DEFAULT_SPAN_COUNT;
