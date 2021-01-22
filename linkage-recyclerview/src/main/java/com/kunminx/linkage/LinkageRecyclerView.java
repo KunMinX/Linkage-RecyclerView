@@ -20,7 +20,6 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -159,7 +158,7 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Con
         if (mTvHeader == null && mSecondaryAdapter.getConfig() != null) {
             ILinkageSecondaryAdapterConfig config = mSecondaryAdapter.getConfig();
             int layout = config.getHeaderLayoutId();
-            mHeaderLayout = LayoutInflater.from(mContext).inflate(layout, null);
+            mHeaderLayout = LayoutInflater.from(mContext).inflate(layout, mHeaderContainer, false);
             mHeaderContainer.addView(mHeaderLayout);
             mTvHeader = mHeaderLayout.findViewById(config.getHeaderTextViewId());
         }
