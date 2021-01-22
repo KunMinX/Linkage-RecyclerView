@@ -27,5 +27,6 @@
     <color name="colorPurple">#6F0AEE</color>
     <color name="colorDarkBlue">#0091EA</color>
     <color name="colorLightBlue">#81D4FA</color>
+    <color name="colorYellow">#FFD700</color>
 
 </resources>
