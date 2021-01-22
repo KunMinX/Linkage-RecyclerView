@@ -56,7 +56,7 @@ public class BottomSheetSampleFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mBinding.btnPreview.setOnClickListener(v -> {
             new XPopup.Builder(getContext())
-                    .moveUpToKeyboard(false) //如果不加这个，评论弹窗会移动到软键盘上面
+                    .moveUpToKeyboard(false)
                     .asCustom(new BottomSheetPopup(getContext()))
                     .show();
 

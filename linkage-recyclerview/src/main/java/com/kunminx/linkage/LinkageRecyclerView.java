@@ -20,11 +20,11 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -53,32 +53,32 @@ import java.util.List;
 /**
  * Create by KunMinX at 19/4/27
  */
-public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends RelativeLayout {
+public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends ConstraintLayout {
 
     private static final int DEFAULT_SPAN_COUNT = 1;
     private static final int SCROLL_OFFSET = 0;
 
     private Context mContext;
 
+    private View mView;
     private RecyclerView mRvPrimary;
     private RecyclerView mRvSecondary;
-    private ConstraintLayout mLinkageLayout;
 
     private LinkagePrimaryAdapter mPrimaryAdapter;
     private LinkageSecondaryAdapter mSecondaryAdapter;
     private TextView mTvHeader;
     private FrameLayout mHeaderContainer;
+    private View mHeaderLayout;
 
     private List<String> mInitGroupNames;
     private List<BaseGroupedItem<T>> mInitItems;
 
-    private List<Integer> mHeaderPositions = new ArrayList<>();
+    private final List<Integer> mHeaderPositions = new ArrayList<>();
     private int mTitleHeight;
     private int mFirstVisiblePosition;
     private String mLastGroupName;
     private LinearLayoutManager mSecondaryLayoutManager;
     private LinearLayoutManager mPrimaryLayoutManager;
-    private View view;
     private boolean mScrollSmoothly = true;
     private boolean mPrimaryClicked = false;
 
@@ -97,11 +97,10 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
 
     private void initView(Context context, @Nullable AttributeSet attrs) {
         this.mContext = context;
-        view = LayoutInflater.from(context).inflate(R.layout.layout_linkage_view, this);
-        mRvPrimary = (RecyclerView) view.findViewById(R.id.rv_primary);
-        mRvSecondary = (RecyclerView) view.findViewById(R.id.rv_secondary);
-        mHeaderContainer = (FrameLayout) view.findViewById(R.id.header_container);
-        mLinkageLayout = (ConstraintLayout) view.findViewById(R.id.linkage_layout);
+        mView = LayoutInflater.from(context).inflate(R.layout.layout_linkage_view, this);
+        mRvPrimary = (RecyclerView) mView.findViewById(R.id.rv_primary);
+        mRvSecondary = (RecyclerView) mView.findViewById(R.id.rv_secondary);
+        mHeaderContainer = (FrameLayout) mView.findViewById(R.id.header_container);
     }
 
     private void setLevel2LayoutManager() {
@@ -160,9 +159,9 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
         if (mTvHeader == null && mSecondaryAdapter.getConfig() != null) {
             ILinkageSecondaryAdapterConfig config = mSecondaryAdapter.getConfig();
             int layout = config.getHeaderLayoutId();
-            View view = LayoutInflater.from(mContext).inflate(layout, null);
-            mHeaderContainer.addView(view);
-            mTvHeader = view.findViewById(config.getHeaderTextViewId());
+            mHeaderLayout = LayoutInflater.from(mContext).inflate(layout, null);
+            mHeaderContainer.addView(mHeaderLayout);
+            mTvHeader = mHeaderLayout.findViewById(config.getHeaderTextViewId());
         }
 
         if (mInitItems.get(mFirstVisiblePosition).isHeader) {
@@ -340,9 +339,9 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
      * @param dp
      */
     public void setLayoutHeight(float dp) {
-        ViewGroup.LayoutParams lp = mLinkageLayout.getLayoutParams();
+        ViewGroup.LayoutParams lp = mView.getLayoutParams();
         lp.height = dpToPx(getContext(), dp);
-        mLinkageLayout.setLayoutParams(lp);
+        mView.setLayoutParams(lp);
     }
 
     /**
@@ -409,7 +408,7 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
      * @param percent
      */
     public void setPercent(float percent) {
-        Guideline guideline = (Guideline) view.findViewById(R.id.guideline);
+        Guideline guideline = (Guideline) mView.findViewById(R.id.guideline);
         guideline.setGuidelinePercent(percent);
     }
 
@@ -419,5 +418,9 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
 
     public void setRvSecondaryBackground(int resId) {
         mRvSecondary.setBackgroundResource(resId);
+    }
+
+    public View getHeaderLayout() {
+        return mHeaderLayout;
     }
 }
