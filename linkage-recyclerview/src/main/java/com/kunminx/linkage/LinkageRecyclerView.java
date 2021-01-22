@@ -174,7 +174,7 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                mTitleHeight = mTvHeader.getMeasuredHeight();
+                mTitleHeight = mHeaderContainer.getMeasuredHeight();
             }
 
             @Override
@@ -192,10 +192,10 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
 
                     View view = mSecondaryLayoutManager.findViewByPosition(firstCompletePosition);
                     if (view != null && view.getTop() <= mTitleHeight) {
-                        mTvHeader.setY(view.getTop() - mTitleHeight);
+                        mHeaderContainer.setY(view.getTop() - mTitleHeight);
                     }
                 } else {
-                    mTvHeader.setY(0);
+                    mHeaderContainer.setY(0);
                 }
 
                 // Here is the logic of group title changes and linkage:
@@ -205,7 +205,7 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Rel
                 if (mFirstVisiblePosition != firstPosition && firstPosition >= 0) {
 
                     if (mFirstVisiblePosition < firstPosition) {
-                        mTvHeader.setY(0);
+                        mHeaderContainer.setY(0);
                     }
 
                     mFirstVisiblePosition = firstPosition;
