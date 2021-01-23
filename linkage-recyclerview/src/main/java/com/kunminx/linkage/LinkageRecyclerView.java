@@ -56,6 +56,8 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Con
 
     private static final int DEFAULT_SPAN_COUNT = 1;
     private static final int SCROLL_OFFSET = 0;
+    public static final int FOR_PRIMARY = 1;
+    public static final int FOR_SECONDARY = 2;
 
     private Context mContext;
 
@@ -424,5 +426,22 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Con
 
     public View getHeaderLayout() {
         return mHeaderLayout;
+    }
+
+    /**
+     * addItemDecoration for Primary or Secondary RecyclerView
+     *
+     * @param forPrimaryOrSecondary
+     * @param decoration
+     */
+    public void addItemDecoration(int forPrimaryOrSecondary, RecyclerView.ItemDecoration decoration) {
+        switch (forPrimaryOrSecondary) {
+            case FOR_PRIMARY:
+                mRvPrimary.removeItemDecoration(decoration);
+                mRvPrimary.addItemDecoration(decoration);
+            case FOR_SECONDARY:
+                mRvSecondary.removeItemDecoration(decoration);
+                mRvSecondary.addItemDecoration(decoration);
+        }
     }
 }
