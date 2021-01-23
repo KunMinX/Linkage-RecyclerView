@@ -1,6 +1,7 @@
 package com.kunminx.linkagelistview.ui.decoration;
 
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ public class SecondaryItemDecoration extends RecyclerView.ItemDecoration {
     private int mRowSpacing;
     private int mColumnSpacing;
     private GridLayoutManager mGridLayoutManager;
+    private int mLastHeaderPosition;
 
 
     public SecondaryItemDecoration(int rowSpacing, int columnSpacing) {
@@ -42,16 +44,29 @@ public class SecondaryItemDecoration extends RecyclerView.ItemDecoration {
             outRect.left = 0;
             outRect.right = 0;
             outRect.top = 0;
+            outRect.bottom = 0;
+            mLastHeaderPosition = position;
 
+            Log.d("TAG", "-----getSpanSize " + mGridLayoutManager.getSpanSizeLookup().getSpanSize(position));
         } else {
-            int column = position % mGridLayoutManager.getSpanCount();
+            outRect.left = mColumnSpacing;
+            outRect.top = mRowSpacing;
 
-            outRect.left = column * mColumnSpacing / mGridLayoutManager.getSpanCount();
-            outRect.right = mColumnSpacing - (column + 1) * mColumnSpacing / mGridLayoutManager.getSpanCount();
-
-            if (position >= mGridLayoutManager.getSpanCount()) {
-                outRect.top = mRowSpacing;
+            int column = Math.abs((position - mLastHeaderPosition) % mGridLayoutManager.getSpanCount());
+            if (position > mLastHeaderPosition) {
+                outRect.right = column == 0 ? mColumnSpacing : 0;
+            } else {
+                outRect.right = column == mGridLayoutManager.getSpanCount() - 1 ? mColumnSpacing : 0;
             }
+            outRect.bottom = 0;
+
+            Log.d("TAG", "-----column " + column);
+            Log.d("TAG", "-----SpanCount " + mGridLayoutManager.getSpanCount());
+            Log.d("TAG", "-----outRect.left " + outRect.left);
+            Log.d("TAG", "-----outRect.right " + outRect.right);
+            Log.d("TAG", "-----outRect.top " + outRect.top);
+            Log.d("TAG", "-----");
+
         }
     }
 }
