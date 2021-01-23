@@ -348,10 +348,13 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Con
      * <p>
      * The reason for this design is that：The width of the first-level list must be an accurate value,
      * otherwise the onBindViewHolder may be called multiple times due to the RecyclerView's own bug.
+     * <p>
+     * Note 2021.1.20: this bug has been deal with in the newest version of RecyclerView
      *
      * @param dp
      */
-    public void setPrimaryWidget(float dp) {
+    @Deprecated
+    public void setPrimaryWidth(float dp) {
         ViewGroup.LayoutParams lpLeft = mRvPrimary.getLayoutParams();
         lpLeft.width = dpToPx(getContext(), dp);
         mRvPrimary.setLayoutParams(lpLeft);

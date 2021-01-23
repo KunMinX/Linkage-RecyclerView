@@ -72,10 +72,6 @@ public class CustomHeaderSampleFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //TODO：可以根据实际需求自定义一级列表的宽度。
-        // 一级列表的宽度务必是个精确值，否则可能因 RecyclerView 自有的 bug 而造成 onBindViewHolder 重复调用多次
-        mBinding.linkage.setPrimaryWidget(104);
-
         initLinkageData(mBinding.linkage);
 
         View headerLayout = mBinding.linkage.getHeaderLayout();
