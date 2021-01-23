@@ -42,6 +42,7 @@ import com.kunminx.linkage.adapter.viewholder.LinkageSecondaryViewHolder;
 import com.kunminx.linkage.bean.BaseGroupedItem;
 import com.kunminx.linkage.contract.ILinkagePrimaryAdapterConfig;
 import com.kunminx.linkage.contract.ILinkageSecondaryAdapterConfig;
+import com.kunminx.linkagelistview.databinding.FragmentElemeBinding;
 import com.kunminx.linkagelistview.ui.decoration.SecondaryItemDecoration;
 import com.kunminx.linkagelistview.R;
 import com.kunminx.linkagelistview.bean.ElemeGroupedItem;
@@ -57,13 +58,13 @@ public class CustomDecorationSampleFragment extends Fragment {
     private static final int SPAN_COUNT_FOR_GRID_MODE = 2;
     private static final int MARQUEE_REPEAT_LOOP_MODE = -1;
     private static final int MARQUEE_REPEAT_NONE_MODE = 0;
-    private FragmentSwitchBinding mBinding;
+    private FragmentElemeBinding mBinding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_switch, container, false);
-        mBinding = FragmentSwitchBinding.bind(view);
+        View view = inflater.inflate(R.layout.fragment_eleme, container, false);
+        mBinding = FragmentElemeBinding.bind(view);
         setHasOptionsMenu(true);
         return view;
     }
@@ -78,10 +79,6 @@ public class CustomDecorationSampleFragment extends Fragment {
                 new SecondaryItemDecoration(12, 12));
 
         mBinding.linkage.setRvSecondaryBackground(Color.BLACK);
-
-        mBinding.btnPreview.setOnClickListener(v -> {
-            mBinding.linkage.setGridMode(!mBinding.linkage.isGridMode());
-        });
     }
 
     private void initLinkageData(LinkageRecyclerView linkage) {
