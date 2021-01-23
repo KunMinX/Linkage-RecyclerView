@@ -416,12 +416,12 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Con
         guideline.setGuidelinePercent(percent);
     }
 
-    public void setRvPrimaryBackground(int resId) {
-        mRvPrimary.setBackgroundResource(resId);
+    public void setRvPrimaryBackground(int color) {
+        mRvPrimary.setBackgroundColor(color);
     }
 
-    public void setRvSecondaryBackground(int resId) {
-        mRvSecondary.setBackgroundResource(resId);
+    public void setRvSecondaryBackground(int color) {
+        mRvSecondary.setBackgroundColor(color);
     }
 
     public View getHeaderLayout() {

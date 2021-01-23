@@ -6,6 +6,7 @@
         <item name="eleme">ElemeSampleFragment</item>
         <item name="switch">SwitchSampleFragment</item>
         <item name="custom_header">CustomHeaderSampleFragment</item>
+        <item name="custom_decoration">CustomDecorationSampleFragment</item>
         <item name="dialog">DialogSampleFragment</item>
         <item name="bottom_sheet">BottomSheetSampleFragment</item>
         <item name="much_level1_item">MuchPrimaryItemSampleFragment</item>
@@ -17,6 +18,7 @@
         <item name="eleme">"com.kunminx.linkagelistview.ui.ElemeSampleFragment"</item>
         <item name="switch">"com.kunminx.linkagelistview.ui.SwitchSampleFragment"</item>
         <item name="custom_header">"com.kunminx.linkagelistview.ui.CustomHeaderSampleFragment"</item>
+        <item name="custom_decoration">"com.kunminx.linkagelistview.ui.CustomDecorationSampleFragment"</item>
         <item name="dialog">"com.kunminx.linkagelistview.ui.DialogSampleFragment"</item>
         <item name="bottom_sheet">"com.kunminx.linkagelistview.ui.BottomSheetSampleFragment"</item>
         <item name="much_level1_item">"com.kunminx.linkagelistview.ui.MuchPrimaryItemSampleFragment"</item>

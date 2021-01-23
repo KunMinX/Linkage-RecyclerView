@@ -3,7 +3,7 @@ apply plugin: 'com.novoda.bintray-release'
 
 
 //
-def theVersionName = "2.3.4"
+def theVersionName = "2.3.5"
 
 android {
     compileSdkVersion 29
@@ -12,7 +12,7 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 29
-        versionCode 20304
+        versionCode 20305
         versionName theVersionName
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

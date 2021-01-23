@@ -17,6 +17,7 @@ package com.kunminx.linkagelistview.ui;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -51,7 +52,7 @@ import java.util.List;
 /**
  * Create by KunMinX at 19/5/8
  */
-public class SwitchSampleFragment extends Fragment {
+public class CustomDecorationSampleFragment extends Fragment {
 
     private static final int SPAN_COUNT_FOR_GRID_MODE = 2;
     private static final int MARQUEE_REPEAT_LOOP_MODE = -1;
@@ -73,6 +74,10 @@ public class SwitchSampleFragment extends Fragment {
         initLinkageData(mBinding.linkage);
 
         mBinding.linkage.setGridMode(true);
+        mBinding.linkage.addItemDecoration(LinkageRecyclerView.FOR_SECONDARY,
+                new SecondaryItemDecoration(12, 12));
+
+        mBinding.linkage.setRvSecondaryBackground(Color.BLACK);
 
         mBinding.btnPreview.setOnClickListener(v -> {
             mBinding.linkage.setGridMode(!mBinding.linkage.isGridMode());

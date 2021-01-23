@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/iv_goods_item"
-    android:layout_width="120dp"
-    android:layout_height="200dp">
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:background="@color/colorWhite">
 
     <ImageView
         android:id="@+id/iv_goods_img"

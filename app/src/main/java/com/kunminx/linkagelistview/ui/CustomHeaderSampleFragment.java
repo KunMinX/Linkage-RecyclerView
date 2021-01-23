@@ -43,6 +43,7 @@ import com.kunminx.linkage.adapter.viewholder.LinkageSecondaryViewHolder;
 import com.kunminx.linkage.bean.BaseGroupedItem;
 import com.kunminx.linkage.contract.ILinkagePrimaryAdapterConfig;
 import com.kunminx.linkage.contract.ILinkageSecondaryAdapterConfig;
+import com.kunminx.linkagelistview.ui.decoration.SecondaryItemDecoration;
 import com.kunminx.linkagelistview.R;
 import com.kunminx.linkagelistview.bean.ElemeGroupedItem;
 import com.kunminx.linkagelistview.databinding.FragmentElemeBinding;
@@ -73,6 +74,8 @@ public class CustomHeaderSampleFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         initLinkageData(mBinding.linkage);
+        mBinding.linkage.addItemDecoration(LinkageRecyclerView.FOR_SECONDARY,
+                new SecondaryItemDecoration(12, 12));
 
         View headerLayout = mBinding.linkage.getHeaderLayout();
         Button btnClick = headerLayout.findViewById(R.id.btn_add);
