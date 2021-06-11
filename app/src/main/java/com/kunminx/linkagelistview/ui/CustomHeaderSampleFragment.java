@@ -19,12 +19,13 @@ package com.kunminx.linkagelistview.ui;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -42,6 +43,7 @@ import com.kunminx.linkage.adapter.viewholder.LinkageSecondaryViewHolder;
 import com.kunminx.linkage.bean.BaseGroupedItem;
 import com.kunminx.linkage.contract.ILinkagePrimaryAdapterConfig;
 import com.kunminx.linkage.contract.ILinkageSecondaryAdapterConfig;
+import com.kunminx.linkagelistview.ui.decoration.SecondaryItemDecoration;
 import com.kunminx.linkagelistview.R;
 import com.kunminx.linkagelistview.bean.ElemeGroupedItem;
 import com.kunminx.linkagelistview.databinding.FragmentElemeBinding;
@@ -51,7 +53,7 @@ import java.util.List;
 /**
  * Create by KunMinX at 19/5/8
  */
-public class ElemeSampleFragment extends Fragment {
+public class CustomHeaderSampleFragment extends Fragment {
 
     private static final int SPAN_COUNT_FOR_GRID_MODE = 2;
     private static final int MARQUEE_REPEAT_LOOP_MODE = -1;
@@ -72,6 +74,16 @@ public class ElemeSampleFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         initLinkageData(mBinding.linkage);
+        mBinding.linkage.addItemDecoration(LinkageRecyclerView.FOR_SECONDARY,
+                new SecondaryItemDecoration(12, 12));
+
+        View headerLayout = mBinding.linkage.getHeaderLayout();
+        Button btnClick = headerLayout.findViewById(R.id.btn_add);
+        TextView tvHeader = headerLayout.findViewById(R.id.secondary_header);
+        btnClick.setOnClickListener(v -> {
+            Toast.makeText(getContext(), "点击了 " + tvHeader.getText() + " - position "
+                    + mBinding.linkage.getPrimaryAdapter().getSelectedPosition(), Toast.LENGTH_SHORT).show();
+        });
     }
 
     private void initLinkageData(LinkageRecyclerView linkage) {
@@ -127,7 +139,7 @@ public class ElemeSampleFragment extends Fragment {
         }
     }
 
-    private static class ElemeSecondaryAdapterConfig implements
+    private class ElemeSecondaryAdapterConfig implements
             ILinkageSecondaryAdapterConfig<ElemeGroupedItem.ItemInfo> {
 
         private Context mContext;
@@ -148,7 +160,7 @@ public class ElemeSampleFragment extends Fragment {
 
         @Override
         public int getHeaderLayoutId() {
-            return com.kunminx.linkage.R.layout.default_adapter_linkage_secondary_header;
+            return R.layout.layout_custom_header;
         }
 
         @Override
@@ -186,6 +198,10 @@ public class ElemeSampleFragment extends Fragment {
                                            BaseGroupedItem<ElemeGroupedItem.ItemInfo> item) {
 
             ((TextView) holder.getView(R.id.secondary_header)).setText(item.header);
+            holder.getView(R.id.btn_add).setOnClickListener(v -> {
+                Toast.makeText(mContext, "点击了 " + item.header + " - position "
+                        + mBinding.linkage.getPrimaryAdapter().getSelectedPosition(), Toast.LENGTH_SHORT).show();
+            });
         }
 
         @Override

@@ -17,9 +17,9 @@ package com.kunminx.linkagelistview.ui;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,16 +42,18 @@ import com.kunminx.linkage.adapter.viewholder.LinkageSecondaryViewHolder;
 import com.kunminx.linkage.bean.BaseGroupedItem;
 import com.kunminx.linkage.contract.ILinkagePrimaryAdapterConfig;
 import com.kunminx.linkage.contract.ILinkageSecondaryAdapterConfig;
+import com.kunminx.linkagelistview.databinding.FragmentElemeBinding;
+import com.kunminx.linkagelistview.ui.decoration.SecondaryItemDecoration;
 import com.kunminx.linkagelistview.R;
 import com.kunminx.linkagelistview.bean.ElemeGroupedItem;
-import com.kunminx.linkagelistview.databinding.FragmentElemeBinding;
+import com.kunminx.linkagelistview.databinding.FragmentSwitchBinding;
 
 import java.util.List;
 
 /**
  * Create by KunMinX at 19/5/8
  */
-public class ElemeSampleFragment extends Fragment {
+public class CustomDecorationSampleFragment extends Fragment {
 
     private static final int SPAN_COUNT_FOR_GRID_MODE = 2;
     private static final int MARQUEE_REPEAT_LOOP_MODE = -1;
@@ -70,8 +72,13 @@ public class ElemeSampleFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         initLinkageData(mBinding.linkage);
+
+        mBinding.linkage.setGridMode(true);
+        mBinding.linkage.addItemDecoration(LinkageRecyclerView.FOR_SECONDARY,
+                new SecondaryItemDecoration(12, 12));
+
+        mBinding.linkage.setRvSecondaryBackground(Color.BLACK);
     }
 
     private void initLinkageData(LinkageRecyclerView linkage) {
@@ -80,10 +87,10 @@ public class ElemeSampleFragment extends Fragment {
                 new TypeToken<List<ElemeGroupedItem>>() {
                 }.getType());
 
-        linkage.init(items, new ElemePrimaryAdapterConfig(), new ElemeSecondaryAdapterConfig());
+        linkage.init(items, new ElemeLinkagePrimaryAdapterConfig(), new ElemeLinkageSecondaryAdapterConfig());
     }
 
-    private static class ElemePrimaryAdapterConfig implements ILinkagePrimaryAdapterConfig {
+    private class ElemeLinkagePrimaryAdapterConfig implements ILinkagePrimaryAdapterConfig {
 
         private Context mContext;
 
@@ -125,9 +132,10 @@ public class ElemeSampleFragment extends Fragment {
         public void onItemClick(LinkagePrimaryViewHolder holder, View view, String title) {
             //TODO
         }
+
     }
 
-    private static class ElemeSecondaryAdapterConfig implements
+    private class ElemeLinkageSecondaryAdapterConfig implements
             ILinkageSecondaryAdapterConfig<ElemeGroupedItem.ItemInfo> {
 
         private Context mContext;
@@ -138,7 +146,7 @@ public class ElemeSampleFragment extends Fragment {
 
         @Override
         public int getGridLayoutId() {
-            return 0;
+            return R.layout.adapter_eleme_secondary_grid;
         }
 
         @Override
@@ -194,5 +202,4 @@ public class ElemeSampleFragment extends Fragment {
 
         }
     }
-
 }

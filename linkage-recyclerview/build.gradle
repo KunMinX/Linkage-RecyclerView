@@ -68,3 +68,16 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
 }
+
+
+publish {
+    userOrg = 'recyclerview-family'
+    repoName = 'maven'
+    groupId = 'com.kunminx.linkage'
+    artifactId = 'linkage-recyclerview'
+    publishVersion = theVersionName
+    desc = 'An double level linkage RecyclerView'
+    licences = ['Apache-2.0']
+    website = 'https://github.com/KunMinX/LinkageRecyclerView'
+}
+

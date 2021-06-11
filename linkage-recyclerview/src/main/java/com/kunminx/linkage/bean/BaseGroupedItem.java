@@ -40,7 +40,7 @@ public abstract class BaseGroupedItem<T extends BaseGroupedItem.ItemInfo> implem
         this.info = info;
     }
 
-    public static class ItemInfo {
+    public static class ItemInfo implements Serializable {
         private String group;
         private String title;
 

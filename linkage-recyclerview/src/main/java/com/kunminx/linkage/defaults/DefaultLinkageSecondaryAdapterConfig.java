@@ -17,6 +17,7 @@ package com.kunminx.linkage.defaults;
 
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.kunminx.linkage.R;
