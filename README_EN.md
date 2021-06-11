@@ -41,8 +41,9 @@ If you are thinking about [**how to choose the right architecture for your proje
 1. Add a dependency on the library in build.gradle.
 
 ```groovy
-implementation 'com.kunminx.linkage:linkage-recyclerview:2.2.3'
+implementation 'com.kunminx.linkage:linkage-recyclerview:2.3.0'
 ```
+Tip: Due to the closure of JCenter, we have migrated the warehouse to Maven Central, so you can add `mavenCentral()` in the root directory build.gradle.
 
 2. Prepare a string of data according to the structure of the default grouping entity class `DefaultGroupedItem`. (The following is JSON as an example).
 

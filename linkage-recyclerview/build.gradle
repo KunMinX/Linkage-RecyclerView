@@ -1,9 +1,32 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
 
+ext {
+    PUBLISH_GROUP_ID = 'com.kunminx.linkage'
+    PUBLISH_ARTIFACT_ID = 'linkage-recyclerview'
+    PUBLISH_VERSION = '2.3.0'
+    VERSION_CODE = 20203
 
-//
-def theVersionName = "2.2.3"
+    ARTIFACT_DESCRIPTION = '即使不用饿了么订餐，也请务必收藏好该库！一行代码即可接入，二级联动订餐列表'
+
+    POM_URL='https://github.com/KunMinX/Linkage-RecyclerView'
+    POM_SCM_URL='https://github.com/KunMinX/Linkage-RecyclerView/tree/master'
+    POM_SCM_CONNECTION='scm:git:github.com/KunMinX/Linkage-RecyclerView.git'
+    POM_SCM_DEV_CONNECTION='scm:git:ssh://github.com/KunMinX/Linkage-RecyclerView.git'
+
+    POM_DEVELOPER_ID='KunMinX'
+    POM_DEVELOPER_NAME='KunMinX'
+    POM_DEVELOPER_URL='https://github.com/KunMinX'
+    POM_DEVELOPER_EMAIL='kunminx@gmail.com'
+
+    LICENSE_NAME='The Apache Software License, Version 2.0'
+    LICENSE_URL='http://www.apache.org/licenses/LICENSE-2.0.txt'
+
+    uploadJavadocs = false
+    uploadSources = false
+}
+
+apply from: "${rootProject.projectDir}/publish-mavencentral.gradle"
+
 
 android {
     compileSdkVersion 30
@@ -12,8 +35,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 30
-        versionCode 20203
-        versionName theVersionName
+        versionCode VERSION_CODE
+        versionName PUBLISH_VERSION
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -36,25 +59,12 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    testImplementation 'junit:junit:4.13.1'
+    testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     androidTestImplementation 'androidx.test:runner:1.3.0'
     androidTestImplementation 'androidx.test:rules:1.3.0'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.recyclerview:recyclerview:1.2.0-alpha06'
+    implementation 'androidx.appcompat:appcompat:1.3.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
 }
-
-
-publish {
-    userOrg = 'recyclerview-family'
-    repoName = 'maven'
-    groupId = 'com.kunminx.linkage'
-    artifactId = 'linkage-recyclerview'
-    publishVersion = theVersionName
-    desc = 'An double level linkage RecyclerView'
-    licences = ['Apache-2.0']
-    website = 'https://github.com/KunMinX/LinkageRecyclerView'
-}
-

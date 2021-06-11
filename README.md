@@ -36,7 +36,7 @@ Linkage-RecyclerView 的目标是：**一行代码即可接入二级联动列表
 
 
 
-如果你正在思考 [**如何为项目挑选合适的架构**](https://juejin.im/post/5cde5d7a51882525e968cdcd#heading-2) 的话，这个项目值得你参考！
+如果你正在思考 [**如何为项目挑选合适的架构**](https://juejin.cn/post/6846687603547176974#heading-4) 的话，这个项目值得你参考！
 
 
 
@@ -45,8 +45,9 @@ Linkage-RecyclerView 的目标是：**一行代码即可接入二级联动列表
 1.在 build.gradle 中添加对该库的依赖。
 
 ```groovy
-implementation 'com.kunminx.linkage:linkage-recyclerview:2.2.3'
+implementation 'com.kunminx.linkage:linkage-recyclerview:2.3.0'
 ```
+提示：鉴于 Jcenter 的关闭，我们已将仓库迁移至 Maven Central，请自行在根目录 build.gradle 添加 `mavenCentral()`。
 
 2.依据默认的分组实体类 `DefaultGroupedItem` 的结构准备一串数据。
 
