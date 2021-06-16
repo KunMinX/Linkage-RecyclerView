@@ -70,14 +70,3 @@ dependencies {
 }
 
 
-publish {
-    userOrg = 'recyclerview-family'
-    repoName = 'maven'
-    groupId = 'com.kunminx.linkage'
-    artifactId = 'linkage-recyclerview'
-    publishVersion = theVersionName
-    desc = 'An double level linkage RecyclerView'
-    licences = ['Apache-2.0']
-    website = 'https://github.com/KunMinX/LinkageRecyclerView'
-}
-

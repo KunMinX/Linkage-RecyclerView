@@ -29,7 +29,7 @@ Linkage-RecyclerView 的目标是：**一行代码即可接入二级联动列表
 1. 整洁的代码风格和标准的资源命名规范。
 2. **MVP 架构在编写第三方库中的最佳实践：使用者无需了解内部逻辑，通过实现接口即可轻松完成个性化配置**。
 3. 优秀的代码分层和封装思想，在不做任何个性化配置的情况下，一行代码即可接入。
-4. 主体工程基于前沿的、遵循关注点分离的 JetPack MVVM 架构。
+4. 主体工程基于前沿的、遵循关注点分离的 Jetpack MVVM 架构。
 5. AndroidX 和 Material Design 2 的全面使用。
 6. ConstraintLayout 约束布局的最佳实践。
 7. 绝不使用 Dagger，绝不使用奇技淫巧、编写艰深晦涩的代码。
@@ -276,7 +276,7 @@ Juejin：[KunMinX 在掘金](https://juejin.cn/post/6882949076267057166)
 
 [《重学安卓》 专栏](https://xiaozhuanlan.com/kunminx)
 
-[![重学安卓小专栏](https://i.loli.net/2019/06/17/5d067596c2dbf49609.png)](https://xiaozhuanlan.com/kunminx?rel=kunminx)
+[![重学安卓小专栏](https://images.xiaozhuanlan.com/photo/2021/d493a54a32e38e7fbcfa68d424ebfd1e.png)](https://xiaozhuanlan.com/kunminx)
 
 
 # License

@@ -25,7 +25,7 @@ In addition to one-line access and eliminating 99% of unnecessary, complex, and 
 1. Neat code style and standard resource naming conventions.
 2. **The best practice for writing third-party libraries by MVP architecture: users don't need to understand internal logic, and they can easily do personalized configuration by implementing interfaces.**
 3. Excellent code layering and encapsulation ideas, one line of code can be accessed without any personalized configuration.
-4. The main project is based on the cutting-edge JetPack MVVM architecture that follows the separation of concerns.
+4. The main project is based on the cutting-edge Jetpack MVVM architecture that follows the separation of concerns.
 5. Full use of AndroidX and Material Design 2.
 6. Best practices for ConstraintLayout.
 7. Never use Dagger, never use geeks and write hard-coded code.
