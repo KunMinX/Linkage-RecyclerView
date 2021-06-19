@@ -1,7 +1,5 @@
 ## 真香警告：即使不用饿了么订餐，也请务必收藏好该库！
 
-### [Here is the English guide](https://github.com/KunMinX/Linkage-RecyclerView/blob/master/README_EN.md)
-
 ### 由来
 
 Linkage-RecyclerView 是一款基于 MVP 架构开发的二级联动列表控件。它是因 [“RxJava 魔法师”](https://github.com/KunMinX/RxJava2-Operators-Sample) 这个项目的需求而存在。
@@ -45,7 +43,7 @@ Linkage-RecyclerView 的目标是：**一行代码即可接入二级联动列表
 1.在 build.gradle 中添加对该库的依赖。
 
 ```groovy
-implementation 'com.kunminx.linkage:linkage-recyclerview:2.3.0'
+implementation 'com.kunminx.linkage:linkage-recyclerview:2.4.0'
 ```
 提示：鉴于 Jcenter 的关闭，我们已将仓库迁移至 Maven Central，请自行在根目录 build.gradle 添加 `mavenCentral()`。
 
