@@ -3,8 +3,8 @@ apply plugin: 'com.android.library'
 ext {
     PUBLISH_GROUP_ID = 'com.kunminx.linkage'
     PUBLISH_ARTIFACT_ID = 'linkage-recyclerview'
-    PUBLISH_VERSION = '2.4.0'
-    VERSION_CODE = 20400
+    PUBLISH_VERSION = '2.5.0'
+    VERSION_CODE = 20500
 
     ARTIFACT_DESCRIPTION = '即使不用饿了么订餐，也请务必收藏好该库！一行代码即可接入，二级联动订餐列表'
 
