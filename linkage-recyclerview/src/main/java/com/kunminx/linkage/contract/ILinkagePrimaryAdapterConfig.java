@@ -77,5 +77,7 @@ public interface ILinkagePrimaryAdapterConfig {
    * @param view   itemView
    * @param title  title of primary item
    */
-  void onItemClick(LinkagePrimaryViewHolder holder, View view, String title);
+  default void onItemClick(LinkagePrimaryViewHolder holder, View view, String title) {
+
+  }
 }
