@@ -40,7 +40,6 @@ import java.util.List;
  */
 public class LinkageSecondaryAdapter<T extends BaseGroupedItem.ItemInfo> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-  private Context mContext;
   private List<BaseGroupedItem<T>> mItems;
   private static final int IS_HEADER = 0;
   private static final int IS_LINEAR = 1;
@@ -48,9 +47,9 @@ public class LinkageSecondaryAdapter<T extends BaseGroupedItem.ItemInfo> extends
   private static final int IS_FOOTER = 3;
   private boolean mIsGridMode;
 
-  private ILinkageSecondaryAdapterConfig mConfig;
+  private final ILinkageSecondaryAdapterConfig<T> mConfig;
 
-  public ILinkageSecondaryAdapterConfig getConfig() {
+  public ILinkageSecondaryAdapterConfig<T> getConfig() {
     return mConfig;
   }
 
@@ -66,7 +65,7 @@ public class LinkageSecondaryAdapter<T extends BaseGroupedItem.ItemInfo> extends
     mIsGridMode = isGridMode;
   }
 
-  public LinkageSecondaryAdapter(List<BaseGroupedItem<T>> items, ILinkageSecondaryAdapterConfig config) {
+  public LinkageSecondaryAdapter(List<BaseGroupedItem<T>> items, ILinkageSecondaryAdapterConfig<T> config) {
     mItems = items;
     if (mItems == null) {
       mItems = new ArrayList<>();
@@ -99,22 +98,22 @@ public class LinkageSecondaryAdapter<T extends BaseGroupedItem.ItemInfo> extends
   @NonNull
   @Override
   public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-    mContext = parent.getContext();
-    mConfig.setContext(mContext);
+    Context context = parent.getContext();
+    mConfig.setContext(context);
     if (viewType == IS_HEADER) {
-      View view = LayoutInflater.from(mContext).inflate(mConfig.getHeaderLayoutId(), parent, false);
+      View view = LayoutInflater.from(context).inflate(mConfig.getHeaderLayoutId(), parent, false);
       return new LinkageSecondaryHeaderViewHolder(view);
     } else if (viewType == IS_FOOTER) {
       int footerLayout = mConfig.getFooterLayoutId() == 0
               ? R.layout.default_adapter_linkage_secondary_footer
               : mConfig.getFooterLayoutId();
-      View view = LayoutInflater.from(mContext).inflate(footerLayout, parent, false);
+      View view = LayoutInflater.from(context).inflate(footerLayout, parent, false);
       return new LinkageSecondaryFooterViewHolder(view);
     } else if (viewType == IS_GRID && mConfig.getGridLayoutId() != 0) {
-      View view = LayoutInflater.from(mContext).inflate(mConfig.getGridLayoutId(), parent, false);
+      View view = LayoutInflater.from(context).inflate(mConfig.getGridLayoutId(), parent, false);
       return new LinkageSecondaryViewHolder(view);
     } else {
-      View view = LayoutInflater.from(mContext).inflate(mConfig.getLinearLayoutId(), parent, false);
+      View view = LayoutInflater.from(context).inflate(mConfig.getLinearLayoutId(), parent, false);
       return new LinkageSecondaryViewHolder(view);
     }
   }

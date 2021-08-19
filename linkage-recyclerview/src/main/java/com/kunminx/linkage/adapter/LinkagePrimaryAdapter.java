@@ -36,12 +36,10 @@ import java.util.List;
 public class LinkagePrimaryAdapter extends RecyclerView.Adapter<LinkagePrimaryViewHolder> {
 
   private List<String> mStrings;
-  private Context mContext;
-  private View mView;
   private int mSelectedPosition;
 
-  private ILinkagePrimaryAdapterConfig mConfig;
-  private OnLinkageListener mLinkageListener;
+  private final ILinkagePrimaryAdapterConfig mConfig;
+  private final OnLinkageListener mLinkageListener;
 
   public List<String> getStrings() {
     return mStrings;
@@ -81,31 +79,28 @@ public class LinkagePrimaryAdapter extends RecyclerView.Adapter<LinkagePrimaryVi
   @NonNull
   @Override
   public LinkagePrimaryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-    mContext = parent.getContext();
-    mConfig.setContext(mContext);
-    mView = LayoutInflater.from(mContext).inflate(mConfig.getLayoutId(), parent, false);
-    return new LinkagePrimaryViewHolder(mView, mConfig);
+    Context context = parent.getContext();
+    mConfig.setContext(context);
+    View view = LayoutInflater.from(context).inflate(mConfig.getLayoutId(), parent, false);
+    return new LinkagePrimaryViewHolder(view, mConfig);
   }
 
   @Override
   public void onBindViewHolder(@NonNull final LinkagePrimaryViewHolder holder, int position) {
 
     // for textView MARQUEE available.
-    holder.mLayout.setSelected(true);
+    holder.getLayout().setSelected(true);
 
     final int adapterPosition = holder.getBindingAdapterPosition();
     final String title = mStrings.get(adapterPosition);
 
     mConfig.onBindViewHolder(holder, adapterPosition == mSelectedPosition, title);
 
-    holder.itemView.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        if (mLinkageListener != null) {
-          mLinkageListener.onLinkageClick(holder, title);
-        }
-        mConfig.onItemClick(holder, v, title);
+    holder.itemView.setOnClickListener(v -> {
+      if (mLinkageListener != null) {
+        mLinkageListener.onLinkageClick(holder, title);
       }
+      mConfig.onItemClick(holder, v, title);
     });
   }
 

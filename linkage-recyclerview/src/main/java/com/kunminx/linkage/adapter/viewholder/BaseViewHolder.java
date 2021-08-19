@@ -27,8 +27,8 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 public class BaseViewHolder extends RecyclerView.ViewHolder {
 
-  private SparseArray<View> mHeaderViews = new SparseArray<>();
-  private View mConvertView;
+  private final SparseArray<View> mHeaderViews = new SparseArray<>();
+  private final View mConvertView;
 
   public BaseViewHolder(@NonNull View itemView) {
     super(itemView);

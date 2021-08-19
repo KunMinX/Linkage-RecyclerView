@@ -330,7 +330,11 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Con
     }
     if (mSecondaryAdapter.getConfig() != null) {
       ((DefaultLinkageSecondaryAdapterConfig) mSecondaryAdapter.getConfig())
-              .setItemBindListener(secondaryItemBindListener, headerBindListener, footerBindListener);
+              .setItemBindListener(
+                      secondaryItemBindListener,
+                      headerBindListener,
+                      footerBindListener
+              );
     }
   }
 
