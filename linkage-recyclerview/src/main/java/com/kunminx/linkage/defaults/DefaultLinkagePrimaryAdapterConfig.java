@@ -18,7 +18,6 @@ package com.kunminx.linkage.defaults;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -33,81 +32,81 @@ import com.kunminx.linkage.contract.ILinkagePrimaryAdapterConfig;
  */
 public class DefaultLinkagePrimaryAdapterConfig implements ILinkagePrimaryAdapterConfig {
 
-    private static final int MARQUEE_REPEAT_LOOP_MODE = -1;
-    private static final int MARQUEE_REPEAT_NONE_MODE = 0;
-    private Context mContext;
-    private OnPrimaryItemBindListener mListener;
-    private OnPrimaryItemClickListner mClickListner;
+  private static final int MARQUEE_REPEAT_LOOP_MODE = -1;
+  private static final int MARQUEE_REPEAT_NONE_MODE = 0;
+  private Context mContext;
+  private OnPrimaryItemBindListener mListener;
+  private OnPrimaryItemClickListner mClickListner;
 
-    public void setListener(OnPrimaryItemBindListener listener,
-                            OnPrimaryItemClickListner clickListner) {
-        mListener = listener;
-        mClickListner = clickListner;
+  public void setListener(OnPrimaryItemBindListener listener,
+                          OnPrimaryItemClickListner clickListner) {
+    mListener = listener;
+    mClickListner = clickListner;
+  }
+
+  @Override
+  public void setContext(Context context) {
+    mContext = context;
+  }
+
+  @Override
+  public int getLayoutId() {
+    return R.layout.default_adapter_linkage_primary;
+  }
+
+  @Override
+  public int getGroupTitleViewId() {
+    return R.id.tv_group;
+  }
+
+  @Override
+  public int getRootViewId() {
+    return R.id.layout_group;
+  }
+
+  @Override
+  public void onBindViewHolder(LinkagePrimaryViewHolder holder, boolean selected, String title) {
+    TextView tvTitle = ((TextView) holder.mGroupTitle);
+    tvTitle.setText(title);
+
+    tvTitle.setBackgroundColor(mContext.getResources().getColor(selected ? R.color.colorPurple : R.color.colorWhite));
+    tvTitle.setTextColor(ContextCompat.getColor(mContext, selected ? R.color.colorWhite : R.color.colorGray));
+    tvTitle.setEllipsize(selected ? TextUtils.TruncateAt.MARQUEE : TextUtils.TruncateAt.END);
+    tvTitle.setFocusable(selected);
+    tvTitle.setFocusableInTouchMode(selected);
+    tvTitle.setMarqueeRepeatLimit(selected ? MARQUEE_REPEAT_LOOP_MODE : MARQUEE_REPEAT_NONE_MODE);
+
+    if (mListener != null) {
+      mListener.onBindViewHolder(holder, title);
     }
+  }
 
-    @Override
-    public void setContext(Context context) {
-        mContext = context;
+  @Override
+  public void onItemClick(LinkagePrimaryViewHolder holder, View view, String title) {
+    if (mClickListner != null) {
+      mClickListner.onItemClick(holder, view, title);
     }
+  }
 
-    @Override
-    public int getLayoutId() {
-        return R.layout.default_adapter_linkage_primary;
-    }
+  public interface OnPrimaryItemClickListner {
+    /**
+     * we suggest you get position by holder.getAdapterPosition
+     *
+     * @param holder primaryHolder
+     * @param view   view
+     * @param title  groupTitle
+     */
+    void onItemClick(LinkagePrimaryViewHolder holder, View view, String title);
+  }
 
-    @Override
-    public int getGroupTitleViewId() {
-        return R.id.tv_group;
-    }
-
-    @Override
-    public int getRootViewId() {
-        return R.id.layout_group;
-    }
-
-    @Override
-    public void onBindViewHolder(LinkagePrimaryViewHolder holder, boolean selected, String title) {
-        TextView tvTitle = ((TextView) holder.mGroupTitle);
-        tvTitle.setText(title);
-
-        tvTitle.setBackgroundColor(mContext.getResources().getColor(selected ? R.color.colorPurple : R.color.colorWhite));
-        tvTitle.setTextColor(ContextCompat.getColor(mContext, selected ? R.color.colorWhite : R.color.colorGray));
-        tvTitle.setEllipsize(selected ? TextUtils.TruncateAt.MARQUEE : TextUtils.TruncateAt.END);
-        tvTitle.setFocusable(selected);
-        tvTitle.setFocusableInTouchMode(selected);
-        tvTitle.setMarqueeRepeatLimit(selected ? MARQUEE_REPEAT_LOOP_MODE : MARQUEE_REPEAT_NONE_MODE);
-
-        if (mListener != null) {
-            mListener.onBindViewHolder(holder, title);
-        }
-    }
-
-    @Override
-    public void onItemClick(LinkagePrimaryViewHolder holder, View view, String title) {
-        if (mClickListner != null) {
-            mClickListner.onItemClick(holder, view, title);
-        }
-    }
-
-    public interface OnPrimaryItemClickListner {
-        /**
-         * we suggest you get position by holder.getAdapterPosition
-         *
-         * @param holder primaryHolder
-         * @param view   view
-         * @param title  groupTitle
-         */
-        void onItemClick(LinkagePrimaryViewHolder holder, View view, String title);
-    }
-
-    public interface OnPrimaryItemBindListener {
-        /**
-         * Note: Please do not override rootView click listener in here, because of linkage selection rely on it.
-         * and we suggest you get position by holder.getAdapterPosition
-         *
-         * @param primaryHolder primaryHolder
-         * @param title         groupTitle
-         */
-        void onBindViewHolder(LinkagePrimaryViewHolder primaryHolder, String title);
-    }
+  public interface OnPrimaryItemBindListener {
+    /**
+     * Note: Please do not override rootView click listener in here, because of linkage selection rely on it.
+     * and we suggest you get position by holder.getAdapterPosition
+     *
+     * @param primaryHolder primaryHolder
+     * @param title         groupTitle
+     */
+    void onBindViewHolder(LinkagePrimaryViewHolder primaryHolder, String title);
+  }
 }
