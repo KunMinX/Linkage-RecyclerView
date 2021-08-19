@@ -109,7 +109,7 @@ public class MuchPrimaryItemSampleFragment extends Fragment {
 
     @Override
     public void onBindViewHolder(LinkagePrimaryViewHolder holder, boolean selected, String title) {
-      TextView tvTitle = ((TextView) holder.mGroupTitle);
+      TextView tvTitle = ((TextView) holder.getGroupTitle());
       tvTitle.setText(title);
 
       tvTitle.setBackgroundColor(mContext.getResources().getColor(
