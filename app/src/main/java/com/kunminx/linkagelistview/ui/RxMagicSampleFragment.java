@@ -40,48 +40,48 @@ import java.util.List;
  */
 public class RxMagicSampleFragment extends Fragment {
 
-    private FragmentRxmagicBinding mBinding;
+  private FragmentRxmagicBinding mBinding;
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_rxmagic, container, false);
-        mBinding = FragmentRxmagicBinding.bind(view);
-        setHasOptionsMenu(true);
-        return view;
-    }
+  @Nullable
+  @Override
+  public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.fragment_rxmagic, container, false);
+    mBinding = FragmentRxmagicBinding.bind(view);
+    setHasOptionsMenu(true);
+    return view;
+  }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        initLinkageData(mBinding.linkage);
-    }
+  @Override
+  public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    initLinkageData(mBinding.linkage);
+  }
 
-    private void initLinkageData(LinkageRecyclerView linkage) {
-        Gson gson = new Gson();
-        List<DefaultGroupedItem> items = gson.fromJson(getString(R.string.operators_json),
-                new TypeToken<List<DefaultGroupedItem>>() {
-                }.getType());
+  private void initLinkageData(LinkageRecyclerView linkage) {
+    Gson gson = new Gson();
+    List<DefaultGroupedItem> items = gson.fromJson(getString(R.string.operators_json),
+            new TypeToken<List<DefaultGroupedItem>>() {
+            }.getType());
 
-        linkage.init(items);
-        linkage.setDefaultOnItemBindListener(
-                (primaryHolder, primaryClickView, title) -> {
-                    Snackbar.make(primaryClickView, title, Snackbar.LENGTH_SHORT).show();
-                },
-                (primaryHolder, title) -> {
-                    //TODO
-                },
-                (secondaryHolder, item) -> {
-                    secondaryHolder.getView(R.id.level_2_item).setOnClickListener(v -> {
-                        Snackbar.make(v, item.info.getTitle(), Snackbar.LENGTH_SHORT).show();
-                    });
-                },
-                (headerHolder, item) -> {
-                    //TODO
-                },
-                (footerHolder, item) -> {
-                    //TODO
-                }
-        );
-    }
+    linkage.init(items);
+    linkage.setDefaultOnItemBindListener(
+            (primaryHolder, primaryClickView, title) -> {
+              Snackbar.make(primaryClickView, title, Snackbar.LENGTH_SHORT).show();
+            },
+            (primaryHolder, title) -> {
+              //TODO
+            },
+            (secondaryHolder, item) -> {
+              secondaryHolder.getView(R.id.level_2_item).setOnClickListener(v -> {
+                Snackbar.make(v, item.info.getTitle(), Snackbar.LENGTH_SHORT).show();
+              });
+            },
+            (headerHolder, item) -> {
+              //TODO
+            },
+            (footerHolder, item) -> {
+              //TODO
+            }
+    );
+  }
 }

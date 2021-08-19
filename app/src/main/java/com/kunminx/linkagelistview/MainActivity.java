@@ -33,60 +33,60 @@ import com.kunminx.linkagelistview.databinding.ActivityMainBinding;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private String[] mFragmentTitles;
-    private String[] mFragmentPaths;
-    private Fragment[] mFragments;
+  private String[] mFragmentTitles;
+  private String[] mFragmentPaths;
+  private Fragment[] mFragments;
 
-    private ActivityMainBinding mBinding;
+  private ActivityMainBinding mBinding;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        mBinding.toolbar.setTitle(R.string.app_name);
-        setSupportActionBar(mBinding.toolbar);
+    mBinding.toolbar.setTitle(R.string.app_name);
+    setSupportActionBar(mBinding.toolbar);
 
-        mFragmentTitles = getResources().getStringArray(R.array.fragments);
-        mFragmentPaths = getResources().getStringArray(R.array.fragments_full_path);
-        mFragments = new Fragment[mFragmentTitles.length];
+    mFragmentTitles = getResources().getStringArray(R.array.fragments);
+    mFragmentPaths = getResources().getStringArray(R.array.fragments_full_path);
+    mFragments = new Fragment[mFragmentTitles.length];
 
-        mBinding.viewPager.setAdapter(new FragmentStateAdapter(this) {
-            @NonNull
-            @Override
-            public Fragment createFragment(int position) {
-                return MainActivity.this.createFragment(position);
-            }
+    mBinding.viewPager.setAdapter(new FragmentStateAdapter(this) {
+      @NonNull
+      @Override
+      public Fragment createFragment(int position) {
+        return MainActivity.this.createFragment(position);
+      }
 
-            @Override
-            public int getItemCount() {
-                return mFragmentTitles.length;
-            }
-        });
+      @Override
+      public int getItemCount() {
+        return mFragmentTitles.length;
+      }
+    });
 
-        new TabLayoutMediator(mBinding.tabs, mBinding.viewPager, (tab, position) -> {
-            tab.setText(mFragmentTitles[position]
-                    .replace("SampleFragment", "")
-                    .replaceAll("[A-Z]", " $0"));
-        }).attach();
+    new TabLayoutMediator(mBinding.tabs, mBinding.viewPager, (tab, position) -> {
+      tab.setText(mFragmentTitles[position]
+              .replace("SampleFragment", "")
+              .replaceAll("[A-Z]", " $0"));
+    }).attach();
+  }
+
+  private Fragment createFragment(Integer index) {
+    if (mFragments[index] != null) {
+      return mFragments[index];
     }
-
-    private Fragment createFragment(Integer index) {
-        if (mFragments[index] != null) {
-            return mFragments[index];
-        }
-        String name = mFragmentPaths[index];
-        Fragment fragment = null;
-        try {
-            fragment = (Fragment) Class.forName(name).newInstance();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (java.lang.InstantiationException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        mFragments[index] = fragment;
-        return mFragments[index];
+    String name = mFragmentPaths[index];
+    Fragment fragment = null;
+    try {
+      fragment = (Fragment) Class.forName(name).newInstance();
+    } catch (IllegalAccessException e) {
+      e.printStackTrace();
+    } catch (java.lang.InstantiationException e) {
+      e.printStackTrace();
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
     }
+    mFragments[index] = fragment;
+    return mFragments[index];
+  }
 }

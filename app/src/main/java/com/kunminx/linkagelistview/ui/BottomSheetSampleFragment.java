@@ -22,45 +22,45 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.kunminx.linkagelistview.R;
 import com.kunminx.linkagelistview.databinding.FragmentBottomsheetBinding;
 import com.kunminx.linkagelistview.ui.dialog.BottomSheetPopup;
 import com.lxj.xpopup.XPopup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.fragment.app.Fragment;
-
 /**
  * Create by KunMinX at 19/5/8
  */
 public class BottomSheetSampleFragment extends Fragment {
 
-    private FragmentBottomsheetBinding mBinding;
-    private BottomSheetDialog mSheetDialog;
+  private FragmentBottomsheetBinding mBinding;
+  private BottomSheetDialog mSheetDialog;
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_bottomsheet, container, false);
-        mBinding = FragmentBottomsheetBinding.bind(view);
-        setHasOptionsMenu(true);
-        return view;
-    }
+  @Nullable
+  @Override
+  public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.fragment_bottomsheet, container, false);
+    mBinding = FragmentBottomsheetBinding.bind(view);
+    setHasOptionsMenu(true);
+    return view;
+  }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mBinding.btnPreview.setOnClickListener(v -> {
-            new XPopup.Builder(getContext())
-                    .moveUpToKeyboard(false)
-                    .asCustom(new BottomSheetPopup(getContext()))
-                    .show();
+  @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+  @Override
+  public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    mBinding.btnPreview.setOnClickListener(v -> {
+      new XPopup.Builder(getContext())
+              .moveUpToKeyboard(false)
+              .asCustom(new BottomSheetPopup(getContext()))
+              .show();
 
-        });
-    }
+    });
+  }
 
 }

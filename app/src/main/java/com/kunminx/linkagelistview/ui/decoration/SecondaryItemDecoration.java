@@ -13,60 +13,60 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 public class SecondaryItemDecoration extends RecyclerView.ItemDecoration {
 
-    private int mRowSpacing;
-    private int mColumnSpacing;
-    private GridLayoutManager mGridLayoutManager;
-    private int mLastHeaderPosition;
+  private int mRowSpacing;
+  private int mColumnSpacing;
+  private GridLayoutManager mGridLayoutManager;
+  private int mLastHeaderPosition;
 
 
-    public SecondaryItemDecoration(int rowSpacing, int columnSpacing) {
-        this.mRowSpacing = rowSpacing;
-        this.mColumnSpacing = columnSpacing;
+  public SecondaryItemDecoration(int rowSpacing, int columnSpacing) {
+    this.mRowSpacing = rowSpacing;
+    this.mColumnSpacing = columnSpacing;
+  }
+
+  @Override
+  public void getItemOffsets(@NonNull Rect outRect,
+                             @NonNull View view,
+                             @NonNull RecyclerView parent,
+                             @NonNull RecyclerView.State state) {
+
+    if (mGridLayoutManager == null) {
+      if (parent.getLayoutManager() instanceof GridLayoutManager) {
+        mGridLayoutManager = (GridLayoutManager) parent.getLayoutManager();
+      } else {
+        return;
+      }
     }
 
-    @Override
-    public void getItemOffsets(@NonNull Rect outRect,
-                               @NonNull View view,
-                               @NonNull RecyclerView parent,
-                               @NonNull RecyclerView.State state) {
+    int position = parent.getChildAdapterPosition(view);
 
-        if (mGridLayoutManager == null) {
-            if (parent.getLayoutManager() instanceof GridLayoutManager) {
-                mGridLayoutManager = (GridLayoutManager) parent.getLayoutManager();
-            } else {
-                return;
-            }
-        }
+    if (mGridLayoutManager.getSpanSizeLookup().getSpanSize(position) == mGridLayoutManager.getSpanCount()) {
+      outRect.left = 0;
+      outRect.right = 0;
+      outRect.top = 0;
+      outRect.bottom = 0;
+      mLastHeaderPosition = position;
 
-        int position = parent.getChildAdapterPosition(view);
+      Log.d("TAG", "-----getSpanSize " + mGridLayoutManager.getSpanSizeLookup().getSpanSize(position));
+    } else {
+      outRect.left = mColumnSpacing;
+      outRect.top = mRowSpacing;
 
-        if (mGridLayoutManager.getSpanSizeLookup().getSpanSize(position) == mGridLayoutManager.getSpanCount()) {
-            outRect.left = 0;
-            outRect.right = 0;
-            outRect.top = 0;
-            outRect.bottom = 0;
-            mLastHeaderPosition = position;
+      int column = Math.abs((position - mLastHeaderPosition) % mGridLayoutManager.getSpanCount());
+      if (position > mLastHeaderPosition) {
+        outRect.right = column == 0 ? mColumnSpacing : 0;
+      } else {
+        outRect.right = column == mGridLayoutManager.getSpanCount() - 1 ? mColumnSpacing : 0;
+      }
+      outRect.bottom = 0;
 
-            Log.d("TAG", "-----getSpanSize " + mGridLayoutManager.getSpanSizeLookup().getSpanSize(position));
-        } else {
-            outRect.left = mColumnSpacing;
-            outRect.top = mRowSpacing;
+      Log.d("TAG", "-----column " + column);
+      Log.d("TAG", "-----SpanCount " + mGridLayoutManager.getSpanCount());
+      Log.d("TAG", "-----outRect.left " + outRect.left);
+      Log.d("TAG", "-----outRect.right " + outRect.right);
+      Log.d("TAG", "-----outRect.top " + outRect.top);
+      Log.d("TAG", "-----");
 
-            int column = Math.abs((position - mLastHeaderPosition) % mGridLayoutManager.getSpanCount());
-            if (position > mLastHeaderPosition) {
-                outRect.right = column == 0 ? mColumnSpacing : 0;
-            } else {
-                outRect.right = column == mGridLayoutManager.getSpanCount() - 1 ? mColumnSpacing : 0;
-            }
-            outRect.bottom = 0;
-
-            Log.d("TAG", "-----column " + column);
-            Log.d("TAG", "-----SpanCount " + mGridLayoutManager.getSpanCount());
-            Log.d("TAG", "-----outRect.left " + outRect.left);
-            Log.d("TAG", "-----outRect.right " + outRect.right);
-            Log.d("TAG", "-----outRect.top " + outRect.top);
-            Log.d("TAG", "-----");
-
-        }
     }
+  }
 }

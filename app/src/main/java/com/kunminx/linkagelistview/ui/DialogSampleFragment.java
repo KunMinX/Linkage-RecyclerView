@@ -44,62 +44,62 @@ import java.util.List;
  */
 public class DialogSampleFragment extends Fragment {
 
-    private FragmentDialogBinding mBinding;
-    private static float DIALOG_HEIGHT = 400;
-    private AlertDialog mDialog;
+  private FragmentDialogBinding mBinding;
+  private static float DIALOG_HEIGHT = 400;
+  private AlertDialog mDialog;
 
-    private SimpleBaseBindingAdapter<String, AdapterVipBinding> mAdapter;
+  private SimpleBaseBindingAdapter<String, AdapterVipBinding> mAdapter;
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_dialog, container, false);
-        mBinding = FragmentDialogBinding.bind(view);
-        setHasOptionsMenu(true);
-        return view;
-    }
+  @Nullable
+  @Override
+  public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.fragment_dialog, container, false);
+    mBinding = FragmentDialogBinding.bind(view);
+    setHasOptionsMenu(true);
+    return view;
+  }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mBinding.btnPreview.setOnClickListener(v -> {
-            View view2 = View.inflate(getContext(), R.layout.layout_linkage, null);
-            LinkageRecyclerView linkage = view2.findViewById(R.id.linkage);
-            initLinkageData(linkage);
-            MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
-            mDialog = builder.setView(linkage).show();
-            linkage.setLayoutHeight(DIALOG_HEIGHT);
-        });
-    }
+  @Override
+  public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    mBinding.btnPreview.setOnClickListener(v -> {
+      View view2 = View.inflate(getContext(), R.layout.layout_linkage, null);
+      LinkageRecyclerView linkage = view2.findViewById(R.id.linkage);
+      initLinkageData(linkage);
+      MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
+      mDialog = builder.setView(linkage).show();
+      linkage.setLayoutHeight(DIALOG_HEIGHT);
+    });
+  }
 
-    private void initLinkageData(LinkageRecyclerView linkage) {
-        Gson gson = new Gson();
-        List<DefaultGroupedItem> items = gson.fromJson(getString(R.string.operators_json),
-                new TypeToken<List<DefaultGroupedItem>>() {
-                }.getType());
+  private void initLinkageData(LinkageRecyclerView linkage) {
+    Gson gson = new Gson();
+    List<DefaultGroupedItem> items = gson.fromJson(getString(R.string.operators_json),
+            new TypeToken<List<DefaultGroupedItem>>() {
+            }.getType());
 
-        linkage.init(items);
-        linkage.setScrollSmoothly(false);
-        linkage.setDefaultOnItemBindListener(
-                (primaryHolder, primaryClickView, title) -> {
-                    Snackbar.make(primaryClickView, title, Snackbar.LENGTH_SHORT).show();
-                },
-                (primaryHolder, title) -> {
-                    //TODO
-                },
-                (secondaryHolder, item) -> {
-                    secondaryHolder.getView(R.id.level_2_item).setOnClickListener(v -> {
-                        if (mDialog != null && mDialog.isShowing()) {
-                            mDialog.dismiss();
-                        }
-                    });
-                },
-                (headerHolder, item) -> {
-                    //TODO
-                },
-                (footerHolder, item) -> {
-                    //TODO
+    linkage.init(items);
+    linkage.setScrollSmoothly(false);
+    linkage.setDefaultOnItemBindListener(
+            (primaryHolder, primaryClickView, title) -> {
+              Snackbar.make(primaryClickView, title, Snackbar.LENGTH_SHORT).show();
+            },
+            (primaryHolder, title) -> {
+              //TODO
+            },
+            (secondaryHolder, item) -> {
+              secondaryHolder.getView(R.id.level_2_item).setOnClickListener(v -> {
+                if (mDialog != null && mDialog.isShowing()) {
+                  mDialog.dismiss();
                 }
-        );
-    }
+              });
+            },
+            (headerHolder, item) -> {
+              //TODO
+            },
+            (footerHolder, item) -> {
+              //TODO
+            }
+    );
+  }
 }

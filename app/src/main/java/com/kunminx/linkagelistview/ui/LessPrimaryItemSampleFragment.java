@@ -52,228 +52,228 @@ import java.util.List;
  */
 public class LessPrimaryItemSampleFragment extends Fragment {
 
-    private static final int SPAN_COUNT_FOR_GRID_MODE = 2;
-    private static final int MARQUEE_REPEAT_LOOP_MODE = -1;
-    private static final int MARQUEE_REPEAT_NONE_MODE = 0;
+  private static final int SPAN_COUNT_FOR_GRID_MODE = 2;
+  private static final int MARQUEE_REPEAT_LOOP_MODE = -1;
+  private static final int MARQUEE_REPEAT_NONE_MODE = 0;
+  private FragmentLessPrimaryItemBinding mBinding;
+
+  @Nullable
+  @Override
+  public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.fragment_less_primary_item, container, false);
+    mBinding = FragmentLessPrimaryItemBinding.bind(view);
+    setHasOptionsMenu(true);
+    return view;
+  }
+
+  @Override
+  public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    initLinkageData(mBinding.linkage);
+    mBinding.btnPreview.setOnClickListener(v -> {
+      mBinding.linkage.setGridMode(!mBinding.linkage.isGridMode());
+    });
+  }
+
+  private void initLinkageData(LinkageRecyclerView linkage) {
+    Gson gson = new Gson();
+    List<ElemeGroupedItem> items = gson.fromJson(getString(R.string.eleme_json_5_food),
+            new TypeToken<List<ElemeGroupedItem>>() {
+            }.getType());
+
+    LessLinkageSecondaryAdapterConfig secondaryAdapterConfig = new LessLinkageSecondaryAdapterConfig();
+    secondaryAdapterConfig.setBinding(mBinding);
+    linkage.init(items, new LessLinkagePrimaryAdapterConfig(), secondaryAdapterConfig);
+  }
+
+  private static class LessLinkagePrimaryAdapterConfig implements ILinkagePrimaryAdapterConfig {
+
+    private Context mContext;
+
+    public void setContext(Context context) {
+      mContext = context;
+    }
+
+    @Override
+    public int getLayoutId() {
+      return com.kunminx.linkage.R.layout.default_adapter_linkage_primary;
+    }
+
+    @Override
+    public int getGroupTitleViewId() {
+      return com.kunminx.linkage.R.id.tv_group;
+    }
+
+    @Override
+    public int getRootViewId() {
+      return com.kunminx.linkage.R.id.layout_group;
+    }
+
+    @Override
+    public void onBindViewHolder(LinkagePrimaryViewHolder holder, boolean selected, String title) {
+      TextView tvTitle = ((TextView) holder.mGroupTitle);
+      tvTitle.setText(title);
+
+      tvTitle.setBackgroundColor(mContext.getResources().getColor(
+              selected ? com.kunminx.linkage.R.color.colorPurple : com.kunminx.linkage.R.color.colorWhite));
+      tvTitle.setTextColor(ContextCompat.getColor(mContext,
+              selected ? com.kunminx.linkage.R.color.colorWhite : com.kunminx.linkage.R.color.colorGray));
+      tvTitle.setEllipsize(selected ? TextUtils.TruncateAt.MARQUEE : TextUtils.TruncateAt.END);
+      tvTitle.setFocusable(selected);
+      tvTitle.setFocusableInTouchMode(selected);
+      tvTitle.setMarqueeRepeatLimit(selected ? MARQUEE_REPEAT_LOOP_MODE : MARQUEE_REPEAT_NONE_MODE);
+    }
+
+    @Override
+    public void onItemClick(LinkagePrimaryViewHolder holder, View view, String title) {
+      //TODO
+    }
+  }
+
+  private static class LessLinkageSecondaryAdapterConfig implements
+          ILinkageSecondaryAdapterConfig<ElemeGroupedItem.ItemInfo> {
+
+    private Context mContext;
     private FragmentLessPrimaryItemBinding mBinding;
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_less_primary_item, container, false);
-        mBinding = FragmentLessPrimaryItemBinding.bind(view);
-        setHasOptionsMenu(true);
-        return view;
+    public void setContext(Context context) {
+      mContext = context;
+    }
+
+    public void setBinding(FragmentLessPrimaryItemBinding binding) {
+      mBinding = binding;
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        initLinkageData(mBinding.linkage);
-        mBinding.btnPreview.setOnClickListener(v -> {
-            mBinding.linkage.setGridMode(!mBinding.linkage.isGridMode());
-        });
+    public int getGridLayoutId() {
+      return R.layout.adapter_eleme_secondary_grid;
     }
 
-    private void initLinkageData(LinkageRecyclerView linkage) {
-        Gson gson = new Gson();
-        List<ElemeGroupedItem> items = gson.fromJson(getString(R.string.eleme_json_5_food),
-                new TypeToken<List<ElemeGroupedItem>>() {
-                }.getType());
-
-        LessLinkageSecondaryAdapterConfig secondaryAdapterConfig = new LessLinkageSecondaryAdapterConfig();
-        secondaryAdapterConfig.setBinding(mBinding);
-        linkage.init(items, new LessLinkagePrimaryAdapterConfig(), secondaryAdapterConfig);
+    @Override
+    public int getLinearLayoutId() {
+      return R.layout.adapter_eleme_secondary_linear;
     }
 
-    private static class LessLinkagePrimaryAdapterConfig implements ILinkagePrimaryAdapterConfig {
-
-        private Context mContext;
-
-        public void setContext(Context context) {
-            mContext = context;
-        }
-
-        @Override
-        public int getLayoutId() {
-            return com.kunminx.linkage.R.layout.default_adapter_linkage_primary;
-        }
-
-        @Override
-        public int getGroupTitleViewId() {
-            return com.kunminx.linkage.R.id.tv_group;
-        }
-
-        @Override
-        public int getRootViewId() {
-            return com.kunminx.linkage.R.id.layout_group;
-        }
-
-        @Override
-        public void onBindViewHolder(LinkagePrimaryViewHolder holder, boolean selected, String title) {
-            TextView tvTitle = ((TextView) holder.mGroupTitle);
-            tvTitle.setText(title);
-
-            tvTitle.setBackgroundColor(mContext.getResources().getColor(
-                    selected ? com.kunminx.linkage.R.color.colorPurple : com.kunminx.linkage.R.color.colorWhite));
-            tvTitle.setTextColor(ContextCompat.getColor(mContext,
-                    selected ? com.kunminx.linkage.R.color.colorWhite : com.kunminx.linkage.R.color.colorGray));
-            tvTitle.setEllipsize(selected ? TextUtils.TruncateAt.MARQUEE : TextUtils.TruncateAt.END);
-            tvTitle.setFocusable(selected);
-            tvTitle.setFocusableInTouchMode(selected);
-            tvTitle.setMarqueeRepeatLimit(selected ? MARQUEE_REPEAT_LOOP_MODE : MARQUEE_REPEAT_NONE_MODE);
-        }
-
-        @Override
-        public void onItemClick(LinkagePrimaryViewHolder holder, View view, String title) {
-            //TODO
-        }
+    @Override
+    public int getHeaderLayoutId() {
+      return com.kunminx.linkage.R.layout.default_adapter_linkage_secondary_header;
     }
 
-    private static class LessLinkageSecondaryAdapterConfig implements
-            ILinkageSecondaryAdapterConfig<ElemeGroupedItem.ItemInfo> {
+    @Override
+    public int getFooterLayoutId() {
+      return 0;
+    }
 
-        private Context mContext;
-        private FragmentLessPrimaryItemBinding mBinding;
+    @Override
+    public int getHeaderTextViewId() {
+      return R.id.secondary_header;
+    }
 
-        public void setContext(Context context) {
-            mContext = context;
-        }
+    @Override
+    public int getSpanCountOfGridMode() {
+      return SPAN_COUNT_FOR_GRID_MODE;
+    }
 
-        public void setBinding(FragmentLessPrimaryItemBinding binding) {
-            mBinding = binding;
-        }
+    @Override
+    public void onBindViewHolder(LinkageSecondaryViewHolder holder,
+                                 BaseGroupedItem<ElemeGroupedItem.ItemInfo> item) {
 
-        @Override
-        public int getGridLayoutId() {
-            return R.layout.adapter_eleme_secondary_grid;
-        }
+      ((TextView) holder.getView(R.id.iv_goods_name)).setText(item.info.getTitle());
+      if (!TextUtils.isEmpty(item.info.getImgUrl())) {
+        Glide.with(mContext).load(item.info.getImgUrl()).into((ImageView) holder.getView(R.id.iv_goods_img));
+      }
+      holder.getView(R.id.iv_goods_item).setOnClickListener(v -> {
+        //TODO
+      });
 
-        @Override
-        public int getLinearLayoutId() {
-            return R.layout.adapter_eleme_secondary_linear;
-        }
-
-        @Override
-        public int getHeaderLayoutId() {
-            return com.kunminx.linkage.R.layout.default_adapter_linkage_secondary_header;
-        }
-
-        @Override
-        public int getFooterLayoutId() {
-            return 0;
-        }
-
-        @Override
-        public int getHeaderTextViewId() {
-            return R.id.secondary_header;
-        }
-
-        @Override
-        public int getSpanCountOfGridMode() {
-            return SPAN_COUNT_FOR_GRID_MODE;
-        }
-
-        @Override
-        public void onBindViewHolder(LinkageSecondaryViewHolder holder,
-                                     BaseGroupedItem<ElemeGroupedItem.ItemInfo> item) {
-
-            ((TextView) holder.getView(R.id.iv_goods_name)).setText(item.info.getTitle());
-            if (!TextUtils.isEmpty(item.info.getImgUrl())) {
-                Glide.with(mContext).load(item.info.getImgUrl()).into((ImageView) holder.getView(R.id.iv_goods_img));
-            }
-            holder.getView(R.id.iv_goods_item).setOnClickListener(v -> {
-                //TODO
-            });
-
-            holder.getView(R.id.iv_goods_add).setOnClickListener(v -> {
+      holder.getView(R.id.iv_goods_add).setOnClickListener(v -> {
                 /*ElemeGroupedItem.ItemInfo info = new ElemeGroupedItem.ItemInfo(
                         mContext.getString(R.string.test_title), item.info.getGroup(),
                         mContext.getString(R.string.test_content)
                 );
                 ElemeGroupedItem item1 = new ElemeGroupedItem(info);
                 addItem(holder.getAdapterPosition(), item1);*/
-                removeItem(holder.getAbsoluteAdapterPosition());
-            });
-        }
-
-        @Override
-        public void onBindHeaderViewHolder(LinkageSecondaryHeaderViewHolder holder,
-                                           BaseGroupedItem<ElemeGroupedItem.ItemInfo> item) {
-
-            ((TextView) holder.getView(R.id.secondary_header)).setText(item.header);
-        }
-
-        @Override
-        public void onBindFooterViewHolder(LinkageSecondaryFooterViewHolder holder,
-                                           BaseGroupedItem<ElemeGroupedItem.ItemInfo> item) {
-
-        }
-
-        //TODO need to test!
-        public void addItem(int position, ElemeGroupedItem item) {
-            if (item == null) {
-                return;
-            }
-            List<ElemeGroupedItem> items = mBinding.linkage.getSecondaryAdapter().getItems();
-            List<String> strings = mBinding.linkage.getPrimaryAdapter().getStrings();
-            if (item.isHeader) {
-                items.add(position, item);
-                strings.add(position, item.header);
-                String clickedGroup = items.get(position).header;
-                int index = strings.indexOf(clickedGroup);
-                mBinding.linkage.getHeaderPositions().add(index, position);
-                mBinding.linkage.getSecondaryAdapter().notifyItemInserted(position);
-                mBinding.linkage.getPrimaryAdapter().notifyItemInserted(index);
-            } else {
-                items.add(position, item);
-                mBinding.linkage.getSecondaryAdapter().notifyItemInserted(position);
-            }
-        }
-
-        //TODO need to test!
-        public void removeItem(int position) {
-            ElemeGroupedItem item = (ElemeGroupedItem) mBinding.linkage.getSecondaryAdapter().getItems().get(position);
-            if (item == null) {
-                return;
-            }
-            List<ElemeGroupedItem> items = mBinding.linkage.getSecondaryAdapter().getItems();
-            List<String> strings = mBinding.linkage.getPrimaryAdapter().getStrings();
-            if (item.isHeader) {
-                items.remove(position);
-                for (int i = items.size(); i > 0; i--) {
-                    ElemeGroupedItem item1 = items.get(i);
-                    if (!item1.isHeader && item1.info.getGroup().equals(item.header)) {
-                        items.remove(item1);
-                    }
-                }
-                mBinding.linkage.getSecondaryAdapter().notifyDataSetChanged();
-                int index = strings.indexOf(item.header);
-                strings.remove(item.header);
-                mBinding.linkage.getHeaderPositions().remove(index);
-                mBinding.linkage.getPrimaryAdapter().notifyItemRemoved(index);
-            } else {
-                items.remove(position);
-                mBinding.linkage.getSecondaryAdapter().notifyItemRemoved(position);
-            }
-        }
-
-        //TODO need to test!
-        public void updateItem(int position, ElemeGroupedItem item) {
-            if (item == null) {
-                return;
-            }
-            List<ElemeGroupedItem> items = mBinding.linkage.getSecondaryAdapter().getItems();
-            List<String> strings = mBinding.linkage.getPrimaryAdapter().getStrings();
-            if (item.isHeader) {
-                items.set(position, item);
-                mBinding.linkage.getSecondaryAdapter().notifyItemChanged(position);
-                mBinding.linkage.getPrimaryAdapter().notifyDataSetChanged();
-            } else {
-                items.set(position, item);
-                mBinding.linkage.getSecondaryAdapter().notifyItemChanged(position);
-            }
-        }
+        removeItem(holder.getAbsoluteAdapterPosition());
+      });
     }
+
+    @Override
+    public void onBindHeaderViewHolder(LinkageSecondaryHeaderViewHolder holder,
+                                       BaseGroupedItem<ElemeGroupedItem.ItemInfo> item) {
+
+      ((TextView) holder.getView(R.id.secondary_header)).setText(item.header);
+    }
+
+    @Override
+    public void onBindFooterViewHolder(LinkageSecondaryFooterViewHolder holder,
+                                       BaseGroupedItem<ElemeGroupedItem.ItemInfo> item) {
+
+    }
+
+    //TODO need to test!
+    public void addItem(int position, ElemeGroupedItem item) {
+      if (item == null) {
+        return;
+      }
+      List<ElemeGroupedItem> items = mBinding.linkage.getSecondaryAdapter().getItems();
+      List<String> strings = mBinding.linkage.getPrimaryAdapter().getStrings();
+      if (item.isHeader) {
+        items.add(position, item);
+        strings.add(position, item.header);
+        String clickedGroup = items.get(position).header;
+        int index = strings.indexOf(clickedGroup);
+        mBinding.linkage.getHeaderPositions().add(index, position);
+        mBinding.linkage.getSecondaryAdapter().notifyItemInserted(position);
+        mBinding.linkage.getPrimaryAdapter().notifyItemInserted(index);
+      } else {
+        items.add(position, item);
+        mBinding.linkage.getSecondaryAdapter().notifyItemInserted(position);
+      }
+    }
+
+    //TODO need to test!
+    public void removeItem(int position) {
+      ElemeGroupedItem item = (ElemeGroupedItem) mBinding.linkage.getSecondaryAdapter().getItems().get(position);
+      if (item == null) {
+        return;
+      }
+      List<ElemeGroupedItem> items = mBinding.linkage.getSecondaryAdapter().getItems();
+      List<String> strings = mBinding.linkage.getPrimaryAdapter().getStrings();
+      if (item.isHeader) {
+        items.remove(position);
+        for (int i = items.size(); i > 0; i--) {
+          ElemeGroupedItem item1 = items.get(i);
+          if (!item1.isHeader && item1.info.getGroup().equals(item.header)) {
+            items.remove(item1);
+          }
+        }
+        mBinding.linkage.getSecondaryAdapter().notifyDataSetChanged();
+        int index = strings.indexOf(item.header);
+        strings.remove(item.header);
+        mBinding.linkage.getHeaderPositions().remove(index);
+        mBinding.linkage.getPrimaryAdapter().notifyItemRemoved(index);
+      } else {
+        items.remove(position);
+        mBinding.linkage.getSecondaryAdapter().notifyItemRemoved(position);
+      }
+    }
+
+    //TODO need to test!
+    public void updateItem(int position, ElemeGroupedItem item) {
+      if (item == null) {
+        return;
+      }
+      List<ElemeGroupedItem> items = mBinding.linkage.getSecondaryAdapter().getItems();
+      List<String> strings = mBinding.linkage.getPrimaryAdapter().getStrings();
+      if (item.isHeader) {
+        items.set(position, item);
+        mBinding.linkage.getSecondaryAdapter().notifyItemChanged(position);
+        mBinding.linkage.getPrimaryAdapter().notifyDataSetChanged();
+      } else {
+        items.set(position, item);
+        mBinding.linkage.getSecondaryAdapter().notifyItemChanged(position);
+      }
+    }
+  }
 
 }
