@@ -36,10 +36,10 @@ public class DefaultLinkagePrimaryAdapterConfig implements ILinkagePrimaryAdapte
   private static final int MARQUEE_REPEAT_NONE_MODE = 0;
   private Context mContext;
   private OnPrimaryItemBindListener mListener;
-  private OnPrimaryItemClickListner mClickListner;
+  private OnPrimaryItemClickListener mClickListner;
 
   public void setListener(OnPrimaryItemBindListener listener,
-                          OnPrimaryItemClickListner clickListener) {
+                          OnPrimaryItemClickListener clickListener) {
     mListener = listener;
     mClickListner = clickListener;
   }
@@ -88,7 +88,7 @@ public class DefaultLinkagePrimaryAdapterConfig implements ILinkagePrimaryAdapte
     }
   }
 
-  public interface OnPrimaryItemClickListner {
+  public interface OnPrimaryItemClickListener {
     /**
      * we suggest you get position by holder.getAdapterPosition
      *
