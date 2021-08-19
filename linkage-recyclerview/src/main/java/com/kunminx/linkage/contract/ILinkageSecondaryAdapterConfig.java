@@ -40,7 +40,9 @@ public interface ILinkageSecondaryAdapterConfig<T extends BaseGroupedItem.ItemIn
    *
    * @return grid layout res id
    */
-  int getGridLayoutId();
+  default int getGridLayoutId() {
+    return 0;
+  }
 
   /**
    * get linear layout res id
@@ -66,21 +68,25 @@ public interface ILinkageSecondaryAdapterConfig<T extends BaseGroupedItem.ItemIn
    *
    * @return footer layout res id
    */
-  int getFooterLayoutId();
+  default int getFooterLayoutId() {
+    return 0;
+  }
 
   /**
    * get the id of textView for bind title of HeaderView
    * <p>
    * Note: Secondary adapter's Header and HeaderView must share the same set of views
    *
-   * @return
+   * @return header layout res id
    */
   int getHeaderTextViewId();
 
   /**
    * get SpanCount of grid mode
    */
-  int getSpanCountOfGridMode();
+  default int getSpanCountOfGridMode() {
+    return 2;
+  }
 
   /**
    * achieve the onBindViewHolder logic on outside
@@ -107,5 +113,7 @@ public interface ILinkageSecondaryAdapterConfig<T extends BaseGroupedItem.ItemIn
    * @param holder LinkageSecondaryFooterViewHolder
    * @param item   footer of this position
    */
-  void onBindFooterViewHolder(LinkageSecondaryFooterViewHolder holder, BaseGroupedItem<T> item);
+  default void onBindFooterViewHolder(LinkageSecondaryFooterViewHolder holder, BaseGroupedItem<T> item) {
+
+  }
 }

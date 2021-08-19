@@ -39,9 +39,9 @@ public class DefaultLinkagePrimaryAdapterConfig implements ILinkagePrimaryAdapte
   private OnPrimaryItemClickListner mClickListner;
 
   public void setListener(OnPrimaryItemBindListener listener,
-                          OnPrimaryItemClickListner clickListner) {
+                          OnPrimaryItemClickListner clickListener) {
     mListener = listener;
-    mClickListner = clickListner;
+    mClickListner = clickListener;
   }
 
   @Override
@@ -66,7 +66,7 @@ public class DefaultLinkagePrimaryAdapterConfig implements ILinkagePrimaryAdapte
 
   @Override
   public void onBindViewHolder(LinkagePrimaryViewHolder holder, boolean selected, String title) {
-    TextView tvTitle = ((TextView) holder.mGroupTitle);
+    TextView tvTitle = ((TextView) holder.getGroupTitle());
     tvTitle.setText(title);
 
     tvTitle.setBackgroundColor(mContext.getResources().getColor(selected ? R.color.colorPurple : R.color.colorWhite));

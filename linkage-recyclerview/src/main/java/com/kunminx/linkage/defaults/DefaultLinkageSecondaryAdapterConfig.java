@@ -30,7 +30,8 @@ import com.kunminx.linkage.contract.ILinkageSecondaryAdapterConfig;
 /**
  * Create by KunMinX at 19/5/8
  */
-public class DefaultLinkageSecondaryAdapterConfig implements ILinkageSecondaryAdapterConfig<DefaultGroupedItem.ItemInfo> {
+public class DefaultLinkageSecondaryAdapterConfig
+        implements ILinkageSecondaryAdapterConfig<DefaultGroupedItem.ItemInfo> {
 
   private Context mContext;
   private OnSecondaryItemBindListener mItemBindListener;
@@ -118,8 +119,8 @@ public class DefaultLinkageSecondaryAdapterConfig implements ILinkageSecondaryAd
     /**
      * we suggest you get position by holder.getAdapterPosition
      *
-     * @param secondaryHolder
-     * @param item
+     * @param secondaryHolder secondary list item Holder
+     * @param item            item
      */
     void onBindViewHolder(LinkageSecondaryViewHolder secondaryHolder,
                           BaseGroupedItem<DefaultGroupedItem.ItemInfo> item);
@@ -129,8 +130,8 @@ public class DefaultLinkageSecondaryAdapterConfig implements ILinkageSecondaryAd
     /**
      * we suggest you get position by holder.getAdapterPosition
      *
-     * @param headerHolder
-     * @param item
+     * @param headerHolder secondary list header Holder
+     * @param item         header
      */
     void onBindHeaderViewHolder(LinkageSecondaryHeaderViewHolder headerHolder,
                                 BaseGroupedItem<DefaultGroupedItem.ItemInfo> item);
@@ -140,8 +141,8 @@ public class DefaultLinkageSecondaryAdapterConfig implements ILinkageSecondaryAd
     /**
      * we suggest you get position by holder.getAdapterPosition
      *
-     * @param footerHolder
-     * @param item
+     * @param footerHolder secondary list footer Holder
+     * @param item         footer
      */
     void onBindFooterViewHolder(LinkageSecondaryFooterViewHolder footerHolder,
                                 BaseGroupedItem<DefaultGroupedItem.ItemInfo> item);
