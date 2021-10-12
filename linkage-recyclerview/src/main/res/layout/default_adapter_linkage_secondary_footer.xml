@@ -20,16 +20,32 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/secondary_footer"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv_secondary_footer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:padding="12dp"
-        android:singleLine="true"
-        android:text="@string/the_end"
-        android:textSize="20sp" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_secondary_footer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="12dp"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/the_end"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_secondary_footer_sub"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="12dp"
+            android:text="@string/the_end_sub"
+            android:textSize="12sp" />
+
+    </LinearLayout>
 </RelativeLayout>

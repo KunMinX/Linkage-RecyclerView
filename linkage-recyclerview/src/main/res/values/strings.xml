@@ -19,4 +19,5 @@
 <resources>
     <string name="app_name">linked</string>
     <string name="the_end">THE END</string>
+    <string name="the_end_sub">Footer 布局用于兼容特殊场景交互问题，高度须 match_parent。可重写 config 的 getFooterLayout 方法来替换自定义布局。</string>
 </resources>
