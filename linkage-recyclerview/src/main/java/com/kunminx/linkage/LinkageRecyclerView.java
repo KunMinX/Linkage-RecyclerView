@@ -261,6 +261,9 @@ public class LinkageRecyclerView<T extends BaseGroupedItem.ItemInfo> extends Con
                    ILinkagePrimaryAdapterConfig primaryAdapterConfig,
                    ILinkageSecondaryAdapterConfig secondaryAdapterConfig) {
 
+    mFirstVisiblePosition = 0;
+    mHeaderPositions.clear();
+
     initRecyclerView(primaryAdapterConfig, secondaryAdapterConfig);
 
     this.mInitItems = linkageItems;
