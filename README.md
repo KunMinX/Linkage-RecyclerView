@@ -43,7 +43,7 @@ Linkage-RecyclerView 的目标是：**一行代码即可接入二级联动列表
 1.在 build.gradle 中添加对该库的依赖。
 
 ```groovy
-implementation 'com.kunminx.linkage:linkage-recyclerview:2.6.0'
+implementation 'com.kunminx.linkage:linkage-recyclerview:2.7.0'
 ```
 提示：鉴于 Jcenter 的关闭，我们已将仓库迁移至 Maven Central，请自行在根目录 build.gradle 添加 `mavenCentral()`。
 
