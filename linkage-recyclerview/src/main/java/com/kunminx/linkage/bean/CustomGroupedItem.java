@@ -1,4 +1,4 @@
-package com.kunminx.linkagelistview.bean;
+package com.kunminx.linkage.bean;
 
 /*
  * Copyright (c) 2018-present. KunMinX
@@ -16,8 +16,6 @@ package com.kunminx.linkagelistview.bean;
  * limitations under the License.
  */
 
-
-import com.kunminx.linkage.bean.BaseGroupedItem;
 
 /**
  * Here is another idea of custom items:

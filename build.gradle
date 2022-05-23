@@ -6,8 +6,8 @@ buildscript {
     ext {
         appTargetSdk = 31
         appMinSdk = 20
-        appVersionCode = 20600
-        appVersionName = '2.6.0'
+        appVersionCode = 20700
+        appVersionName = '2.7.0'
     }
 
     repositories {

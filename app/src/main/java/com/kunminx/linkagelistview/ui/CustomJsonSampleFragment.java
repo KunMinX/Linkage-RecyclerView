@@ -40,7 +40,7 @@ import com.kunminx.linkage.bean.BaseGroupedItem;
 import com.kunminx.linkage.contract.ILinkagePrimaryAdapterConfig;
 import com.kunminx.linkage.contract.ILinkageSecondaryAdapterConfig;
 import com.kunminx.linkagelistview.R;
-import com.kunminx.linkagelistview.bean.CustomGroupedItem;
+import com.kunminx.linkage.bean.CustomGroupedItem;
 import com.kunminx.linkagelistview.bean.CustomSampleBean;
 import com.kunminx.linkagelistview.databinding.FragmentRxmagicBinding;
 
