@@ -3,13 +3,20 @@
 apply plugin: 'io.codearte.nexus-staging'
 
 buildscript {
+    ext {
+        appTargetSdk = 31
+        appMinSdk = 20
+        appVersionCode = 20600
+        appVersionName = '2.6.0'
+    }
+
     repositories {
         google()
         mavenCentral()
         maven { url 'https://jitpack.io' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.1'
+        classpath 'com.android.tools.build:gradle:7.2.0'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.30.0'
     }

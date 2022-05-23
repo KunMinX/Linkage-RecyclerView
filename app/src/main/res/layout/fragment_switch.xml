@@ -1,33 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <com.kunminx.linkage.LinkageRecyclerView
+        android:id="@+id/linkage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_weight="1">
 
-        <com.kunminx.linkage.LinkageRecyclerView
-            android:id="@+id/linkage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-        </com.kunminx.linkage.LinkageRecyclerView>
+    </com.kunminx.linkage.LinkageRecyclerView>
 
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_preview"
-            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/margin8"
-            android:layout_marginBottom="@dimen/margin8"
-            android:layout_weight="0"
-            android:backgroundTint="?attr/colorPrimary"
-            android:text="@string/btn_name_switch"
-            android:textColor="@color/colorWhite" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_preview"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/margin8"
+        android:layout_marginBottom="@dimen/margin8"
+        android:layout_weight="0"
+        android:backgroundTint="?attr/colorPrimary"
+        android:text="@string/btn_name_switch"
+        android:textColor="@color/colorWhite" />
 
-    </LinearLayout>
+</LinearLayout>
 
-</layout>

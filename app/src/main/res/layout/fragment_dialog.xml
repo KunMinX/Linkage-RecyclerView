@@ -1,38 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <FrameLayout
+    <ImageView
+        android:id="@+id/iv_bg"
+        android:layout_width="360dp"
+        android:layout_height="360dp"
+        android:layout_gravity="center"
+        android:src="@drawable/bg_sample" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-        <ImageView
-            android:id="@+id/iv_bg"
-            android:layout_width="360dp"
-            android:layout_height="360dp"
-            android:layout_gravity="center"
-            android:src="@drawable/bg_sample" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_preview"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"
+        android:layout_marginTop="@dimen/margin8"
+        android:layout_marginBottom="@dimen/margin8"
+        android:layout_weight="0"
+        android:backgroundTint="?attr/colorPrimary"
+        android:text="@string/btn_name_dialog"
+        android:textColor="@color/colorWhite" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+</FrameLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_preview"
-            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|bottom"
-            android:layout_marginTop="@dimen/margin8"
-            android:layout_marginBottom="@dimen/margin8"
-            android:layout_weight="0"
-            android:backgroundTint="?attr/colorPrimary"
-            android:text="@string/btn_name_dialog"
-            android:textColor="@color/colorWhite" />
-
-    </FrameLayout>
-
-</layout>

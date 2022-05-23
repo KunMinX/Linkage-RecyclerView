@@ -18,10 +18,10 @@ package com.kunminx.linkagelistview;
 
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
@@ -42,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+    mBinding = ActivityMainBinding.inflate(LayoutInflater.from(this));
+    setContentView(mBinding.getRoot());
 
     mBinding.toolbar.setTitle(R.string.app_name);
     setSupportActionBar(mBinding.toolbar);

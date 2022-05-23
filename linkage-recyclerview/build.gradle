@@ -3,8 +3,8 @@ apply plugin: 'com.android.library'
 ext {
     PUBLISH_GROUP_ID = 'com.kunminx.linkage'
     PUBLISH_ARTIFACT_ID = 'linkage-recyclerview'
-    PUBLISH_VERSION = '2.6.0'
-    VERSION_CODE = 20600
+    PUBLISH_VERSION = appVersionName
+    VERSION_CODE = appVersionCode
 
     ARTIFACT_DESCRIPTION = '即使不用饿了么订餐，也请务必收藏好该库！一行代码即可接入，二级联动订餐列表'
 
@@ -29,13 +29,10 @@ apply from: "${rootProject.projectDir}/publish-mavencentral.gradle"
 
 
 android {
-    compileSdkVersion 30
-
-
+    compileSdk appTargetSdk
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 30
-
+        minSdk appMinSdk
+        targetSdk appTargetSdk
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
@@ -64,7 +61,7 @@ dependencies {
     androidTestImplementation 'androidx.test:rules:1.4.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
 }
 

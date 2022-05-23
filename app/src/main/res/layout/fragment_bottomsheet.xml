@@ -1,32 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <ImageView
+        android:id="@+id/iv_bg"
+        android:layout_width="360dp"
+        android:layout_height="360dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/bg_sample" />
 
-        <ImageView
-            android:id="@+id/iv_bg"
-            android:layout_width="360dp"
-            android:layout_height="360dp"
-            android:layout_centerInParent="true"
-            android:src="@drawable/bg_sample" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_preview"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin8"
+        android:layout_marginBottom="@dimen/margin8"
+        android:layout_weight="0"
+        android:backgroundTint="?attr/colorPrimary"
+        android:text="@string/btn_name_bottomsheet"
+        android:textColor="@color/colorWhite" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_preview"
-            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/margin8"
-            android:layout_marginBottom="@dimen/margin8"
-            android:layout_weight="0"
-            android:backgroundTint="?attr/colorPrimary"
-            android:text="@string/btn_name_bottomsheet"
-            android:textColor="@color/colorWhite" />
+</RelativeLayout>
 
-    </RelativeLayout>
-
-</layout>
