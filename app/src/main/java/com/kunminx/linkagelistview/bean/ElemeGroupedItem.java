@@ -37,18 +37,10 @@ public class ElemeGroupedItem extends BaseGroupedItem<ElemeGroupedItem.ItemInfo>
     private String imgUrl;
     private String cost;
 
-    public ItemInfo(String title, String group, String content) {
+    public ItemInfo(String title, String group, String content, String imgUrl, String cost) {
       super(title, group);
       this.content = content;
-    }
-
-    public ItemInfo(String title, String group, String content, String imgUrl) {
-      this(title, group, content);
       this.imgUrl = imgUrl;
-    }
-
-    public ItemInfo(String title, String group, String content, String imgUrl, String cost) {
-      this(title, group, content, imgUrl);
       this.cost = cost;
     }
 

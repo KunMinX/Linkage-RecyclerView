@@ -26,7 +26,12 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.gson.Gson;
+import com.kunminx.linkagelistview.bean.CustomSampleBean;
 import com.kunminx.linkagelistview.databinding.ActivityMainBinding;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Create by KunMinX at 19/4/27

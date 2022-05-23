@@ -3,6 +3,7 @@
 
     <string-array name="fragments">
         <item name="rx_magic">RxMagicSampleFragment</item>
+        <item name="custom_json">CustomJsonSampleFragment</item>
         <item name="eleme">ElemeSampleFragment</item>
         <item name="switch">SwitchSampleFragment</item>
         <item name="custom_header">CustomHeaderSampleFragment</item>
@@ -15,6 +16,7 @@
 
     <string-array name="fragments_full_path">
         <item name="rx_magic">"com.kunminx.linkagelistview.ui.RxMagicSampleFragment"</item>
+        <item name="custom_json">"com.kunminx.linkagelistview.ui.CustomJsonSampleFragment"</item>
         <item name="eleme">"com.kunminx.linkagelistview.ui.ElemeSampleFragment"</item>
         <item name="switch">"com.kunminx.linkagelistview.ui.SwitchSampleFragment"</item>
         <item name="custom_header">"com.kunminx.linkagelistview.ui.CustomHeaderSampleFragment"</item>
