@@ -48,11 +48,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 本页面用于展示另一种自定义 items 的思路：
- * 当后台数据和本库 BaseGroupedItem 结构不匹配时，可将后台数据的实体类作为本库 item 的字段，
- * 并在获取后台数据时，遍历后台数据，和实例化本库 item，从而拿到可用的 items
+ * 本页面用于展示另一种自定义 items 思路：
+ * 当后台数据和本库 BaseGroupedItem 结构不匹配时，可将后台数据实体类作为本库 item 字段，
+ * 并在获取后台数据时，遍历后台数据和实例化本库 item，从而拿到可用 items
  * <p>
- * 本示例对应的自定义 bean 是 CustomSampleBean，是普通的 POJO，遍历后可装载到 CustomGroupedItem
+ * 本示例对应的自定义 bean 是 CustomSampleBean，是普通 POJO，遍历后可装载到 CustomGroupedItem
  * <p>
  * Create by KunMinX at 19/5/8
  */
