@@ -20,17 +20,17 @@ Linkage-RecyclerView 个性化配置十分简单，依托于 MVP “配置解耦
 
 Linkage-RecyclerView 目标是：**一行代码即可接入二级联动列表**。
 
-除了一键接入而省去 99% 不必要的复杂重复工作外，你还可从该项目获得内容包括：
+除一键接入省去 99% 不必要复杂重复工作外，您还可从该项目获得内容包括：
 
-1. 整洁的代码风格和标准的资源命名规范。
+1. 整洁代码风格和标准资源命名规范。
 2. **MVP 架构在编写第三方库的最佳实践：使用者无需了解内部逻辑，简单配置即可使用**。
-3. 优秀的代码分层和封装思想，在不做任何个性化配置情况下，一行代码即可接入。
+3. 优秀代码分层和封装思想，在不做任何个性化配置情况下，一行代码即可接入。
 4. 主体工程基于前沿 Jetpack 组件。
-5. AndroidX 和 Material Design 2 的全面使用。
+5. AndroidX 和 Material Design 2 全面使用。
 6. ConstraintLayout 约束布局最佳实践。
-7. 绝不使用 Dagger，绝不使用奇技淫巧、编写艰深晦涩的代码。
+7. 绝不使用 Dagger，绝不使用奇技淫巧、编写艰深晦涩代码。
 
-如果你正考虑 [**如何为项目挑选合适架构**](https://juejin.cn/post/7106042518457810952)，这项目值得你参考！
+如果您正考虑 [**如何为项目挑选合适架构**](https://juejin.cn/post/7106042518457810952)，这项目值得你参考！
 
 &nbsp;
 
@@ -42,7 +42,7 @@ Linkage-RecyclerView 目标是：**一行代码即可接入二级联动列表**�
 implementation 'com.kunminx.linkage:linkage-recyclerview:2.7.0'
 ```
 
-提示：鉴于 Jcenter 的关闭，我们已将仓库迁移至 Maven Central，请自行在根目录 build.gradle 添加 `mavenCentral()`。
+提示：本库托管于 Maven Central，请自行在根目录 build.gradle 添加 `mavenCentral()`。
 
 2.依据默认分组实体类 `DefaultGroupedItem` 结构准备一串数据。此处以 JSON 为例：
 
@@ -96,7 +96,6 @@ String content //（选填）二级选项的内容
         android:id="@+id/linkage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
 </LinearLayout>
 ```
 
@@ -110,7 +109,7 @@ linkage.init(items);
 
 **温馨提示：**
 
-1.实际项目开发中，做法通常是，从后端拿到和解析 JSON 数据，并对该数据进行遍历。在遍历过程中，实例化并装载本库实体类对象到列表中，从而获得本库所能使用的列表数据。
+1.实际开发中，项目数据或与本库数据 “结构上存在差异”，故通常做法是，从后端拿到和解析项目 JSON 数据，并对该数据进行遍历。在遍历过程中，实例化并装载 “本库实体类对象” 到列表中，以获本库所能使用的列表数据。（具体可参见 CustomJsonSampleFragment 示例）
 
 2.注意：如使用 JSON，请在 ProGuard Rules 中为该实体类配置混淆白名单：
 
