@@ -111,7 +111,7 @@ linkage.init(items);
 
 1.实际开发中，项目数据或与本库数据 “结构上存在差异”，故通常做法是，从后端拿到和解析项目 JSON 数据，并对该数据进行遍历。在遍历过程中，实例化并装载 “本库实体类对象” 到列表中，以获本库所能使用的列表数据。（具体可参见 CustomJsonSampleFragment 示例）
 
-2.注意：如使用 JSON，请在 ProGuard Rules 中为该实体类配置混淆白名单：
+2.注意：如后端直接使用本库实体类读写 JSON 数据，请在 ProGuard Rules 中为该实体类配置混淆白名单：
 
 ```java
 -keep class com.kunminx.linkage.bean.** {*;}
