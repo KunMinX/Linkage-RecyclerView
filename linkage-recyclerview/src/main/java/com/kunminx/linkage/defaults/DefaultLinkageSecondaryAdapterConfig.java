@@ -117,7 +117,7 @@ public class DefaultLinkageSecondaryAdapterConfig
 
   public interface OnSecondaryItemBindListener {
     /**
-     * we suggest you get position by holder.getAdapterPosition
+     * we suggest you get position by holder.getBindingAdapterPosition
      *
      * @param secondaryHolder secondary list item Holder
      * @param item            item
@@ -128,7 +128,7 @@ public class DefaultLinkageSecondaryAdapterConfig
 
   public interface OnSecondaryHeaderBindListener {
     /**
-     * we suggest you get position by holder.getAdapterPosition
+     * we suggest you get position by holder.getBindingAdapterPosition
      *
      * @param headerHolder secondary list header Holder
      * @param item         header
@@ -139,7 +139,7 @@ public class DefaultLinkageSecondaryAdapterConfig
 
   public interface OnSecondaryFooterBindListener {
     /**
-     * we suggest you get position by holder.getAdapterPosition
+     * we suggest you get position by holder.getBindingAdapterPosition
      *
      * @param footerHolder secondary list footer Holder
      * @param item         footer

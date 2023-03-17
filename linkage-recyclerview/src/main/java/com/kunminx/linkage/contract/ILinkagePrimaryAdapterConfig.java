@@ -61,7 +61,7 @@ public interface ILinkagePrimaryAdapterConfig {
    * instead, you can deal with item click in method 'ILinkagePrimaryAdapterConfig.onItemSelected()'
    * or 'LinkageRecyclerView.OnPrimaryItemClickListener.onItemClick()'
    * <p>
-   * and we suggest you get position by holder.getAdapterPosition
+   * and we suggest you get position by holder.getBindingAdapterPosition
    *
    * @param holder   LinkagePrimaryViewHolder
    * @param title    title of this position
@@ -71,7 +71,7 @@ public interface ILinkagePrimaryAdapterConfig {
 
   /**
    * on primary item clicked
-   * and we suggest you get position by holder.getAdapterPosition
+   * and we suggest you get position by holder.getBindingAdapterPosition
    *
    * @param holder LinkagePrimaryViewHolder
    * @param view   itemView

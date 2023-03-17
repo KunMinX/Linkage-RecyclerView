@@ -90,7 +90,7 @@ public interface ILinkageSecondaryAdapterConfig<T extends BaseGroupedItem.ItemIn
 
   /**
    * achieve the onBindViewHolder logic on outside
-   * and we suggest you get position by holder.getAdapterPosition
+   * and we suggest you get position by holder.getBindingAdapterPosition
    *
    * @param holder LinkageSecondaryViewHolder
    * @param item   linkageItem of this position
@@ -99,7 +99,7 @@ public interface ILinkageSecondaryAdapterConfig<T extends BaseGroupedItem.ItemIn
 
   /**
    * achieve the onBindHeaderViewHolder logic on outside
-   * and we suggest you get position by holder.getAdapterPosition
+   * and we suggest you get position by holder.getBindingAdapterPosition
    *
    * @param holder LinkageSecondaryHeaderViewHolder
    * @param item   header of this position
@@ -108,7 +108,7 @@ public interface ILinkageSecondaryAdapterConfig<T extends BaseGroupedItem.ItemIn
 
   /**
    * achieve the onBindFooterViewHolder logic on outside
-   * and we suggest you get position by holder.getAdapterPosition
+   * and we suggest you get position by holder.getBindingAdapterPosition
    *
    * @param holder LinkageSecondaryFooterViewHolder
    * @param item   footer of this position

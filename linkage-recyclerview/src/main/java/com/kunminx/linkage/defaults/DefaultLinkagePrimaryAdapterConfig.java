@@ -90,7 +90,7 @@ public class DefaultLinkagePrimaryAdapterConfig implements ILinkagePrimaryAdapte
 
   public interface OnPrimaryItemClickListener {
     /**
-     * we suggest you get position by holder.getAdapterPosition
+     * we suggest you get position by holder.getBindingAdapterPosition
      *
      * @param holder primaryHolder
      * @param view   view
@@ -102,7 +102,7 @@ public class DefaultLinkagePrimaryAdapterConfig implements ILinkagePrimaryAdapte
   public interface OnPrimaryItemBindListener {
     /**
      * Note: Please do not override rootView click listener in here, because of linkage selection rely on it.
-     * and we suggest you get position by holder.getAdapterPosition
+     * and we suggest you get position by holder.getBindingAdapterPosition
      *
      * @param primaryHolder primaryHolder
      * @param title         groupTitle
