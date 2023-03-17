@@ -67,6 +67,12 @@ public class RxMagicSampleFragment extends Fragment {
     linkage.setDefaultOnItemBindListener(
             (primaryHolder, primaryClickView, title) -> {
               Snackbar.make(primaryClickView, title, Snackbar.LENGTH_SHORT).show();
+
+              //TODO Tip: if position need, we suggest you get position by holder.getBindingAdapterPosition
+
+              int position = primaryHolder.getBindingAdapterPosition();
+
+              //
             },
             (primaryHolder, title) -> {
               //TODO

@@ -178,6 +178,12 @@ public class LessPrimaryItemSampleFragment extends Fragment {
     public void onBindViewHolder(LinkageSecondaryViewHolder holder,
                                  BaseGroupedItem<ElemeGroupedItem.ItemInfo> item) {
 
+      //TODO Tip: if position need, we suggest you get position by holder.getBindingAdapterPosition
+
+      int position = holder.getBindingAdapterPosition();
+
+      //
+
       ((TextView) holder.getView(R.id.iv_goods_name)).setText(item.info.getTitle());
       if (!TextUtils.isEmpty(item.info.getImgUrl())) {
         Glide.with(mContext).load(item.info.getImgUrl()).into((ImageView) holder.getView(R.id.iv_goods_img));

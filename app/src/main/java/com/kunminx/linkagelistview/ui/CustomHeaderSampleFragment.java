@@ -120,6 +120,13 @@ public class CustomHeaderSampleFragment extends Fragment {
 
     @Override
     public void onBindViewHolder(LinkagePrimaryViewHolder holder, boolean selected, String title) {
+
+      //TODO Tip: if position need, we suggest you get position by holder.getBindingAdapterPosition
+
+      int position = holder.getBindingAdapterPosition();
+
+      //
+
       TextView tvTitle = ((TextView) holder.getGroupTitle());
       tvTitle.setText(title);
 
